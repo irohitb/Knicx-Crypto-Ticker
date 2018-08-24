@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import openSocket from 'socket.io-client';
-import { ScrollView } from 'react-native';
+import {ScrollView, TextInput, StyleSheet } from 'react-native';
 import {fetchCoin, updateCrypto} from "../actions/cryptoAction.js"
 import CoinCard from "../components/CoinCard.js"
 import Header from './../components/header.js';
@@ -9,15 +9,52 @@ import {CurrencyRate} from '../actions/currencyData.js'
 
 
 
+let displaySearchCrypto = []
 
 class cryptoTicker extends Component {
 
 
 
+  state = {
+    searchCoin: false
+  }
+
   componentWillMount() {
+    console.log("here inside comppnent will mount")
     this.props.fetchCoin()
     this.props.CurrencyRate()
   }
+
+  //On Search type 
+onSearch = (text) => {
+ 
+    //check if coins are loaded or not 
+    if (!this.props.cryptoLoading) {
+        this.setState({searchCoin: true})
+        let updateCoinData = [...this.props.cryptoLoaded];
+        for (let i=0; i<updateCoinData.length; i++) {
+          let coinVal = updateCoinData[i]["long"] + updateCoinData[i]["short"]
+          if (coinVal.indexOf(text) > - 1) {
+              displaySearchCrypto.push(<CoinCard 
+                no={i}
+                key={updateCoinData[i]["long"]}
+                coinShortName = {updateCoinData[i]["short"]}
+                coinName = {updateCoinData[i]["long"]}
+                coinPrice = {updateCoinData[i]["price"].toFixed(2)}
+                marketCap = {(updateCoinData[i]["mktcap"]/1000000000).toFixed(4)}
+                percentChange = {updateCoinData[i]["perc"].toFixed(2)}
+                vwapData={updateCoinData[i]["vwapData"].toFixed(2)}    />
+            )
+        }
+        
+    }
+    console.log(typeof displaySearchCrypto)
+  }
+}
+
+
+
+  //On Clear 
 
   //Socket.io
   componentDidUpdate() {
@@ -50,33 +87,41 @@ class cryptoTicker extends Component {
 
   //CurrencyData
 
-
   //
  //If condition to see if we need to display the spinner
  // if (this.props.cryptoLoading) {
  //
  // }
-    
+
+ let displayCrypto;
+
+    if (this.state.searchCoin) {
+      displayCrypto =  displaySearchCrypto
+      console.log(displayCrypto)
+
+    }
 
   //Update State from websocket
   var CryptoData = this.props.cryptoLoaded;
-  
   let i=0;
  
-  let displayCrypto = CryptoData.map(el => {
-    return (<CoinCard
-       no={i++}
-       key={el["short"]}
-       coinShortName = {el["short"]}
-       coinName = {el["long"]}
-       coinPrice = {el["price"].toFixed(2)}
-       marketCap = {(el["mktcap"]/1000000000).toFixed(4)}
-       percentChange = {el["perc"].toFixed(2)}
-       vwapData={el["vwapData"].toFixed(2)}
-      />
-    )
+  if (!this.state.searchCoin) {
+     displayCrypto = CryptoData.map(el => {
+      return (<CoinCard
+        no={i++}
+        key={el["short"]}
+        coinShortName = {el["short"]}
+        coinName = {el["long"]}
+        coinPrice = {el["price"].toFixed(2)}
+        marketCap = {(el["mktcap"]/1000000000).toFixed(4)}
+        percentChange = {el["perc"].toFixed(2)}
+        vwapData={el["vwapData"].toFixed(2)}
+        />
+      )
+    })
+  }
 
-  })
+  console.log(typeof displayCrypto)
 
 
 
@@ -85,11 +130,32 @@ class cryptoTicker extends Component {
 
            <ScrollView>
              <Header />
-            {displayCrypto}
+             {/* Custom Search Input */}
+             <TextInput
+              style={textInput}
+              placeholder="Search Coin"
+              onChangeText={(text) => this.onSearch(text)} />
+              {displayCrypto}
            </ScrollView>
-       );
+       )
   }
 }
+
+//Creating Stylesheet 
+const styles = StyleSheet.create({ 
+  textInput: {
+    borderColor: 'gray',
+    flex: 0.8,
+     borderWidth: 2,
+     height: 45
+  
+  }
+})
+
+const {
+  textInput
+} = styles
+
 
 
 //Redux
