@@ -6,6 +6,7 @@ import {fetchCoin, updateCrypto} from "../actions/cryptoAction.js"
 import CoinCard from "../components/CoinCard.js"
 import Header from './../components/header.js';
 import {CurrencyRate} from '../actions/currencyData.js'
+import ModalDropdown from 'react-native-modal-dropdown';
 
 
 
@@ -27,6 +28,10 @@ class cryptoTicker extends Component {
 
   //On Search type 
 onSearch = (text) => {
+
+  if (text == "") {
+    this.setState({searchCoin: false})
+  }
  
     //check if coins are loaded or not 
     if (!this.props.cryptoLoading) {
@@ -43,12 +48,12 @@ onSearch = (text) => {
                 coinPrice = {updateCoinData[i]["price"].toFixed(2)}
                 marketCap = {(updateCoinData[i]["mktcap"]/1000000000).toFixed(4)}
                 percentChange = {updateCoinData[i]["perc"].toFixed(2)}
-                vwapData={updateCoinData[i]["vwapData"].toFixed(2)}    />
+                vwapData={updateCoinData[i]["vwapData"].toFixed(2)}    
+                coinImage={"https://coincap.io/images/coins/" + updateCoinData[i]["long"] + ".png"} />
             )
         }
         
     }
-    console.log(typeof displaySearchCrypto)
   }
 }
 
@@ -103,7 +108,7 @@ onSearch = (text) => {
 
   //Update State from websocket
   var CryptoData = this.props.cryptoLoaded;
-  let i=0;
+  let i=1;
  
   if (!this.state.searchCoin) {
      displayCrypto = CryptoData.map(el => {
@@ -116,12 +121,14 @@ onSearch = (text) => {
         marketCap = {(el["mktcap"]/1000000000).toFixed(4)}
         percentChange = {el["perc"].toFixed(2)}
         vwapData={el["vwapData"].toFixed(2)}
+        coinImage={"https://coincap.io/images/coins/" + el["long"] + ".png"}
         />
       )
     })
   }
 
   console.log(typeof displayCrypto)
+  console.log(this.props.currencyLoaded)
 
 
 
@@ -135,6 +142,7 @@ onSearch = (text) => {
               style={textInput}
               placeholder="Search Coin"
               onChangeText={(text) => this.onSearch(text)} />
+
               {displayCrypto}
            </ScrollView>
        )

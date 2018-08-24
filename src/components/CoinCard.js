@@ -66,7 +66,7 @@ class  CoinCard extends Component {
                     <View style={upperRow}>
                     <Text style={sno}> {this.props.no} </Text>
                     <Image 
-                        source={{uri: "https://coincap.io/images/coins/" + this.props.coinName + ".png"}}
+                        source={{uri: this.props.coinImage}}
                         style={img}
                         /> 
                         <Text style={coinSymbol}>{this.props.coinShortName}</Text>
