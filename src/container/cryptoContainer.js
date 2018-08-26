@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import openSocket from 'socket.io-client';
-import {ScrollView, TextInput, StyleSheet } from 'react-native';
+import {ScrollView, TextInput, StyleSheet, FlatList, View} from 'react-native';
 import {fetchCoin, updateCrypto} from "../actions/cryptoAction.js"
 import CoinCard from "../components/CoinCard.js"
 import Header from './../components/header.js';
@@ -28,7 +28,8 @@ class cryptoTicker extends Component {
 
   //On Search type 
 onSearch = (text) => {
-
+console.log("this is text", text)
+console.log("this is Crypto Loaded",this.props.cryptoLoaded )
   if (text == "") {
     this.setState({searchCoin: false})
   }
@@ -40,21 +41,21 @@ onSearch = (text) => {
         for (let i=0; i<updateCoinData.length; i++) {
           let coinVal = updateCoinData[i]["long"] + updateCoinData[i]["short"]
           if (coinVal.indexOf(text) > - 1) {
-              displaySearchCrypto.push(<CoinCard 
-                no={i}
-                key={updateCoinData[i]["long"]}
-                coinShortName = {updateCoinData[i]["short"]}
-                coinName = {updateCoinData[i]["long"]}
-                coinPrice = {updateCoinData[i]["price"].toFixed(2)}
-                marketCap = {(updateCoinData[i]["mktcap"]/1000000000).toFixed(4)}
-                percentChange = {updateCoinData[i]["perc"].toFixed(2)}
-                vwapData={updateCoinData[i]["vwapData"].toFixed(2)}    
-                coinImage={"https://coincap.io/images/coins/" + updateCoinData[i]["long"] + ".png"} />
-            )
+              displaySearchCrypto.push({
+                no: {i},
+                key: updateCoinData[i]["long"],
+                short: updateCoinData[i]["short"],
+                long: updateCoinData[i]["long"],
+                price: updateCoinData[i]["price"],
+                mktcap: updateCoinData[i]["mktcap"],
+                perc: updateCoinData[i]["perc"],
+                vwapData: updateCoinData[i]["vwapData"] 
+               })
+          
         }
-        
-    }
+      }
   }
+  console.log("This is display coins", displaySearchCrypto)
 }
 
 
@@ -64,6 +65,7 @@ onSearch = (text) => {
   //Socket.io
   componentDidUpdate() {
     var socket = openSocket('https://coincap.io');
+
     var updateCoinData = [...this.props.cryptoLoaded];
      socket.on('trades', (tradeMsg) => {
       for (let i=0; i<updateCoinData.length; i++) {
@@ -98,37 +100,33 @@ onSearch = (text) => {
  //
  // }
 
- let displayCrypto;
+//  let displayCrypto;
 
-    if (this.state.searchCoin) {
-      displayCrypto =  displaySearchCrypto
-      console.log(displayCrypto)
+    // if (this.state.searchCoin) {
+    //   displayCrypto =  displaySearchCrypto
+    //   console.log(displayCrypto)
 
-    }
+    // }
 
   //Update State from websocket
-  var CryptoData = this.props.cryptoLoaded;
-  let i=1;
- 
-  if (!this.state.searchCoin) {
-     displayCrypto = CryptoData.map(el => {
-      return (<CoinCard
-        no={i++}
-        key={el["short"]}
-        coinShortName = {el["short"]}
-        coinName = {el["long"]}
-        coinPrice = {el["price"].toFixed(2)}
-        marketCap = {(el["mktcap"]/1000000000).toFixed(4)}
-        percentChange = {el["perc"].toFixed(2)}
-        vwapData={el["vwapData"].toFixed(2)}
-        coinImage={"https://coincap.io/images/coins/" + el["long"] + ".png"}
-        />
-      )
-    })
-  }
 
-  console.log(typeof displayCrypto)
-  console.log(this.props.currencyLoaded)
+  // if (!this.state.searchCoin) {
+  //    displayCrypto = CryptoData.map(el => {
+  //     return (<CoinCard
+  //       no={i++}
+  //       key={el["short"]}
+  //       coinShortName = {el["short"]}
+  //       coinName = {el["long"]}
+  //       coinPrice = {el["price"].toFixed(2)}
+  //       marketCap = {(el["mktcap"]/1000000000).toFixed(4)}
+  //       percentChange = {el["perc"].toFixed(2)}
+  //       vwapData={el["vwapData"].toFixed(2)}
+  //       coinImage={"https://coincap.io/images/coins/" + el["long"] + ".png"}
+  //       />
+  //     )
+  //   })
+  // }
+
 
 
 
@@ -138,12 +136,29 @@ onSearch = (text) => {
            <ScrollView>
              <Header />
              {/* Custom Search Input */}
+             <View>
              <TextInput
               style={textInput}
               placeholder="Search Coin"
               onChangeText={(text) => this.onSearch(text)} />
-
-              {displayCrypto}
+              </View>
+              <View>
+              <FlatList
+               data={this.state.searchCoin ? displaySearchCrypto : this.props.cryptoLoaded}
+               renderItem={({ item }) => (
+               <CoinCard
+                  key={item["short"]}
+                  coinShortName = {item["short"]}
+                  coinName = {item["long"]}
+                  coinPrice = {item["price"].toFixed(2)}
+                  marketCap = {(item["mktcap"]/1000000000).toFixed(4)}
+                  percentChange = {item["perc"].toFixed(2)}
+                  vwapData={item["vwapData"].toFixed(2)}
+                  coinImage={"https://coincap.io/images/coins/" + item["long"] + ".png"}
+                  />
+              )}
+      />
+      </View>
            </ScrollView>
        )
   }
