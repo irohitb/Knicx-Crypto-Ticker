@@ -44,7 +44,7 @@ class  CoinCard extends Component {
         setTimeout(
             function() {
                 this.setState({decreased: false, increased: false})
-            }.bind(this), 100)
+            }.bind(this), 500)
         }
 
 

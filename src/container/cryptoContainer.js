@@ -21,18 +21,14 @@ class cryptoTicker extends Component {
   }
 
   componentWillMount() {
-    console.log("here inside comppnent will mount")
     this.props.fetchCoin()
     this.props.CurrencyRate()
   }
 
   //On Search type 
 onSearch = (text) => {
-console.log("this is text", text)
-console.log("this is Crypto Loaded",this.props.cryptoLoaded )
-  if (text == "") {
-    this.setState({searchCoin: false})
-  }
+
+ console.log("Inside onSearch", text)
  
     //check if coins are loaded or not 
     if (!this.props.cryptoLoading) {
@@ -43,7 +39,6 @@ console.log("this is Crypto Loaded",this.props.cryptoLoaded )
           if (coinVal.indexOf(text) > - 1) {
               displaySearchCrypto.push({
                 no: {i},
-                key: updateCoinData[i]["long"],
                 short: updateCoinData[i]["short"],
                 long: updateCoinData[i]["long"],
                 price: updateCoinData[i]["price"],
@@ -55,7 +50,16 @@ console.log("this is Crypto Loaded",this.props.cryptoLoaded )
         }
       }
   }
-  console.log("This is display coins", displaySearchCrypto)
+
+  if ( text == '') {
+    this.setState({searchCoin: false})
+  }
+}
+
+//On Clear 
+onClear = () => {
+  console.log("Insider On clear method")
+  this.setState({searchCoin: false})
 }
 
 
@@ -92,42 +96,6 @@ console.log("this is Crypto Loaded",this.props.cryptoLoaded )
 
   render() {
 
-  //CurrencyData
-
-  //
- //If condition to see if we need to display the spinner
- // if (this.props.cryptoLoading) {
- //
- // }
-
-//  let displayCrypto;
-
-    // if (this.state.searchCoin) {
-    //   displayCrypto =  displaySearchCrypto
-    //   console.log(displayCrypto)
-
-    // }
-
-  //Update State from websocket
-
-  // if (!this.state.searchCoin) {
-  //    displayCrypto = CryptoData.map(el => {
-  //     return (<CoinCard
-  //       no={i++}
-  //       key={el["short"]}
-  //       coinShortName = {el["short"]}
-  //       coinName = {el["long"]}
-  //       coinPrice = {el["price"].toFixed(2)}
-  //       marketCap = {(el["mktcap"]/1000000000).toFixed(4)}
-  //       percentChange = {el["perc"].toFixed(2)}
-  //       vwapData={el["vwapData"].toFixed(2)}
-  //       coinImage={"https://coincap.io/images/coins/" + el["long"] + ".png"}
-  //       />
-  //     )
-  //   })
-  // }
-
-
 
 
 
@@ -140,7 +108,9 @@ console.log("this is Crypto Loaded",this.props.cryptoLoaded )
              <TextInput
               style={textInput}
               placeholder="Search Coin"
-              onChangeText={(text) => this.onSearch(text)} />
+              onChangeText={(text) => this.onSearch(text)} 
+              onClear={this.onClear}
+              />
               </View>
               <View>
               <FlatList
@@ -168,9 +138,10 @@ console.log("this is Crypto Loaded",this.props.cryptoLoaded )
 const styles = StyleSheet.create({ 
   textInput: {
     borderColor: 'gray',
-    flex: 0.8,
+    flex: 0.5,
      borderWidth: 2,
-     height: 45
+     height: 45,
+     borderRadius:10
   
   }
 })
