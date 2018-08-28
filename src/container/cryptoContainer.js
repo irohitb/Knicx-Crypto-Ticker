@@ -27,7 +27,8 @@ class cryptoTicker extends Component {
 
   //On Search type 
 onSearch = (text) => {
-
+  //Setting
+  displaySearchCrypto = [];
  console.log("Inside onSearch", text)
  
     //check if coins are loaded or not 
@@ -36,6 +37,7 @@ onSearch = (text) => {
         let updateCoinData = [...this.props.cryptoLoaded];
         for (let i=0; i<updateCoinData.length; i++) {
           let coinVal = updateCoinData[i]["long"] + updateCoinData[i]["short"]
+          console.log(coinVal)
           if (coinVal.indexOf(text) > - 1) {
               displaySearchCrypto.push({
                 no: {i},
@@ -53,6 +55,7 @@ onSearch = (text) => {
 
   if ( text == '') {
     this.setState({searchCoin: false})
+    displaySearchCrypto = [];
   }
 }
 
@@ -77,8 +80,6 @@ onClear = () => {
         if (updateCoinData[i]["short"] == tradeMsg.coin ) {
 
         //Search for changed Crypto Value
-        updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
-        updateCoinData[i]["short"] = tradeMsg["message"]["msg"]["short"]
         updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
         updateCoinData[i]['mktcap'] = tradeMsg['message']['msg']["mktcap"]
         updateCoinData[i]['price'] = tradeMsg['message']['msg']['price']

@@ -9,6 +9,8 @@ export const fetchCoin = () => {
   return function (dispatch) {
     dispatch({type: CRYPTO_FETCHING}) 
     axios.get(ApiCoinCap).then((response) => {
+      console.log("indside djdj")
+      console.log(response)
     return(
     dispatch({
       type: CRYPTO_FETCH_SUCESS,
