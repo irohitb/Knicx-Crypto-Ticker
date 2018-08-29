@@ -10,7 +10,9 @@ import ModalDropdown from 'react-native-modal-dropdown';
 
 
 
+
 let displaySearchCrypto = []
+var socket
 
 class cryptoTicker extends Component {
 
@@ -71,9 +73,11 @@ onClear = () => {
 
   //Socket.io
   componentDidUpdate() {
-    var socket = openSocket('https://coincap.io');
+    let socketConnect = false;
 
-    var updateCoinData = [...this.props.cryptoLoaded];
+    socket = openSocket('https://coincap.io');
+
+    let updateCoinData = [...this.props.cryptoLoaded];
      socket.on('trades', (tradeMsg) => {
       for (let i=0; i<updateCoinData.length; i++) {
 
@@ -88,10 +92,19 @@ onClear = () => {
         //Update the crypto Value state in Redux
         this.props.updateCrypto(updateCoinData);
 
+         socketConnect = true;
           }
         }
      })
+
+     if (socketConnect) {
+       console.log('here')
+      socket.disconnect();
+      socketConnect = false
+     }
+  
   }
+
 
 
 
