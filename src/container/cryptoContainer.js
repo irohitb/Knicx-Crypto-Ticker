@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import openSocket from 'socket.io-client';
 import {ScrollView, TextInput, StyleSheet, FlatList, View} from 'react-native';
-import {fetchCoin, updateCrypto} from "../actions/cryptoAction.js"
 import CoinCard from "../components/CoinCard.js"
 import Header from './../components/header.js';
 import {CurrencyRate} from '../actions/currencyData.js'
 import ModalDropdown from 'react-native-modal-dropdown';
-
-
+import axios from 'axios';
+import {ApiCoinCap} from '../urls.js';
 
 
 let displaySearchCrypto = []
@@ -19,11 +18,17 @@ class cryptoTicker extends Component {
 
 
   state = {
-    searchCoin: false
+    searchCoin: false, 
+    currencyData: [],
+    error: false
   }
 
   componentWillMount() {
-    this.props.fetchCoin()
+    axios.get(ApiCoinCap).then((response) => {
+      this.setState({currencyData: response.data})
+    }).catch((error) => {
+      this.setState({error:true})
+    })
     this.props.CurrencyRate()
   }
 
@@ -36,7 +41,7 @@ onSearch = (text) => {
     //check if coins are loaded or not 
     if (!this.props.cryptoLoading) {
         this.setState({searchCoin: true})
-        let updateCoinData = [...this.props.cryptoLoaded];
+        let updateCoinData = [...this.state.currencyData];
         for (let i=0; i<updateCoinData.length; i++) {
           let coinVal = updateCoinData[i]["long"] + updateCoinData[i]["short"]
           console.log(coinVal)
@@ -73,11 +78,11 @@ onClear = () => {
 
   //Socket.io
   componentDidUpdate() {
-    let socketConnect = false;
+
 
     socket = openSocket('https://coincap.io');
 
-    let updateCoinData = [...this.props.cryptoLoaded];
+    let updateCoinData = [...this.state.currencyData];
      socket.on('trades', (tradeMsg) => {
       for (let i=0; i<updateCoinData.length; i++) {
 
@@ -90,18 +95,13 @@ onClear = () => {
 
 
         //Update the crypto Value state in Redux
-        this.props.updateCrypto(updateCoinData);
-
+        this.setState({currencyData: updateCoinData})
          socketConnect = true;
           }
         }
      })
 
-     if (socketConnect) {
-       console.log('here')
-      socket.disconnect();
-      socketConnect = false
-     }
+
   
   }
 
@@ -128,7 +128,7 @@ onClear = () => {
               </View>
               <View>
               <FlatList
-               data={this.state.searchCoin ? displaySearchCrypto : this.props.cryptoLoaded}
+               data={this.state.searchCoin ? displaySearchCrypto : this.state.currencyData }
                renderItem={({ item }) => (
                <CoinCard
                   key={item["short"]}
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     flex: 0.5,
      borderWidth: 2,
      height: 45,
-     borderRadius:10
+     borderRadius:0
   
   }
 })
@@ -169,10 +169,8 @@ const {
 //Redux
 const mapStateToProps = state => {
   return {
-    cryptoLoaded: state.posts.itemsSucess,
-    cryptoLoading: state.posts.itemsFetching,
     currencyLoaded: state.currency.DataSucess
   }
 };
 
-export default connect(mapStateToProps, {fetchCoin, updateCrypto, CurrencyRate})(cryptoTicker);
+export default connect(mapStateToProps, {CurrencyRate})(cryptoTicker);
