@@ -55,7 +55,6 @@ console.log("this is Crypto Loaded",this.props.cryptoLoaded )
         }
       }
   }
-  console.log("This is display coins", displaySearchCrypto)
 }
 
 
@@ -64,70 +63,37 @@ console.log("this is Crypto Loaded",this.props.cryptoLoaded )
 
   //Socket.io
   componentDidUpdate() {
-    var socket = openSocket('https://coincap.io');
+    // var socket = openSocket('https://coincap.io');
 
-    var updateCoinData = [...this.props.cryptoLoaded];
-     socket.on('trades', (tradeMsg) => {
-      for (let i=0; i<updateCoinData.length; i++) {
+    // var updateCoinData = [...this.props.cryptoLoaded];
+    //  socket.on('trades', (tradeMsg) => {
+    //   for (let i=0; i<updateCoinData.length; i++) {
 
-        if (updateCoinData[i]["short"] == tradeMsg.coin ) {
+    //     if (updateCoinData[i]["short"] == tradeMsg.coin ) {
 
-        //Search for changed Crypto Value
-        updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
-        updateCoinData[i]["short"] = tradeMsg["message"]["msg"]["short"]
-        updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
-        updateCoinData[i]['mktcap'] = tradeMsg['message']['msg']["mktcap"]
-        updateCoinData[i]['price'] = tradeMsg['message']['msg']['price']
+    //     //Search for changed Crypto Value
+    //     updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
+    //     updateCoinData[i]["short"] = tradeMsg["message"]["msg"]["short"]
+    //     updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
+    //     updateCoinData[i]['mktcap'] = tradeMsg['message']['msg']["mktcap"]
+    //     updateCoinData[i]['price'] = tradeMsg['message']['msg']['price']
 
 
-        //Update the crypto Value state in Redux
-        this.props.updateCrypto(updateCoinData);
+    //     //Update the crypto Value state in Redux
+    //     this.props.updateCrypto(updateCoinData);
 
-          }
-        }
-     })
+    //       }
+    //     }
+    //  })
   }
 
 
 
   render() {
 
-  //CurrencyData
-
-  //
- //If condition to see if we need to display the spinner
- // if (this.props.cryptoLoading) {
- //
- // }
-
-//  let displayCrypto;
-
-    // if (this.state.searchCoin) {
-    //   displayCrypto =  displaySearchCrypto
-    //   console.log(displayCrypto)
-
-    // }
-
-  //Update State from websocket
-
-  // if (!this.state.searchCoin) {
-  //    displayCrypto = CryptoData.map(el => {
-  //     return (<CoinCard
-  //       no={i++}
-  //       key={el["short"]}
-  //       coinShortName = {el["short"]}
-  //       coinName = {el["long"]}
-  //       coinPrice = {el["price"].toFixed(2)}
-  //       marketCap = {(el["mktcap"]/1000000000).toFixed(4)}
-  //       percentChange = {el["perc"].toFixed(2)}
-  //       vwapData={el["vwapData"].toFixed(2)}
-  //       coinImage={"https://coincap.io/images/coins/" + el["long"] + ".png"}
-  //       />
-  //     )
-  //   })
-  // }
 
 
+ 
 
 
 
@@ -147,7 +113,7 @@ console.log("this is Crypto Loaded",this.props.cryptoLoaded )
                data={this.state.searchCoin ? displaySearchCrypto : this.props.cryptoLoaded}
                renderItem={({ item }) => (
                <CoinCard
-                  key={item["short"]}
+                  key={item["long"]}
                   coinShortName = {item["short"]}
                   coinName = {item["long"]}
                   coinPrice = {item["price"].toFixed(2)}
