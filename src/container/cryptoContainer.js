@@ -2,41 +2,39 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import openSocket from 'socket.io-client';
 import {ScrollView, TextInput, StyleSheet, FlatList, View} from 'react-native';
+import {fetchCoin, updateCrypto} from "../actions/cryptoAction.js"
 import CoinCard from "../components/CoinCard.js"
 import Header from './../components/header.js';
 import {CurrencyRate} from '../actions/currencyData.js'
 import ModalDropdown from 'react-native-modal-dropdown';
-import axios from 'axios';
-import {ApiCoinCap} from '../urls.js';
+
 
 
 let displaySearchCrypto = []
-var socket
-
+var socket;
 class cryptoTicker extends Component {
 
 
 
   state = {
-    searchCoin: false, 
-    currencyData: [],
-    error: false
+    searchCoin: false
   }
 
   componentWillMount() {
+    console.log("here inside comppnent will mount")
     this.props.fetchCoin()
     this.props.CurrencyRate()
   }
 
   componentDidMount() {
      this.socket = openSocket('https://coincap.io');
-
+   
+    console.log(socket)
     var updateCoinData = [...this.props.cryptoLoaded];
-    console.log(this.props.cryptoLoaded)
       this.socket.on('trades', (tradeMsg) => {
-    
+       
       for (let i=0; i<updateCoinData.length; i++) {
-     
+        console.log("testing 1234")
 
         if (updateCoinData[i]["short"] == tradeMsg.coin ) {
 
@@ -58,20 +56,22 @@ class cryptoTicker extends Component {
 
   //On Search type 
 onSearch = (text) => {
-  //Setting
-  displaySearchCrypto = [];
- console.log("Inside onSearch", text)
+console.log("this is text", text)
+console.log("this is Crypto Loaded",this.props.cryptoLoaded )
+  if (text == "") {
+    this.setState({searchCoin: false})
+  }
  
     //check if coins are loaded or not 
     if (!this.props.cryptoLoading) {
         this.setState({searchCoin: true})
-        let updateCoinData = [...this.state.currencyData];
+        let updateCoinData = [...this.props.cryptoLoaded];
         for (let i=0; i<updateCoinData.length; i++) {
           let coinVal = updateCoinData[i]["long"] + updateCoinData[i]["short"]
-          console.log(coinVal)
           if (coinVal.indexOf(text) > - 1) {
               displaySearchCrypto.push({
                 no: {i},
+                key: updateCoinData[i]["long"],
                 short: updateCoinData[i]["short"],
                 long: updateCoinData[i]["long"],
                 price: updateCoinData[i]["price"],
@@ -86,7 +86,7 @@ onSearch = (text) => {
 }
 
 componentWillUnmount() {
-  this.socket.disconnect();
+  socket.disconnect();
 }
 
 
@@ -124,6 +124,9 @@ componentWillUnmount() {
 
 
 
+ 
+
+
 
   return (
 
@@ -134,13 +137,11 @@ componentWillUnmount() {
              <TextInput
               style={textInput}
               placeholder="Search Coin"
-              onChangeText={(text) => this.onSearch(text)} 
-              onClear={this.onClear}
-              />
+              onChangeText={(text) => this.onSearch(text)} />
               </View>
               <View>
               <FlatList
-               data={this.state.searchCoin ? displaySearchCrypto : this.state.currencyData }
+               data={this.state.searchCoin ? displaySearchCrypto : this.props.cryptoLoaded}
                renderItem={({ item }) => (
                <CoinCard
                   key={item["long"]}
@@ -164,10 +165,9 @@ componentWillUnmount() {
 const styles = StyleSheet.create({ 
   textInput: {
     borderColor: 'gray',
-    flex: 0.5,
+    flex: 0.8,
      borderWidth: 2,
-     height: 45,
-     borderRadius:0
+     height: 45
   
   }
 })
@@ -181,6 +181,8 @@ const {
 //Redux
 const mapStateToProps = state => {
   return {
+    cryptoLoaded: state.posts.itemsSucess,
+    cryptoLoading: state.posts.itemsFetching,
     currencyLoaded: state.currency.DataSucess
   }
 };
