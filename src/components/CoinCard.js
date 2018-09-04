@@ -32,8 +32,10 @@ class  CoinCard extends Component {
     }
 
     touched = (id) => {
+        console.log("inside touched")
         this.setState({selectedPostId: id})
         if (this.props.coinShortName == this.state.selectedPostId ) {
+            console.log("inside If condition in props.key and selected post")
            this.setState({stateToDisplay: !this.state.stateToDisplay})
         }
     }
@@ -51,12 +53,21 @@ class  CoinCard extends Component {
 
     render () { 
 
+<<<<<<< HEAD
+=======
+    /* <View style={statisticsContainer}>
+                
+                              <Text style={marketCap}>Cap: {this.props.marketCap}B </Text>
+                             <Text style={seperator1}>|</Text>
+                             <Text style={vwapData}>24vwap: {this.props.vwapData} </Text>
+                     </View> */
+>>>>>>> 07337501f6ac72a1df29c9ffdef8d13e05ef2873
 
         return (
 
             <TouchableOpacity  style={[container1,this.state.increased ? {backgroundColor: "#B4EEB4"} : null,this.state.decreased ? {backgroundColor: "#ffe5e5"} : null]} onPress={() => this.touched(this.props.coinShortName)}>
                     <View style={upperRow}>
-                    {/* <Text style={sno}> {this.props.no} </Text> */}
+                    <Text style={sno}> {this.props.no} </Text>
                     <Image 
                         source={{uri: this.props.coinImage}}
                         style={img}
