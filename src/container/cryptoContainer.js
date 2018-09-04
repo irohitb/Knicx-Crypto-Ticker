@@ -24,15 +24,7 @@ class cryptoTicker extends Component {
   }
 
   componentWillMount() {
-<<<<<<< HEAD
     this.props.fetchCoin()
-=======
-    axios.get(ApiCoinCap).then((response) => {
-      this.setState({currencyData: response.data})
-    }).catch((error) => {
-      this.setState({error:true})
-    })
->>>>>>> 07337501f6ac72a1df29c9ffdef8d13e05ef2873
     this.props.CurrencyRate()
   }
 
@@ -40,6 +32,7 @@ class cryptoTicker extends Component {
      this.socket = openSocket('https://coincap.io');
 
     var updateCoinData = [...this.props.cryptoLoaded];
+    
       this.socket.on('trades', (tradeMsg) => {
     
       for (let i=0; i<updateCoinData.length; i++) {
@@ -90,20 +83,6 @@ onSearch = (text) => {
         }
       }
   }
-<<<<<<< HEAD
-=======
-
-  if ( text == '') {
-    this.setState({searchCoin: false})
-    displaySearchCrypto = [];
-  }
-}
-
-//On Clear 
-onClear = () => {
-  console.log("Insider On clear method")
-  this.setState({searchCoin: false})
->>>>>>> 07337501f6ac72a1df29c9ffdef8d13e05ef2873
 }
 
 componentWillUnmount() {
@@ -114,27 +93,15 @@ componentWillUnmount() {
   //On Clear 
 
   //Socket.io
-<<<<<<< HEAD
   // componentDidUpdate() {
   //   // var socket = openSocket('https://coincap.io');
 
   //   // var updateCoinData = [...this.props.cryptoLoaded];
   //   //  socket.on('trades', (tradeMsg) => {
       // for (let i=0; i<updateCoinData.length; i++) {
-=======
-  componentDidUpdate() {
-
-
-    socket = openSocket('https://coincap.io');
-
-    let updateCoinData = [...this.state.currencyData];
-     socket.on('trades', (tradeMsg) => {
-      for (let i=0; i<updateCoinData.length; i++) {
->>>>>>> 07337501f6ac72a1df29c9ffdef8d13e05ef2873
 
       //   if (updateCoinData[i]["short"] == tradeMsg.coin ) {
 
-<<<<<<< HEAD
       //   //Search for changed Crypto Value
       //   updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
       //   updateCoinData[i]["short"] = tradeMsg["message"]["msg"]["short"]
@@ -155,27 +122,6 @@ componentWillUnmount() {
 
   render() {
 
-=======
-        //Search for changed Crypto Value
-        updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
-        updateCoinData[i]['mktcap'] = tradeMsg['message']['msg']["mktcap"]
-        updateCoinData[i]['price'] = tradeMsg['message']['msg']['price']
-
-
-        //Update the crypto Value state in Redux
-        this.setState({currencyData: updateCoinData})
-         socketConnect = true;
-          }
-        }
-     })
-
-
-  
-  }
-
-
-
->>>>>>> 07337501f6ac72a1df29c9ffdef8d13e05ef2873
 
   render() {
 
@@ -243,7 +189,6 @@ const mapStateToProps = state => {
   }
 };
 
-<<<<<<< HEAD
 export default connect(mapStateToProps, {fetchCoin, updateCrypto, CurrencyRate})(cryptoTicker);
 
 
@@ -253,6 +198,3 @@ export default connect(mapStateToProps, {fetchCoin, updateCrypto, CurrencyRate})
 //   console.log(value)
 //   console.log(this.value)
 // }
-=======
-export default connect(mapStateToProps, {CurrencyRate})(cryptoTicker);
->>>>>>> 07337501f6ac72a1df29c9ffdef8d13e05ef2873
