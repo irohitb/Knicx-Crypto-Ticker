@@ -52,13 +52,6 @@ class  CoinCard extends Component {
     render () { 
 
 
-    /* <View style={statisticsContainer}>
-                
-                              <Text style={marketCap}>Cap: {this.props.marketCap}B </Text>
-                             <Text style={seperator1}>|</Text>
-                             <Text style={vwapData}>24vwap: {this.props.vwapData} </Text>
-                     </View> */
-
         return (
 
             <TouchableOpacity  style={[container1,this.state.increased ? {backgroundColor: "#B4EEB4"} : null,this.state.decreased ? {backgroundColor: "#ffe5e5"} : null]} onPress={() => this.touched(this.props.coinShortName)}>
@@ -84,9 +77,6 @@ class  CoinCard extends Component {
                 </Display> 
 
              </TouchableOpacity>
-
-
-
 
         )
 

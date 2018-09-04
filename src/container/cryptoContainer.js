@@ -21,9 +21,35 @@ class cryptoTicker extends Component {
   }
 
   componentWillMount() {
-    console.log("here inside comppnent will mount")
     this.props.fetchCoin()
     this.props.CurrencyRate()
+  }
+
+  componentDidMount() {
+     this.socket = openSocket('https://coincap.io');
+
+    var updateCoinData = [...this.props.cryptoLoaded];
+      this.socket.on('trades', (tradeMsg) => {
+    
+      for (let i=0; i<updateCoinData.length; i++) {
+     
+
+        if (updateCoinData[i]["short"] == tradeMsg.coin ) {
+
+        //Search for changed Crypto Value
+        updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
+        updateCoinData[i]["short"] = tradeMsg["message"]["msg"]["short"]
+        updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
+        updateCoinData[i]['mktcap'] = tradeMsg['message']['msg']["mktcap"]
+        updateCoinData[i]['price'] = tradeMsg['message']['msg']['price']
+
+
+        //Update the crypto Value state in Redux
+        this.props.updateCrypto(updateCoinData);
+
+          }
+        }
+      })
   }
 
   //On Search type 
@@ -57,35 +83,38 @@ console.log("this is Crypto Loaded",this.props.cryptoLoaded )
   }
 }
 
+componentWillUnmount() {
+  this.socket.disconnect();
+}
 
 
   //On Clear 
 
   //Socket.io
-  componentDidUpdate() {
-    // var socket = openSocket('https://coincap.io');
+  // componentDidUpdate() {
+  //   // var socket = openSocket('https://coincap.io');
 
-    // var updateCoinData = [...this.props.cryptoLoaded];
-    //  socket.on('trades', (tradeMsg) => {
-    //   for (let i=0; i<updateCoinData.length; i++) {
+  //   // var updateCoinData = [...this.props.cryptoLoaded];
+  //   //  socket.on('trades', (tradeMsg) => {
+      // for (let i=0; i<updateCoinData.length; i++) {
 
-    //     if (updateCoinData[i]["short"] == tradeMsg.coin ) {
+      //   if (updateCoinData[i]["short"] == tradeMsg.coin ) {
 
-    //     //Search for changed Crypto Value
-    //     updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
-    //     updateCoinData[i]["short"] = tradeMsg["message"]["msg"]["short"]
-    //     updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
-    //     updateCoinData[i]['mktcap'] = tradeMsg['message']['msg']["mktcap"]
-    //     updateCoinData[i]['price'] = tradeMsg['message']['msg']['price']
+      //   //Search for changed Crypto Value
+      //   updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
+      //   updateCoinData[i]["short"] = tradeMsg["message"]["msg"]["short"]
+      //   updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
+      //   updateCoinData[i]['mktcap'] = tradeMsg['message']['msg']["mktcap"]
+      //   updateCoinData[i]['price'] = tradeMsg['message']['msg']['price']
 
 
-    //     //Update the crypto Value state in Redux
-    //     this.props.updateCrypto(updateCoinData);
+      //   //Update the crypto Value state in Redux
+      //   this.props.updateCrypto(updateCoinData);
 
-    //       }
-    //     }
-    //  })
-  }
+      //     }
+      //   }
+  //   //  })
+  // }
 
 
 
@@ -157,3 +186,11 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {fetchCoin, updateCrypto, CurrencyRate})(cryptoTicker);
+
+
+// function foo () {
+//   value = "rohit"
+
+//   console.log(value)
+//   console.log(this.value)
+// }
