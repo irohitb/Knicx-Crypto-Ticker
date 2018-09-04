@@ -53,15 +53,6 @@ class  CoinCard extends Component {
 
     render () { 
 
-<<<<<<< HEAD
-=======
-    /* <View style={statisticsContainer}>
-                
-                              <Text style={marketCap}>Cap: {this.props.marketCap}B </Text>
-                             <Text style={seperator1}>|</Text>
-                             <Text style={vwapData}>24vwap: {this.props.vwapData} </Text>
-                     </View> */
->>>>>>> 07337501f6ac72a1df29c9ffdef8d13e05ef2873
 
         return (
 

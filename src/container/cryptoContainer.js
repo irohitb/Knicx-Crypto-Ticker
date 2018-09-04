@@ -32,7 +32,7 @@ class cryptoTicker extends Component {
      this.socket = openSocket('https://coincap.io');
 
     var updateCoinData = [...this.props.cryptoLoaded];
-    
+    console.log(this.props.cryptoLoaded)
       this.socket.on('trades', (tradeMsg) => {
     
       for (let i=0; i<updateCoinData.length; i++) {
@@ -122,10 +122,6 @@ componentWillUnmount() {
 
   render() {
 
-
-  render() {
-
- 
 
 
 
