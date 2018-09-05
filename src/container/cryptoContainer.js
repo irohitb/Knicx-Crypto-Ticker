@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import openSocket from 'socket.io-client';
 import {ScrollView, TextInput, StyleSheet, FlatList, View} from 'react-native';
@@ -12,7 +12,7 @@ import ModalDropdown from 'react-native-modal-dropdown';
 
 let displaySearchCrypto = []
 var socket;
-class cryptoTicker extends Component {
+class cryptoTicker extends PureComponent {
 
 
 
@@ -21,63 +21,64 @@ class cryptoTicker extends Component {
   }
 
   componentWillMount() {
-    console.log("here inside comppnent will mount")
+
     this.props.fetchCoin()
     this.props.CurrencyRate()
   }
 
-  componentDidMount() {
-     this.socket = openSocket('https://coincap.io');
+  componentDidUpdate() {
+    //  this.socket = openSocket('https://coincap.io');
    
-    console.log(socket)
-    var updateCoinData = [...this.props.cryptoLoaded];
-      this.socket.on('trades', (tradeMsg) => {
+
+    // var updateCoinData = [...this.props.cryptoLoaded];
+  
+    //   this.socket.on('trades', (tradeMsg) => {
        
-      for (let i=0; i<updateCoinData.length; i++) {
-        console.log("testing 1234")
+    //   for (let i=0; i<updateCoinData.length; i++) {
+     
 
-        if (updateCoinData[i]["short"] == tradeMsg.coin ) {
+    //     if (updateCoinData[i]["short"] == tradeMsg.coin ) {
 
-        //Search for changed Crypto Value
-        updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
-        updateCoinData[i]["short"] = tradeMsg["message"]["msg"]["short"]
-        updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
-        updateCoinData[i]['mktcap'] = tradeMsg['message']['msg']["mktcap"]
-        updateCoinData[i]['price'] = tradeMsg['message']['msg']['price']
+    //     //Search for changed Crypto Value
+    //     updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
+    //     updateCoinData[i]["short"] = tradeMsg["message"]["msg"]["short"]
+    //     updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
+    //     updateCoinData[i]['mktcap'] = tradeMsg['message']['msg']["mktcap"]
+    //     updateCoinData[i]['price'] = tradeMsg['message']['msg']['price']
 
 
-        //Update the crypto Value state in Redux
-        this.props.updateCrypto(updateCoinData);
+    //     //Update the crypto Value state in Redux
+    //     this.props.updateCrypto(updateCoinData);
 
-          }
-        }
-      })
+    //       }
+    //     }
+    //   })
   }
 
   //On Search type 
 onSearch = (text) => {
-console.log("this is text", text)
-console.log("this is Crypto Loaded",this.props.cryptoLoaded )
+
   if (text == "") {
     this.setState({searchCoin: false})
+    displaySearchCrypto = []
   }
  
     //check if coins are loaded or not 
     if (!this.props.cryptoLoading) {
         this.setState({searchCoin: true})
-        let updateCoinData = [...this.props.cryptoLoaded];
-        for (let i=0; i<updateCoinData.length; i++) {
-          let coinVal = updateCoinData[i]["long"] + updateCoinData[i]["short"]
+     
+        for (let i=0; i<this.props.cryptoLoaded.length; i++) {
+          let coinVal = this.props.cryptoLoaded[i]["long"] + this.props.cryptoLoaded[i]["short"]
           if (coinVal.indexOf(text) > - 1) {
               displaySearchCrypto.push({
                 no: {i},
-                key: updateCoinData[i]["long"],
-                short: updateCoinData[i]["short"],
-                long: updateCoinData[i]["long"],
-                price: updateCoinData[i]["price"],
-                mktcap: updateCoinData[i]["mktcap"],
-                perc: updateCoinData[i]["perc"],
-                vwapData: updateCoinData[i]["vwapData"] 
+                key: this.props.cryptoLoaded[i]["long"],
+                short: this.props.cryptoLoaded[i]["short"],
+                long: this.props.cryptoLoaded[i]["long"],
+                price: this.props.cryptoLoaded[i]["price"],
+                mktcap: this.props.cryptoLoaded[i]["mktcap"],
+                perc: this.props.cryptoLoaded[i]["perc"],
+                vwapData: this.props.cryptoLoaded[i]["vwapData"] 
                })
           
         }
@@ -86,7 +87,7 @@ console.log("this is Crypto Loaded",this.props.cryptoLoaded )
 }
 
 componentWillUnmount() {
-  socket.disconnect();
+ // socket.disconnect();
 }
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View , Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View , Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import Display from 'react-native-display';
 
 
@@ -32,10 +32,10 @@ class  CoinCard extends Component {
     }
 
     touched = (id) => {
-        console.log("inside touched")
+
         this.setState({selectedPostId: id})
         if (this.props.coinShortName == this.state.selectedPostId ) {
-            console.log("inside If condition in props.key and selected post")
+         
            this.setState({stateToDisplay: !this.state.stateToDisplay})
         }
     }
@@ -55,7 +55,7 @@ class  CoinCard extends Component {
 
 
         return (
-
+            
             <TouchableOpacity  style={[container1,this.state.increased ? {backgroundColor: "#B4EEB4"} : null,this.state.decreased ? {backgroundColor: "#ffe5e5"} : null]} onPress={() => this.touched(this.props.coinShortName)}>
                     <View style={upperRow}>
                     <Text style={sno}> {this.props.no} </Text>
@@ -70,13 +70,7 @@ class  CoinCard extends Component {
                         </View>
                         </View>
                
-                <Display enable={this.state.stateToDisplay}>
-                    <View style={statisticsContainer}>
-                              <Text style={marketCap}>Cap: {this.props.marketCap}B </Text>
-                             <Text style={seperator1}>|</Text>
-                             <Text style={vwapData}>24vwap: {this.props.vwapData} </Text>
-                    </View>
-                </Display> 
+        
 
              </TouchableOpacity>
 
