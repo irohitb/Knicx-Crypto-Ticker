@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View , Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
-import Display from 'react-native-display';
+
 
 
 
@@ -56,23 +56,22 @@ class  CoinCard extends Component {
 
         return (
             
-            <TouchableOpacity  style={[container1,this.state.increased ? {backgroundColor: "#B4EEB4"} : null,this.state.decreased ? {backgroundColor: "#ffe5e5"} : null]} onPress={() => this.touched(this.props.coinShortName)}>
+            <TouchableWithoutFeedback  style={[container1,this.state.increased ? {backgroundColor: "#B4EEB4"} : null,this.state.decreased ? {backgroundColor: "#ffe5e5"} : null]} onPress={() => this.touched(this.props.coinShortName)}>
+                <View>
                     <View style={upperRow}>
-                    <Text style={sno}> {this.props.no} </Text>
-                    <Image 
-                        source={{uri: this.props.coinImage}}
-                        style={img}
-                        /> 
-                        <Text style={coinSymbol}>{this.props.coinShortName}</Text>
-                        <Text style={coinPrice}>${this.props.coinPrice}</Text>
-                        <View style={percentageBox}>
-                        <Text style={this.props.percentChange < 0 ? percentChangeMinus : percentChangePlus }>{this.props.percentChange}%</Text>
+                        <Text style={sno}> {this.props.no} </Text>
+                        <Image 
+                            source={{uri: this.props.coinImage}}
+                            style={img}
+                            /> 
+                            <Text style={coinSymbol}>{this.props.coinShortName}</Text>
+                            <Text style={coinPrice}>${this.props.coinPrice}</Text>
+                            <View style={percentageBox}>
+                                <Text style={this.props.percentChange < 0 ? percentChangeMinus : percentChangePlus }>{this.props.percentChange}%</Text>
+                            </View>
                         </View>
-                        </View>
-               
-        
-
-             </TouchableOpacity>
+             </View>
+        </TouchableWithoutFeedback>
 
         )
 
