@@ -9,154 +9,22 @@ import {CurrencyRate} from '../actions/currencyData.js'
 
 
 
-
-let displaySearchCrypto = []
-
 class cryptoTicker extends PureComponent {
 
-
-
-  state = {
-    searchCoin: false
-  }
-
-  componentWillMount() {
-    console.log("here inside component WIll Mount")
-    this.socket = openSocket('https://coincap.io');
+  componentDidMount() {
     this.props.fetchCoin()
     this.props.CurrencyRate()
   }
-
-  componentDidUpdate() {
-     
-   
-
-    //var updateCoinData = [...this.props.cryptoLoaded];
-  
-      this.socket.on('trades', (tradeMsg) => {
-       
-      for (let i=0; i<this.props.cryptoLoaded.length; i++) {
-     
-
-        if (this.props.cryptoLoaded[i]["short"] == tradeMsg.coin ) {
-
-        //Search for changed Crypto Value
-        this.props.cryptoLoaded[i]["long"] = tradeMsg["message"]["msg"]["long"]
-        this.props.cryptoLoaded[i]["short"] = tradeMsg["message"]["msg"]["short"]
-        this.props.cryptoLoaded[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
-        this.props.cryptoLoaded[i]["mktcap"]= tradeMsg['message']['msg']["mktcap"]
-        this.props.cryptoLoaded[i]["price"] = tradeMsg['message']['msg']['price']
-
-
-        //Update the crypto Value state in Redux
-
-          }
-        }
-      })
-
-  }
-
-  //On Search type 
-onSearch = (text) => {
- 
-  if (text == "") {
-    this.socket = openSocket('https://coincap.io');
-    this.setState({searchCoin: false})
-    displaySearchCrypto = []
-  } else if (!this.props.cryptoLoading) {
-        this.setState({searchCoin: true})
-        this.socket.disconnect();
-        displaySearchCrypto = []
-        for (let i=0; i<this.props.cryptoLoaded.length; i++) {
-          let coinVal = this.props.cryptoLoaded[i]["long"] + this.props.cryptoLoaded[i]["short"]
-          if (coinVal.indexOf(text) > - 1) {
-              displaySearchCrypto.push({
-                no: {i},
-                key: this.props.cryptoLoaded[i]["long"],
-                short: this.props.cryptoLoaded[i]["short"],
-                long: this.props.cryptoLoaded[i]["long"],
-                price: this.props.cryptoLoaded[i]["price"],
-                mktcap: this.props.cryptoLoaded[i]["mktcap"],
-                perc: this.props.cryptoLoaded[i]["perc"],
-                vwapData: this.props.cryptoLoaded[i]["vwapData"] 
-               })
-          
-        }
-      }
-  }
-}
-
-componentWillUnmount() {
-  console.log("here inside component WIll UnMount")
- this.socket.disconnect();
-}
-
-
-  //On Clear 
-
-  //Socket.io
-  // componentDidUpdate() {
-  //   // var socket = openSocket('https://coincap.io');
-
-  //   // var updateCoinData = [...this.props.cryptoLoaded];
-  //   //  socket.on('trades', (tradeMsg) => {
-      // for (let i=0; i<updateCoinData.length; i++) {
-
-      //   if (updateCoinData[i]["short"] == tradeMsg.coin ) {
-
-      //   //Search for changed Crypto Value
-      //   updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
-      //   updateCoinData[i]["short"] = tradeMsg["message"]["msg"]["short"]
-      //   updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
-      //   updateCoinData[i]['mktcap'] = tradeMsg['message']['msg']["mktcap"]
-      //   updateCoinData[i]['price'] = tradeMsg['message']['msg']['price']
-
-
-      //   //Update the crypto Value state in Redux
-      //   this.props.updateCrypto(updateCoinData);
-
-      //     }
-      //   }
-  //   //  })
-  // }
-
-
-
   render() {
-
-
-
- 
-
-
-
   return (
-
            <ScrollView>
              <Header />
-             {/* Custom Search Input */}
-             <View>
-             <TextInput
-              style={textInput}
-              placeholder="Search Coin"
-              onChangeText={(text) => this.onSearch(text)} />
-              </View>
               <View>
               <FlatList
-               data={this.state.searchCoin ? displaySearchCrypto : this.props.cryptoLoaded}
-               removeClippedSubviews={true} 
-               initialNumToRender={5}
+               data={this.props.cryptoLoaded}
                renderItem={({ item }) => (
                <CoinCard
-                  keyExtractor={item.id}
                   key={item["long"]}
-                  coinShortName = {item["short"]}
-                  coinName = {item["long"]}
-                  coinPrice = {item["price"].toFixed(2)}
-                  marketCap = {(item["mktcap"]/1000000000).toFixed(4)}
-                  percentChange = {item["perc"].toFixed(2)}
-                  vwapData={item["vwapData"].toFixed(2)}
-                  coinImage={"https://coincap.io/images/coins/" + item["long"] + ".png"}
                   />
               )}
       />
@@ -166,29 +34,13 @@ componentWillUnmount() {
   }
 }
 
-//Creating Stylesheet 
-const styles = StyleSheet.create({ 
-  textInput: {
-    borderColor: 'gray',
-    flex: 0.8,
-     borderWidth: 2,
-     height: 45
-  
-  }
-})
-
-const {
-  textInput
-} = styles
-
 
 
 //Redux
 const mapStateToProps = state => {
   return {
-    cryptoLoaded: state.posts.itemsSucess,
-    cryptoLoading: state.posts.itemsFetching,
-    currencyLoaded: state.currency.DataSucess
+    cryptoLoaded: state.posts.itemsSucess
+
   }
 };
 
