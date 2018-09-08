@@ -11,6 +11,7 @@ import {CurrencyRate} from '../actions/currencyData.js'
 
 
 let displaySearchCrypto = []
+var updateCoinData = [];
 
 class cryptoTicker extends PureComponent {
 
@@ -29,9 +30,9 @@ class cryptoTicker extends PureComponent {
   }
 
   componentDidUpdate() {
-      var updateCoinData;
+
    
-    if (!updateCoinData) {
+    if (this.state.updateCoinData || updateCoinData.length < 1 ) {
      updateCoinData = [...this.props.cryptoLoaded];
      this.setState({updateCoinData: true})
     }
@@ -42,6 +43,7 @@ class cryptoTicker extends PureComponent {
      
 
         if (updateCoinData[i]["short"] == tradeMsg.coin ) {
+
 
         //Search for changed Crypto Value
         updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
@@ -62,13 +64,15 @@ class cryptoTicker extends PureComponent {
 
   //On Search type 
 onSearch = (text) => {
- 
+
   if (text == "") {
     this.socket = openSocket('https://coincap.io');
     this.setState({searchCoin: false})
     displaySearchCrypto = []
   } else if (!this.props.cryptoLoading) {
+        if (!this.state.searchCoin) {
         this.setState({searchCoin: true})
+        }
         this.socket.disconnect();
         displaySearchCrypto = []
         for (let i=0; i<this.props.cryptoLoaded.length; i++) {
@@ -91,7 +95,7 @@ onSearch = (text) => {
 }
 
 componentWillUnmount() {
-  console.log("here inside component WIll UnMount")
+
  this.socket.disconnect();
 }
 
@@ -102,25 +106,35 @@ componentWillUnmount() {
 
   render() {
 
-
+    console.log(this.state.searchCoin)
+    console.log(displaySearchCrypto)
   return (
 
-           <ScrollView>
+     
+             <View style={{height: '100%'}}>
              <Header />
              {/* Custom Search Input */}
-             <View>
+           
              <TextInput
               style={textInput}
               placeholder="Search Coin"
               onChangeText={(text) => this.onSearch(text)} />
-              </View>
-              <View>
+       
+            
               <FlatList
+
                data={this.state.searchCoin ? displaySearchCrypto : this.props.cryptoLoaded}
+               style={{flex:1}}
+                    extraData={updateCoinData}
+                    keyExtractor={item => item.short}
+                    initialNumToRender={50}
+                    windowSize={21}
+                 
+                    removeClippedSubviews={true}
                renderItem={({ item, index }) => (
                <CoinCard
                   key = {index}
-                  no = {index}
+                  no = {index + 1}
                   coinShortName = {item["short"]}
                   coinName = {item["long"]}
                   coinPrice = {item["price"].toFixed(2)}
@@ -133,8 +147,9 @@ componentWillUnmount() {
               )}
              
       />
+  
       </View>
-           </ScrollView>
+         
        )
   }
 }
@@ -142,10 +157,11 @@ componentWillUnmount() {
 //Creating Stylesheet 
 const styles = StyleSheet.create({ 
   textInput: {
+
     borderColor: 'gray',
-    flex: 0.8,
-     borderWidth: 2,
-     height: 45
+    flex: 0.08,
+     borderWidth: 2
+    
   
   }
 })

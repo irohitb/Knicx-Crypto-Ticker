@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { StyleSheet, Text, View , Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 
 
@@ -6,7 +6,7 @@ import { StyleSheet, Text, View , Image, TouchableOpacity, TouchableWithoutFeedb
 
 
 
-class  CoinCard extends Component {
+class  CoinCard extends PureComponent {
 
     state = {
         increased: false,
@@ -20,7 +20,7 @@ class  CoinCard extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        if (this.props.coinPrice != nextProps.coinPrice ) {
+        if (this.props.coinPrice > nextProps.coinPrice ) {
            if (this.props.coinPrice > nextProps.coinPrice) {
               this.setState({decreased: true, increased: false})
            }
@@ -42,10 +42,19 @@ class  CoinCard extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-
-        if (this.props == nextProps || this.state == nextState)  {
+       
+        if (this.props.coinPrice == nextProps.coinPrice || this.state == nextState)  {
             return false;
         } else {
+            if (this.props.coinPrice > nextProps.coinPrice ) {
+                if (this.props.coinPrice > nextProps.coinPrice) {
+                   this.setState({decreased: true, increased: false})
+                }
+     
+                if (this.props.coinPrice < nextProps.coinPrice) {
+                 this.setState({increased: true, decreased: false})
+                }
+             }
             return true; 
         }
 
