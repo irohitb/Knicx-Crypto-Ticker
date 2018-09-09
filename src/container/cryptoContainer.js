@@ -10,13 +10,16 @@ import {CurrencyRate} from '../actions/currencyData.js'
 
 
 
-let displaySearchCrypto = []
-var updateCoinData = [];
+
 
 class cryptoTicker extends PureComponent {
 
-
-
+  constructor() {
+    super();
+  this.updateCoinData = []
+   this.displaySearchCrypto = []
+}
+  
   state = {
     searchCoin: false, 
     updateCoinData: false
@@ -32,29 +35,29 @@ class cryptoTicker extends PureComponent {
   componentDidUpdate() {
 
    
-    if (this.state.updateCoinData || updateCoinData.length < 1 ) {
-     updateCoinData = [...this.props.cryptoLoaded];
+    if (this.state.updateCoinData || this.updateCoinData.length < 1 ) {
+      this.updateCoinData = [...this.props.cryptoLoaded];
      this.setState({updateCoinData: true})
     }
   
       this.socket.on('trades', (tradeMsg) => {
        
-      for (let i=0; i< updateCoinData.length; i++) {
+      for (let i=0; i< this.updateCoinData.length; i++) {
      
 
-        if (updateCoinData[i]["short"] == tradeMsg.coin ) {
+        if (this.updateCoinData[i]["short"] == tradeMsg.coin ) {
 
 
         //Search for changed Crypto Value
-        updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
-        updateCoinData["short"] = tradeMsg["message"]["msg"]["short"]
-        updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
-        updateCoinData[i]["mktcap"]= tradeMsg['message']['msg']["mktcap"]
-        updateCoinData[i]["price"] = tradeMsg['message']['msg']['price']
+       this.updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
+       this.updateCoinData["short"] = tradeMsg["message"]["msg"]["short"]
+       this.updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
+       this.updateCoinData[i]["mktcap"]= tradeMsg['message']['msg']["mktcap"]
+       this.updateCoinData[i]["price"] = tradeMsg['message']['msg']['price']
 
 
         //Update the crypto Value state in Redux
-        this.props.updateCrypto(updateCoinData);
+        this.props.updateCrypto(this.updateCoinData);
 
           }
         }
@@ -68,17 +71,17 @@ onSearch = (text) => {
   if (text == "") {
     this.socket = openSocket('https://coincap.io');
     this.setState({searchCoin: false})
-    displaySearchCrypto = []
+    this.displaySearchCrypto = []
   } else if (!this.props.cryptoLoading) {
         if (!this.state.searchCoin) {
         this.setState({searchCoin: true})
         }
         this.socket.disconnect();
-        displaySearchCrypto = []
+        this.displaySearchCrypto = []
         for (let i=0; i<this.props.cryptoLoaded.length; i++) {
           let coinVal = this.props.cryptoLoaded[i]["long"] + this.props.cryptoLoaded[i]["short"]
           if (coinVal.indexOf(text) > - 1) {
-              displaySearchCrypto.push({
+              this.displaySearchCrypto.push({
                 no: {i},
                 key: this.props.cryptoLoaded[i]["long"],
                 short: this.props.cryptoLoaded[i]["short"],
@@ -106,8 +109,7 @@ componentWillUnmount() {
 
   render() {
 
-    console.log(this.state.searchCoin)
-    console.log(displaySearchCrypto)
+
   return (
 
      
@@ -123,9 +125,9 @@ componentWillUnmount() {
             
               <FlatList
 
-               data={this.state.searchCoin ? displaySearchCrypto : this.props.cryptoLoaded}
+               data={this.state.searchCoin ? this.displaySearchCrypto : this.props.cryptoLoaded}
                style={{flex:1}}
-                    extraData={updateCoinData}
+                    extraData={this.displaySearchCrypto}
                     keyExtractor={item => item.short}
                     initialNumToRender={50}
                     windowSize={21}

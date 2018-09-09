@@ -18,20 +18,20 @@ class  CoinCard extends PureComponent {
 
 
 
-    componentWillReceiveProps(nextProps) {
+    // componentWillReceiveProps(nextProps) {
 
-        if (this.props.coinPrice > nextProps.coinPrice ) {
-           if (this.props.coinPrice > nextProps.coinPrice) {
-              this.setState({decreased: true, increased: false})
-           }
+    //     if (this.props.coinPrice > nextProps.coinPrice ) {
+    //        if (this.props.coinPrice > nextProps.coinPrice) {
+    //           this.setState({decreased: true, increased: false})
+    //        }
 
-           if (this.props.coinPrice < nextProps.coinPrice) {
-            this.setState({increased: true, decreased: false})
-           }
-        }
+    //        if (this.props.coinPrice < nextProps.coinPrice) {
+    //         this.setState({increased: true, decreased: false})
+    //        }
+    //     }
 
 
-    }
+    // }
 
     touched = (id) => {
 
@@ -39,25 +39,6 @@ class  CoinCard extends PureComponent {
         if (this.props.coinShortName == this.state.selectedPostId ) {
            this.setState({stateToDisplay: !this.state.stateToDisplay})
         }
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-       
-        if (this.props.coinPrice == nextProps.coinPrice || this.state == nextState)  {
-            return false;
-        } else {
-            if (this.props.coinPrice > nextProps.coinPrice ) {
-                if (this.props.coinPrice > nextProps.coinPrice) {
-                   this.setState({decreased: true, increased: false})
-                }
-     
-                if (this.props.coinPrice < nextProps.coinPrice) {
-                 this.setState({increased: true, decreased: false})
-                }
-             }
-            return true; 
-        }
-
     }
 
 
