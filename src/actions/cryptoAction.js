@@ -32,7 +32,6 @@ export const fetchCoin = () => {
 //Updating Cryto Data
 export const updateCrypto = (updatedData) => {
   return function (dispatch) {
-    console.log("here in Upx")
     dispatch({
       type: UPDATE_CRYPTO_DATA,
       payload: updatedData

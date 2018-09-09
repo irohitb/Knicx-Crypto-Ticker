@@ -33,7 +33,7 @@ class cryptoTicker extends PureComponent {
   }
 
   componentDidUpdate() {
-
+    
    
     if (this.state.updateCoinData || this.updateCoinData.length < 1 ) {
       this.updateCoinData = [...this.props.cryptoLoaded];
@@ -49,10 +49,7 @@ class cryptoTicker extends PureComponent {
 
 
         //Search for changed Crypto Value
-       this.updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
-       this.updateCoinData["short"] = tradeMsg["message"]["msg"]["short"]
        this.updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
-       this.updateCoinData[i]["mktcap"]= tradeMsg['message']['msg']["mktcap"]
        this.updateCoinData[i]["price"] = tradeMsg['message']['msg']['price']
 
 
@@ -98,7 +95,6 @@ onSearch = (text) => {
 }
 
 componentWillUnmount() {
-
  this.socket.disconnect();
 }
 
@@ -108,7 +104,7 @@ componentWillUnmount() {
 
 
   render() {
-
+    
 
   return (
 
@@ -127,7 +123,7 @@ componentWillUnmount() {
 
                data={this.state.searchCoin ? this.displaySearchCrypto : this.props.cryptoLoaded}
                style={{flex:1}}
-                    extraData={this.displaySearchCrypto}
+                    extraData={[this.displaySearchCrypto, this.props.cryptoLoaded]}
                     keyExtractor={item => item.short}
                     initialNumToRender={50}
                     windowSize={21}

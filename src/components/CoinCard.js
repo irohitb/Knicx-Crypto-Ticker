@@ -18,20 +18,32 @@ class  CoinCard extends PureComponent {
 
 
 
-    // componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
 
-    //     if (this.props.coinPrice > nextProps.coinPrice ) {
-    //        if (this.props.coinPrice > nextProps.coinPrice) {
-    //           this.setState({decreased: true, increased: false})
-    //        }
+        if (this.props.coinPrice > nextProps.coinPrice ) {
+           if (this.props.coinPrice > nextProps.coinPrice) {
+               console.log("Component Will recieve props")
+              this.setState({decreased: true, increased: false})
+              setTimeout(
+                function() {
+                    this.setState({decreased: false, increased: false})
+                }.bind(this), 500)
+            }
+           }
 
-    //        if (this.props.coinPrice < nextProps.coinPrice) {
-    //         this.setState({increased: true, decreased: false})
-    //        }
-    //     }
+           if (this.props.coinPrice < nextProps.coinPrice) {
+               if (this.props.coinPrice > nextProps.coinPrice) {
+               console.log("Component Will recieve props")
+            this.setState({increased: true, decreased: false})
+            setTimeout(
+                function() {
+                    this.setState({decreased: false, increased: false})
+                }.bind(this), 500)
+           }
+        }
 
-
-    // }
+     
+    }
 
     touched = (id) => {
 
@@ -43,13 +55,6 @@ class  CoinCard extends PureComponent {
 
 
 
-    componentDidUpdate() {
-        setTimeout(
-            function() {
-                this.setState({decreased: false, increased: false})
-            }.bind(this), 100)
-        }
-
 
 
     render () { 
@@ -57,9 +62,9 @@ class  CoinCard extends PureComponent {
         console.log("Inside render")
         return (
             
-            <TouchableWithoutFeedback  style={[container1,this.state.increased ? {backgroundColor: "#B4EEB4"} : null,this.state.decreased ? {backgroundColor: "#ffe5e5"} : null]} onPress={() => this.touched(this.props.coinShortName)}>
+            <TouchableWithoutFeedback onPress={() => this.touched(this.props.coinShortName)}>
                 <View>
-                    <View style={upperRow}>
+                    <View style={[upperRow, container1,this.state.increased ? {backgroundColor: "#B4EEB4"} : null,this.state.decreased ? {backgroundColor: "#ffe5e5"} : null]}>
                         <Text style={sno}> {this.props.no} </Text>
                         <Image 
                             source={{uri: this.props.coinImage}}

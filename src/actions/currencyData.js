@@ -8,8 +8,6 @@ export const CurrencyRate = () => {
     dispatch({type: CURRENCY_FETCHING})
 
     axios.get(CurrencyRateLink).then((response) => {
-      console.log("Currency loading inside axios")
-      console.log(response)
     return (
     dispatch({
       type: CURRENCY_RATE,
