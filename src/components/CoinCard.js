@@ -54,7 +54,7 @@ class  CoinCard extends PureComponent {
 
     render () { 
 
-        console.log("Inside render")
+        console.log("Inside render", this.props.coinShortName)
         return (
             
             <TouchableWithoutFeedback  style={[container1,this.state.increased ? {backgroundColor: "#B4EEB4"} : null,this.state.decreased ? {backgroundColor: "#ffe5e5"} : null]} onPress={() => this.touched(this.props.coinShortName)}>
