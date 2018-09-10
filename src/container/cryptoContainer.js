@@ -127,7 +127,11 @@ componentWillUnmount() {
                     windowSize={21}
                  
                     removeClippedSubviews={true}
-               renderItem={({ item, index }) => (
+               renderItem={({ item, index }) => {
+                 let newlong  = item["long"]
+                 newlong = newlong.replace(/\s+/g, '');
+                newlong = newlong.trim()
+                 return (
                <CoinCard
                   key = {index}
                   no = {index + 1}
@@ -137,10 +141,10 @@ componentWillUnmount() {
                   marketCap = {(item["mktcap"]/1000000000).toFixed(4)}
                   percentChange = {item["perc"].toFixed(2)}
                   vwapData={item["vwapData"].toFixed(2)}
-                  coinImage={"https://coincap.io/images/coins/" + item["long"] + ".png"}
+                  coinImage={"https://coincap.io/images/coins/" + newlong + ".png"}
                   />
 
-              )}
+                 )}}
              
       />
   
