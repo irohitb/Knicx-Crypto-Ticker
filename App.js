@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {Provider} from 'react-redux';
 import Store from "./src/store.js"
-import CryptoContainer from "./src/container/cryptoContainer.js"
+
+import CoinCap from './src/container/CoinCap.js';
 
 
 export default class App extends React.Component {
@@ -10,7 +11,7 @@ export default class App extends React.Component {
     return (
     <Provider store={Store}>
       <View style={styles.container}>
-        <CryptoContainer />
+        <CoinCap/>
       </View>
     </Provider>
     );

@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import openSocket from 'socket.io-client';
-import {ScrollView, TextInput, StyleSheet, FlatList, View} from 'react-native';
-import {fetchCoin, updateCrypto} from "../actions/cryptoAction.js"
+import {TextInput, StyleSheet, FlatList, View} from 'react-native';
+import {fetchCoin, updateCrypto} from "../actions/coinCapAction.js"
 import CoinCard from "../components/CoinCard.js"
-import Header from './../components/header.js';
+import Header from '../components/header.js';
 import {CurrencyRate} from '../actions/currencyData.js'
 
 
