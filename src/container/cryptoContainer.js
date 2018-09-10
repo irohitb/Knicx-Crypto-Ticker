@@ -30,39 +30,34 @@ class cryptoTicker extends PureComponent {
     this.socket = openSocket('https://coincap.io');
     this.props.fetchCoin()
     this.props.CurrencyRate()
-  }
 
-  componentDidUpdate() {
-
-   
-    if (this.state.updateCoinData || this.updateCoinData.length < 1 ) {
-      this.updateCoinData = [...this.props.cryptoLoaded];
-     this.setState({updateCoinData: true})
-    }
-  
       this.socket.on('trades', (tradeMsg) => {
-       
-      for (let i=0; i< this.updateCoinData.length; i++) {
-     
 
-        if (this.updateCoinData[i]["short"] == tradeMsg.coin ) {
+          for (let i=0; i< this.updateCoinData.length; i++) {
 
+              if (this.updateCoinData[i]["short"] == tradeMsg.coin ) {
 
-        //Search for changed Crypto Value
-       this.updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
-       this.updateCoinData["short"] = tradeMsg["message"]["msg"]["short"]
-       this.updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
-       this.updateCoinData[i]["mktcap"]= tradeMsg['message']['msg']["mktcap"]
-       this.updateCoinData[i]["price"] = tradeMsg['message']['msg']['price']
+                  //Search for changed Crypto Value
+                  this.updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
+                  this.updateCoinData["short"] = tradeMsg["message"]["msg"]["short"]
+                  this.updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
+                  this.updateCoinData[i]["mktcap"]= tradeMsg["message"]['msg']["mktcap"]
+                  this.updateCoinData[i]["price"] = tradeMsg["message"]['msg']['price']
 
+                  //Update the crypto Value state in Redux
+                  this.props.updateCrypto(this.updateCoinData);
 
-        //Update the crypto Value state in Redux
-        this.props.updateCrypto(this.updateCoinData);
-
+              }
           }
-        }
       })
 
+  }
+
+  componentWillReceiveProps(newProps){
+      // Fill with redux data once
+      if (this.updateCoinData.length < 1 && newProps.cryptoLoaded) {
+          this.updateCoinData = [...newProps.cryptoLoaded];
+      }
   }
 
   //On Search type 
