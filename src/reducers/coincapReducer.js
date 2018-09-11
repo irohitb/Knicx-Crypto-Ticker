@@ -1,11 +1,11 @@
-import {CRYPTO_FETCHING, CRYPTO_DATA_FAIL, CRYPTO_FETCH_SUCESS, UPDATE_CRYPTO_DATA} from './../actions/type.js';
+import {CRYPTO_FETCHING, CRYPTO_DATA_FAIL, CRYPTO_FETCH_SUCESS, UPDATE_CRYPTO_DATA, GLOBAL_DATA} from '../actions/type.js';
 
 
 const initialState = {
   itemsFetching: true,
   itemsSucess: [],
   itemsFail: [],
-  itemsUpdate: []
+  itemGlobal: []
 }
 
 
@@ -34,8 +34,14 @@ export default function(state = initialState, action) {
       itemsSucess: action.payload,
       itemsFetching: false
       }
+      //GLOBAL_DATA
+      case GLOBAL_DATA:
+      return {
+      ...state,
+      itemGlobal: action.payload,
+      itemsFetching: false
+      }
       default:
         return state
     }
   }
-//What is action, action.type

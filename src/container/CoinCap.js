@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import openSocket from 'socket.io-client';
-import {TextInput, StyleSheet, FlatList, View} from 'react-native';
-import {fetchCoin, updateCrypto} from "../actions/coinCapAction.js"
+import { TextInput, StyleSheet, FlatList, View} from 'react-native';
+import {fetchCoin, updateCrypto, globalData} from "../actions/coinCapAction.js"
 import CoinCard from "../components/CoinCard.js"
 import Header from '../components/header.js';
 import {CurrencyRate} from '../actions/currencyData.js'
@@ -28,9 +28,10 @@ class cryptoTicker extends PureComponent {
   }
 
   componentDidMount() {
-
+    this.props.globalData()
     this.props.fetchCoin()
     this.props.CurrencyRate()
+
       this.socket.on('trades', (tradeMsg) => {
  
           console.log("inside socket")
@@ -175,18 +176,17 @@ const {
 //Redux
 const mapStateToProps = state => {
   return {
-    cryptoLoaded: state.posts.itemsSucess,
-    cryptoLoading: state.posts.itemsFetching,
-    currencyLoaded: state.currency.DataSucess
+    cryptoLoaded: state.coincap.itemsSucess,
+    cryptoLoading: state.coincap.itemsFetching,
+    cryptoGlobal: state.coincap.itemGlobal,
+    currencyLoaded: state.currency.DataSucess,
+
   }
 };
 
-export default connect(mapStateToProps, {fetchCoin, updateCrypto, CurrencyRate})(cryptoTicker);
-
-
-// function foo () {
-//   value = "rohit"
-
-//   console.log(value)
-//   console.log(this.value)
-// }
+export default connect(mapStateToProps, 
+  {fetchCoin, 
+    updateCrypto, 
+    CurrencyRate, 
+    globalData
+  })(cryptoTicker);

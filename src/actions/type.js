@@ -4,6 +4,7 @@ export const CRYPTO_FETCHING = 'CRYPTO_FETCHING';
 export const CRYPTO_FETCH_SUCESS = 'CRYPTO_FETCH_SUCESS';
 export const CRYPTO_DATA_FAIL = "CRYPTO_DATA_FAIL";
 export const UPDATE_CRYPTO_DATA = 'UPDATE_CRYPTO_DATA';
+export const GLOBAL_DATA = "GLOBAL_DATA";
 
 //Currency Rate
 export const CURRENCY_RATE = "CURRENCY_RATE";

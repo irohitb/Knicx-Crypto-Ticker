@@ -11,3 +11,7 @@ AppRegistry.registerComponent(appName, () => App);
 
 //Searching with FLatList
 //https://medium.freecodecamp.org/how-to-build-a-react-native-flatlist-with-realtime-searching-ability-81ad100f6699
+
+
+//React Native Performance 
+//https://stackoverflow.com/questions/52020855/react-native-performance-issue/52230865?noredirect=1#comment91480937_52230865
