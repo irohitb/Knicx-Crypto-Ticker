@@ -13,7 +13,6 @@
     "d3-shape": "^1.2.2",
     "react": "16.4.1",
     "react-native": "0.56.0",
-    "react-native-charts-wrapper": "^0.4.5",
     "react-native-display": "^1.0.8",
     "react-native-modal-dropdown": "^0.6.2",
     "react-navigation": "^2.13.0",
