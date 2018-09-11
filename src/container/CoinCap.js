@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import openSocket from 'socket.io-client';
-import { TextInput, StyleSheet, FlatList, View} from 'react-native';
+import { TextInput, StyleSheet, FlatList, View, Text} from 'react-native';
 import {fetchCoin, updateCrypto, globalData} from "../actions/coinCapAction.js"
 import CoinCard from "../components/CoinCard.js"
 import Header from '../components/header.js';
@@ -108,7 +108,7 @@ componentWillUnmount() {
   return (
 
      
-             <View style={{height: '100%'}}>
+             <View style={mainView}>
              <Header />
              {/* Custom Search Input */}
            
@@ -158,17 +158,23 @@ componentWillUnmount() {
 //Creating Stylesheet 
 const styles = StyleSheet.create({ 
   textInput: {
-
-    borderColor: 'gray',
     flex: 0.08,
-     borderWidth: 2
-    
-  
+    borderWidth: 0,
+    backgroundColor: "white"
+  }, 
+  cryptoName: {
+    textAlign: "center"
+  }, 
+  mainView: {
+    height: "100%", 
+    backgroundColor: "#f3f3f3"
   }
 })
 
 const {
-  textInput
+  textInput,
+  cryptoName,
+  mainView
 } = styles
 
 

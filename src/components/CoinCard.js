@@ -27,7 +27,7 @@ class  CoinCard extends PureComponent {
               setTimeout(
                 function() {
                     this.setState({decreased: false, increased: false})
-                }.bind(this), 500)
+                }.bind(this), 1500)
             }
            }
 
@@ -38,7 +38,7 @@ class  CoinCard extends PureComponent {
             setTimeout(
                 function() {
                     this.setState({decreased: false, increased: false})
-                }.bind(this), 500)
+                }.bind(this), 1500)
            }
         }
 
@@ -63,18 +63,32 @@ class  CoinCard extends PureComponent {
         return (
             
             <TouchableWithoutFeedback onPress={() => this.touched(this.props.coinShortName)}>
-                <View>
-                    <View style={[upperRow, container1,this.state.increased ? {backgroundColor: "#B4EEB4"} : null,this.state.decreased ? {backgroundColor: "#ffe5e5"} : null]}>
-                        <Text style={sno}> {this.props.no} </Text>
+               <View style={container1}>
+                    <View style={upperRow}>
+                       
                         <Image 
                             source={{uri: this.props.coinImage}}
                             style={img}
                             /> 
-                            <Text style={coinSymbol}>{this.props.coinShortName}</Text>
-                            <Text style={coinPrice}>${this.props.coinPrice}</Text>
-                            <View style={percentageBox}>
+                             <Text style={coinSymbol}>{this.props.coinShortName}</Text>
+                            <Text style={coinFullName}> {this.props.coinName} </Text>
+                       </View>
+                        <View style={lowerRow}>
+                         <View style={aboveHeading}>
+                            <Text style={sno}>SNo</Text>
+                            <Text style={sno1}> {this.props.no} </Text>
+                          </View>
+                          <View style={aboveHeading}>
+                             <Text style={sno}>Price</Text>
+                             <Text style={[coinPrice, this.state.increased ? {color: "green"} : null,this.state.decreased ? {color: "red"} : null]}>${this.props.coinPrice}</Text>
+                          </View>
+                           <View style={aboveHeading}>
+                             <Text style={sno}>%Change</Text>
+                              <View style={percentageBox}>
                                 <Text style={this.props.percentChange < 0 ? percentChangeMinus : percentChangePlus }>{this.props.percentChange}%</Text>
+                             </View>
                             </View>
+
                         </View>
              </View>
         </TouchableWithoutFeedback>
@@ -87,21 +101,37 @@ class  CoinCard extends PureComponent {
 
 const styles = StyleSheet.create({
     container1: {
-        display: "flex",
+        marginTop: 15,
         borderBottomColor: "#e5e5e5",
-        borderBottomWidth: 3,
         padding: 10,
-        backgroundColor: "white"
+        backgroundColor: "white",
+        borderRadius: 15,
+        marginLeft: 10,
+        marginRight: 10
+    },
+    sno1: {
+        marginTop: 10,
     },
     sno: {
         marginTop: 10,
         color: "#808080"
     },
     upperRow: {
-        padding: 5,
+        padding: 2,
         display: "flex",
         flexDirection: "row",
         //marginBottom: 15,
+    },
+    lowerRow: {
+        marginTop: 7,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: 'space-between'
+        //marginBottom: 15,
+    },
+    aboveHeading: {
+        display: "flex",
+        flexDirection: "column"
     },
     img: {
         width: 30,
@@ -110,16 +140,18 @@ const styles = StyleSheet.create({
         marginLeft: 5
     },
     coinSymbol: {
-        color: "#808080",
+    
         marginTop: 10,
         marginLeft: 20,
-        marginRight: 5,      
+        marginRight: 0,  
+        fontSize: 17,    
     },
-    coinName: {
+    coinFullName: {
+        color: "#808080",
         marginTop: 10,
-        marginLeft: 5,
-        marginRight: 20,
-        color: "#808080"
+        marginLeft: 1,
+        marginRight: 5,   
+        fontSize: 17,
     },
     seperator: {
         marginTop: 10,
@@ -128,8 +160,7 @@ const styles = StyleSheet.create({
     coinPrice: {
         marginTop: 10,
         marginLeft: "auto",
-        marginRight: 5,
-        color: "#808080"     
+        marginRight: 5,  
     },
     image: {
         width: 35,
@@ -171,7 +202,7 @@ const styles = StyleSheet.create({
     percentageBox: {
         marginLeft: 5,
         marginRight: 5,
-        marginTop: 10
+        marginTop: 10,
     }
 })
 
@@ -189,7 +220,11 @@ const {
     whiteColor,
     vwapData,
     seperator1,
-    percentageBox
+    percentageBox,
+    coinFullName,
+    lowerRow,
+    aboveHeading, 
+    sno1
 } = styles;
 
 

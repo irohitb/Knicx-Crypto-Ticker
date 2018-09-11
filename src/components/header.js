@@ -15,17 +15,16 @@ const Header = () => {
 const styles = StyleSheet.create({
   headerContainer : {
     display: "flex",
-    marginTop: 8,
     alignItems: 'center',
-
+    backgroundColor: "#4A708B",
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0
   },
   header: {
-    marginTop: 8,
+    marginTop: 20,
     padding: 10,
     fontSize: 16,
-    color: "#4A708B",
+    color: "white",
   }, 
   headerSecondary: {
     color: "#63B8FF",
