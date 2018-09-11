@@ -27,3 +27,5 @@ AppRegistry.registerComponent(appName, () => App);
 
 //Relevant Git Repository 
 //https://github.com/msenejoa/crypto-markets -> For graphs
+
+//What is task orphaned for request 

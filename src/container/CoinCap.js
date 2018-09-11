@@ -6,7 +6,7 @@ import {fetchCoin, updateCrypto, globalData} from "../actions/coinCapAction.js"
 import CoinCard from "./CoinCard.js"
 import Header from '../components/header.js';
 import {CurrencyRate} from '../actions/currencyData.js'
-import TestGraph from "./CoinCapCharts"
+
 
 
 
@@ -117,7 +117,7 @@ componentWillUnmount() {
               style={textInput}
               placeholder="Search Coin"
               onChangeText={(text) => this.onSearch(text)} />
-        <TestGraph />
+
             
               <FlatList
 
