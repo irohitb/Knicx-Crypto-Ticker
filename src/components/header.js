@@ -11,9 +11,10 @@ import Display from 'react-native-display';
 const Header = (props) => {
   return (
   <View style={headerContainer}>
-   <Display enable={props.enable == "true"}>
-     <Button onPress={() => props.navigation.navigate('Home')} 
-      title="Go Back"/> 
+    <Display style={GoBack} enable={props.enable == "true"}>
+      <Button onPress={() => props.navigation.navigate('Home')} 
+        title="Go Back"
+        color='white'/> 
     </Display>
     <Text style={header}> Knicx   
      <Text style={headerSecondary}> Crypto Ticker </Text> 
@@ -25,6 +26,7 @@ const Header = (props) => {
 const styles = StyleSheet.create({
   headerContainer : {
     display: "flex",
+    flexDirection: "row",
     alignItems: 'center',
     backgroundColor: "#4A708B",
     borderBottomLeftRadius: 0,
@@ -38,10 +40,20 @@ const styles = StyleSheet.create({
   }, 
   headerSecondary: {
     color: "#63B8FF",
+  },
+  GoBack: {
+    color: "white",
+    marginTop: 20,
+    marginRight: 50
   }
 })
 
-const { headerContainer, header, headerSecondary } = styles;
+const { 
+  headerContainer, 
+  header, 
+  headerSecondary, 
+  GoBack 
+} = styles;
 
 
 

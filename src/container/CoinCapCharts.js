@@ -1,7 +1,11 @@
 import React, { PureComponent} from 'react'
 import * as d3 from 'd3'
 import { connect } from 'react-redux';
-import { ART, View, Text } from 'react-native'
+import { 
+    ART, 
+    View, 
+    Text 
+} from 'react-native'
 import Header from '../components/header.js';
 import { 
     coinHistory, 
@@ -23,16 +27,14 @@ class CoinCapCharts extends PureComponent {
     }
 
     render ()  {    
-        console.log("this is coinComplete navigation", this.props.coinCompleteDisplay) 
-        console.log("This is coinHistoryDisplay", this.props.coinHistoryDisplay)
-        return (
-            <View> 
-                <Header 
-                  navigation = {this.props.navigation} 
-                  enable = "true" />
-            </View>
-            
-        )
+            return (
+                <View> 
+                    <Header 
+                    navigation = {this.props.navigation} 
+                    enable = "true" />
+                </View>
+                
+            )
     }
 
 }
