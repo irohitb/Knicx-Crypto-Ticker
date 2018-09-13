@@ -62,7 +62,7 @@ export default function(state = initialState, action) {
       case COIN_COMPLETE:
       return {
         ...state,
-        itemHistory: action.payload,
+        itemComplete: action.payload,
         itemsFetching: false
         }
       default:

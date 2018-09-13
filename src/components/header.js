@@ -1,10 +1,20 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  Button 
+} from 'react-native';
+import Display from 'react-native-display';
 
 
-const Header = () => {
+const Header = (props) => {
   return (
   <View style={headerContainer}>
+   <Display enable={props.enable == "true"}>
+     <Button onPress={() => props.navigation.navigate('Home')} 
+      title="Go Back"/> 
+    </Display>
     <Text style={header}> Knicx   
      <Text style={headerSecondary}> Crypto Ticker </Text> 
      </Text>

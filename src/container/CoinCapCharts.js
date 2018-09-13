@@ -1,16 +1,19 @@
-import React, { Component} from 'react'
+import React, { PureComponent} from 'react'
 import * as d3 from 'd3'
 import { ART, View, Text } from 'react-native'
 import Header from '../components/header.js';
 
 
 
-class CoinCapCharts extends Component {
-    render ()  {
-        
+class CoinCapCharts extends PureComponent {
+
+    render ()  {    
+        console.log("this is props navigation", this.props.navigation) 
         return (
             <View> 
-                <Header />
+                <Header 
+                  navigation = {this.props.navigation} 
+                  enable = "true" />
             </View>
             
         )
