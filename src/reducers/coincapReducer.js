@@ -3,7 +3,8 @@ import {
   CRYPTO_DATA_FAIL, 
   CRYPTO_FETCH_SUCESS, 
   UPDATE_CRYPTO_DATA, 
-  GLOBAL_DATA
+  GLOBAL_DATA,
+  COIN_HISTORY
 } from '../actions/type.js';
 
 
