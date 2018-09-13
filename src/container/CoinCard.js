@@ -22,7 +22,7 @@ class  CoinCard extends PureComponent {
 
         if (this.props.coinPrice > nextProps.coinPrice ) {
            if (this.props.coinPrice > nextProps.coinPrice) {
-               console.log("Component Will recieve props")
+               
               this.setState({decreased: true, increased: false})
               setTimeout(
                 function() {
@@ -33,7 +33,7 @@ class  CoinCard extends PureComponent {
 
            if (this.props.coinPrice < nextProps.coinPrice) {
                if (this.props.coinPrice > nextProps.coinPrice) {
-               console.log("Component Will recieve props")
+             
             this.setState({increased: true, decreased: false})
             setTimeout(
                 function() {
@@ -58,11 +58,12 @@ class  CoinCard extends PureComponent {
 
 
     render () { 
-        
-     console.log("navigation", this.props.navigation)
+  
         return (
             
-            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('CoinCapCharts')}>
+            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('CoinCapCharts', {
+                coinShortName: this.props.coinShortName
+            })}>
                <View style={container1}>
                     <View style={upperRow}>
                        

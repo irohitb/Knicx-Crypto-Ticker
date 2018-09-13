@@ -1,17 +1,24 @@
-import React from 'react'
+import React, { Component} from 'react'
 import * as d3 from 'd3'
 import { ART, View, Text } from 'react-native'
+import Header from '../components/header.js';
 
 
 
+class CoinCapCharts extends Component {
+    render ()  {
+        
+        return (
+            <View> 
+                <Header />
+            </View>
+            
+        )
+    }
 
-const CoinCapCharts = (props) => {
-    return (
-        <View>
-            <Text> Welcome to Charts</Text>
-        </View>
-    )
 }
+
+
 
 
 export default CoinCapCharts

@@ -35,7 +35,6 @@ class cryptoTicker extends PureComponent {
 
       this.socket.on('trades', (tradeMsg) => {
  
-          console.log("inside socket")
           for (let i=0; i< this.updateCoinData.length; i++) {
 
               if (this.updateCoinData[i]["short"] == tradeMsg.coin ) {

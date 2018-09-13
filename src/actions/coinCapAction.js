@@ -1,6 +1,22 @@
 import axios from 'axios';
-import {CRYPTO_FETCHING, CRYPTO_DATA_FAIL, CRYPTO_FETCH_SUCESS, UPDATE_CRYPTO_DATA, GLOBAL_DATA} from './type.js';
-import {ApiCoinCap, GlobalData} from '../urls.js';
+import {
+  CRYPTO_FETCHING, 
+  CRYPTO_DATA_FAIL, 
+  CRYPTO_FETCH_SUCESS, 
+  UPDATE_CRYPTO_DATA, 
+  GLOBAL_DATA,
+  COIN_HISTORY
+  // COIN_CAP_1DAYS,
+  // COIN_CAP_7DAYS,
+  // COIN_CAP_30DAYS,
+  // COIN_CAP_90DAYS,
+  // COIN_CAP_180DAYS,
+  // COIN_CAP_365DAYS
+} from './type.js';
+import {
+  ApiCoinCap, 
+  GlobalData,
+  coinHistory } from '../urls.js';
 
 
 
@@ -58,4 +74,42 @@ export const updateCrypto = (updatedData) => {
   }
 }
 
-//https://exchangeratesapi.io/
+
+//Coincap Coin History 
+
+
+//1 Day history 
+export const CoinHistory = (days, coinName) => {
+    return function (dispatch) {
+    dispatch({type: CRYPTO_FETCHING}) 
+  axios.get("coinHistory" + days + "day" + coinName).then(respone => {
+    return (
+        dispatch({
+          type: COIN_HISTORY,
+          payload: respone.data
+        })
+      )
+    })
+  }
+}
+// //7 Day history 
+// export const SevenDayCoinHistory = (days, coinName) => {
+  
+// }
+
+// //30 Day History 
+// export const ThirtyDayCoinHistory = (coinName) => {
+  
+// }
+// //90 Day History 
+// export const NintyDayCoinHistory = (coinName) => {
+  
+// }
+// //180 Day History 
+// export const One80DayCoinHistory = (coinName) => {
+  
+// }
+// //365 Day History 
+// export const Three65DayCoinHistory = (coinName) => {
+  
+// }
