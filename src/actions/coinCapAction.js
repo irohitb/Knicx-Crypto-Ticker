@@ -86,13 +86,31 @@ export const coinHistory = (days, coinName) => {
     return function (dispatch) {
     dispatch({type: CRYPTO_FETCHING}) 
     axios.get(coinCapHistory + days + "day/" + coinName).then(respone => {
+      console.log(respone.data["price"][1][0])
+      let coinHistoryV = []
+      for (let i = 0; i<respone.data["price"].length; i++) {
+        coinHistoryV.push({
+            cHT :   respone.data["price"][1][0],
+            cHTVU : respone.data["price"][i][1],
+            cHTVF : "$" + respone.data["price"][i][1].toLocaleString(),
+            no: i
+        })
+    }
       return (
           dispatch({
             type: COIN_HISTORY,
-            payload: respone.data
+            payload: coinHistoryV
           })
         )
-    })
+    }).catch((error) => {
+      console.log("This is Error", error)
+      return (
+    dispatch({
+        type: CRYPTO_DATA_FAIL,
+        payload: error.data
+      })
+    )
+    })   
   }
 }
 
@@ -101,7 +119,6 @@ export const coinComplete = (coinName) => {
   return function (dispatch) {
     dispatch({type: CRYPTO_FETCHING}) 
     axios.get(coinCapComplete + coinName).then((respone) => {
-      console.log("Coin Cap Complete Action", respone)
       return (
         dispatch({
           type: COIN_COMPLETE,

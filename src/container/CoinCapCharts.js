@@ -14,24 +14,36 @@ import {
 
 
 
+
+
+
 class CoinCapCharts extends PureComponent {
 
     state = {
         days: 1
     }
 
-    componentWillMount() {
-      
+    constructor () {
+        super()
+    }
+    
+
+    componentDidMount() {
         this.props.coinHistory(this.state.days, this.props.navigation.state.params.coinShortName) 
         this.props.coinComplete(this.props.navigation.state.params.coinShortName)
+        
     }
 
-    render ()  {    
+    render ()  {   
+        
+        console.log(this.props.coinHistoryDisplay)
+        
             return (
                 <View> 
                     <Header 
                     navigation = {this.props.navigation} 
                     enable = "true" />
+
                 </View>
                 
             )
@@ -41,13 +53,15 @@ class CoinCapCharts extends PureComponent {
 const mapStateToProps = state => {
     return {
       coinCompleteDisplay: state.coincap.itemComplete,
-      coinHistoryDisplay: state.coincap.itemHistory  
+      coinHistoryDisplay: state.coincap.itemHistory ,
+      cryptoLoading: state.coincap.itemsFetching, 
     }
   };
 
 export default connect(mapStateToProps, 
   {coinHistory, 
-    coinComplete 
+    coinComplete, 
+
   })(CoinCapCharts);
 
 
@@ -59,10 +73,30 @@ export default connect(mapStateToProps,
 
 
 
+/* 
+
+
+// Create a new linear scale instance, which we'll use as your y-scale.
+const y = d3.scaleLinear()
+
+    // Set our domain, which is our input data, which is our test scores,
+    // which can be between 0 and 100.
+    .domain([0, 100])
+
+    // Set our range, which is our output data, which is the height of our
+    // screen, which is 640 pixels.
+    .range([0, 640]);
+
+// Now if we want to know how high a test score of 50 is on our screen
+// we pass the value from our domain and get our range of 320.
+y(50); // 320
+// Same thing here with 80.
+y(80); // 512
 
 
 
 
+*/
 //This ART component will render the SVG path data created by D3.
 //https://medium.com/@jennysihua/creating-a-donut-chart-in-react-native-with-d3-and-art-2a7ac91dda5c
 //User Purchase is data 
