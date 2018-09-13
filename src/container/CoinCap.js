@@ -105,7 +105,6 @@ componentWillUnmount() {
 
   render() {
     
-
   return (
 
      
@@ -135,6 +134,7 @@ componentWillUnmount() {
                 newlong = newlong.trim()
                  return (
                <CoinCard
+                  navigation = {this.props.navigation}
                   key = {index}
                   no = {index + 1}
                   coinShortName = {item["short"]}

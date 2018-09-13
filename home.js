@@ -1,15 +1,36 @@
 import React from 'react';
-import Screen from './Screen.js';
+import { StyleSheet, Text, View } from 'react-native';
+import {Provider} from 'react-redux';
+import Store from "./src/store.js"
+
+import CoinCap from './src/container/CoinCap.js';
+
 
 export default class App extends React.Component {
   render() {
     return (
-      <Screen/>
+    <Provider store={Store}>
+     
+        <CoinCap
+        navigation = {this.props.navigation}
+        />
+    
+    </Provider>
     );
   }
 }
 
+//Styling 
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white"
+  } 
+})
 
+
+
+
+//A StackNavigator works exactly like a call stack or a stack of dishes. Each screen we navigate to is pushed to the top of the stack, and each time we hit the back button, this screen pops off the top of the stack.
 
 // /**
 //  * Sample React Native App
