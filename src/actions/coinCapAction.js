@@ -17,8 +17,8 @@ import {
 import {
   ApiCoinCap, 
   GlobalData,
-  coinHistory,
-  coinComplete
+  coinCapHistory,
+  coinCapComplete
  } from '../urls.js';
 
 
@@ -78,14 +78,14 @@ export const updateCrypto = (updatedData) => {
 }
 
 
-//Coincap Coin History 
+
 
 
 //Coin history 
-export const CoinHistory = (days, coinName) => {
+export const coinHistory = (days, coinName) => {
     return function (dispatch) {
     dispatch({type: CRYPTO_FETCHING}) 
-    axios.get(coinHistory + days + "day/" + coinName).then(respone => {
+    axios.get(coinCapHistory + days + "day/" + coinName).then(respone => {
       return (
           dispatch({
             type: COIN_HISTORY,
@@ -97,17 +97,26 @@ export const CoinHistory = (days, coinName) => {
 }
 
 //Coin Complete 
-export const CoinComplete = (coinName) => {
+export const coinComplete = (coinName) => {
   return function (dispatch) {
     dispatch({type: CRYPTO_FETCHING}) 
-    axios.get(coinComplete + coinName).then(respone => {
+    axios.get(coinCapComplete + coinName).then((respone) => {
+      console.log("Coin Cap Complete Action", respone)
       return (
         dispatch({
           type: COIN_COMPLETE,
           payload: respone.data
         })
       )
-    })
+    }).catch((error) => {
+      console.log("This is Error", error)
+      return (
+    dispatch({
+        type: CRYPTO_DATA_FAIL,
+        payload: error.data
+      })
+    )
+    })   
   }
 }
 

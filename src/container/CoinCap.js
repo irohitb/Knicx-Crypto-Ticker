@@ -128,17 +128,16 @@ componentWillUnmount() {
 
             
               <FlatList
-
-               data={this.state.searchCoin ? this.displaySearchCrypto : this.props.cryptoLoaded}
-               style={{flex:1}}
+                     data={this.state.searchCoin ? this.displaySearchCrypto : this.props.cryptoLoaded}
+                     style={{flex:1}}
                     extraData={[this.displaySearchCrypto, this.props.cryptoLoaded]}
                     keyExtractor={item => item.short}
                     initialNumToRender={50}
                     windowSize={21}
-                 
                     removeClippedSubviews={true}
-               renderItem={({ item, index }) => {
+                   renderItem={({ item, index }) => {
                  let newlong  = item["long"]
+                 //Removing spaces in image name
                  newlong = newlong.replace(/\s+/g, '');
                 newlong = newlong.trim()
                  return (

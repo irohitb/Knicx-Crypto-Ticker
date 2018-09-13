@@ -1,14 +1,30 @@
 import React, { PureComponent} from 'react'
 import * as d3 from 'd3'
+import { connect } from 'react-redux';
 import { ART, View, Text } from 'react-native'
 import Header from '../components/header.js';
+import { 
+    coinHistory, 
+    coinComplete 
+} from "../actions/coinCapAction.js"
 
 
 
 class CoinCapCharts extends PureComponent {
 
+    state = {
+        days: 1
+    }
+
+    componentWillMount() {
+      
+        this.props.coinHistory(this.state.days, this.props.navigation.state.params.coinShortName) 
+        this.props.coinComplete(this.props.navigation.state.params.coinShortName)
+    }
+
     render ()  {    
-        console.log("this is props navigation", this.props.navigation) 
+        console.log("this is coinComplete navigation", this.props.coinCompleteDisplay) 
+        console.log("This is coinHistoryDisplay", this.props.coinHistoryDisplay)
         return (
             <View> 
                 <Header 
@@ -20,11 +36,19 @@ class CoinCapCharts extends PureComponent {
     }
 
 }
+const mapStateToProps = state => {
+    return {
+      coinCompleteDisplay: state.coincap.itemComplete,
+      coinHistoryDisplay: state.coincap.itemHistory  
+    }
+  };
+
+export default connect(mapStateToProps, 
+  {coinHistory, 
+    coinComplete 
+  })(CoinCapCharts);
 
 
-
-
-export default CoinCapCharts
 
 
 

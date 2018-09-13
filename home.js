@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import {Provider} from 'react-redux';
-import Store from "./src/store.js"
+
 
 import CoinCap from './src/container/CoinCap.js';
 
@@ -9,13 +8,11 @@ import CoinCap from './src/container/CoinCap.js';
 export default class App extends React.Component {
   render() {
     return (
-    <Provider store={Store}>
-     
+      <View>
         <CoinCap
         navigation = {this.props.navigation}
         />
-    
-    </Provider>
+      </View>
     );
   }
 }
