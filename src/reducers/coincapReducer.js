@@ -4,7 +4,8 @@ import {
   CRYPTO_FETCH_SUCESS, 
   UPDATE_CRYPTO_DATA, 
   GLOBAL_DATA,
-  COIN_HISTORY
+  COIN_HISTORY,
+  COIN_COMPLETE
 } from '../actions/type.js';
 
 
@@ -13,7 +14,8 @@ const initialState = {
   itemsSucess: [],
   itemsFail: [],
   itemGlobal: [],
-  itemHistory: []
+  itemHistory: [], 
+  itemComplete: []
 }
 
 
@@ -56,6 +58,13 @@ export default function(state = initialState, action) {
       itemHistory: action.payload,
       itemsFetching: false
       }
+      //Complete Info About Coin
+      case COIN_COMPLETE:
+      return {
+        ...state,
+        itemHistory: action.payload,
+        itemsFetching: false
+        }
       default:
         return state
     }

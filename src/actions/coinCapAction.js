@@ -5,7 +5,8 @@ import {
   CRYPTO_FETCH_SUCESS, 
   UPDATE_CRYPTO_DATA, 
   GLOBAL_DATA,
-  COIN_HISTORY
+  COIN_HISTORY,
+  COIN_COMPLETE
   // COIN_CAP_1DAYS,
   // COIN_CAP_7DAYS,
   // COIN_CAP_30DAYS,
@@ -78,7 +79,7 @@ export const updateCrypto = (updatedData) => {
 //Coincap Coin History 
 
 
-//1 Day history 
+//Coin history 
 export const CoinHistory = (days, coinName) => {
     return function (dispatch) {
     dispatch({type: CRYPTO_FETCHING}) 
@@ -92,6 +93,11 @@ export const CoinHistory = (days, coinName) => {
     })
   }
 }
+
+
+//Coin Complete Info 
+
+
 // //7 Day history 
 // export const SevenDayCoinHistory = (days, coinName) => {
   
