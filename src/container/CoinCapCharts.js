@@ -1,8 +1,6 @@
 import React, { PureComponent} from 'react'
-import * as d3 from 'd3'
 import { connect } from 'react-redux';
 import { 
-    ART, 
     View, 
     Text 
 } from 'react-native'
@@ -11,6 +9,8 @@ import {
     coinHistory, 
     coinComplete 
 } from "../actions/coinCapAction.js"
+import { VictoryBar } from "victory-native";
+
 
 
 
@@ -43,7 +43,7 @@ class CoinCapCharts extends PureComponent {
                     <Header 
                     navigation = {this.props.navigation} 
                     enable = "true" />
-
+                <VictoryBar />
                 </View>
                 
             )
