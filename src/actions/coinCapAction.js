@@ -86,7 +86,6 @@ export const coinHistory = (days, coinName) => {
     return function (dispatch) {
     dispatch({type: CRYPTO_FETCHING}) 
     axios.get(coinCapHistory + days + "day/" + coinName).then(respone => {
-      console.log(respone.data["price"][1][0])
       let coinHistoryV = []
       for (let i = 0; i<respone.data["price"].length; i++) {
         coinHistoryV.push({

@@ -9,7 +9,13 @@ import {
     coinHistory, 
     coinComplete 
 } from "../actions/coinCapAction.js"
-import { VictoryBar } from "victory-native";
+import { 
+    VictoryBar,
+    VictoryChart,
+    VictoryArea,
+    VictoryTheme
+ } from "victory-native";
+ import CoinChartStatus from './coinChartComponents/coinChartStatus'
 
 
 
@@ -35,16 +41,19 @@ class CoinCapCharts extends PureComponent {
     }
 
     render ()  {   
-        
-        console.log(this.props.coinHistoryDisplay)
+
         
             return (
                 <View> 
                     <Header 
                     navigation = {this.props.navigation} 
-                    enable = "true" />
-                <VictoryBar />
+                    enable = "true" />    
+
+                    <CoinChartStatus 
+                    coinDetails = {this.props.coinCompleteDisplay}
+                    />
                 </View>
+
                 
             )
     }

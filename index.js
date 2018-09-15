@@ -43,3 +43,13 @@ const Root = () => (
 //What is task orphaned for request?
 
 //Fix Currency Rate 
+
+
+
+//Things to implement 
+//Price conversion in CoinCap 
+//Price conversion in coin Sats 
+//Implement Graph
+//Implement loading 
+//Implement Reddit, Twitter, News Integration 
+//Implement Prices at various exchange 

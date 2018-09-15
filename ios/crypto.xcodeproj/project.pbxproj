@@ -317,6 +317,20 @@
 			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
 			remoteInfo = RCTBlob;
 		};
+		F93A67B9214CE97E0001B1E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00A040F743354FBFB214676D /* RNSVG.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CF68AC11AF0540F00FF9E5C;
+			remoteInfo = RNSVG;
+		};
+		F93A67BB214CE97E0001B1E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00A040F743354FBFB214676D /* RNSVG.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 94DDAC5C1F3D024300EED511;
+			remoteInfo = "RNSVG-tvOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -619,6 +633,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		F93A6790214CE97E0001B1E4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F93A67BA214CE97E0001B1E4 /* libRNSVG.a */,
+				F93A67BC214CE97E0001B1E4 /* libRNSVG-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F9884FAD214C52B700D1548E /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -786,6 +809,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = F93A6790214CE97E0001B1E4 /* Products */;
+					ProjectRef = 00A040F743354FBFB214676D /* RNSVG.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1056,6 +1083,20 @@
 			fileType = archive.ar;
 			path = libRCTBlob.a;
 			remoteRef = ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F93A67BA214CE97E0001B1E4 /* libRNSVG.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSVG.a;
+			remoteRef = F93A67B9214CE97E0001B1E4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F93A67BC214CE97E0001B1E4 /* libRNSVG-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNSVG-tvOS.a";
+			remoteRef = F93A67BB214CE97E0001B1E4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
