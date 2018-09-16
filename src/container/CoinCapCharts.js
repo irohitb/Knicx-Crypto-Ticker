@@ -2,21 +2,17 @@ import React, { PureComponent} from 'react'
 import { connect } from 'react-redux';
 import { 
     View, 
-    Text 
+    StyleSheet,
+    ScrollView 
 } from 'react-native'
 import Header from '../components/header.js';
 import { 
     coinHistory, 
     coinComplete 
 } from "../actions/coinCapAction.js"
-import { 
-    VictoryBar,
-    VictoryChart,
-    VictoryArea,
-    VictoryTheme
- } from "victory-native";
- import CoinChartStatus from './coinChartComponents/coinChartStatus'
 
+ import CoinChartStatus from './coinChartComponents/coinChartStatus'
+ import CoinChart from "./coinChartComponents/coinChart.js"
 
 
 
@@ -41,18 +37,25 @@ class CoinCapCharts extends PureComponent {
     }
 
     render ()  {   
-
+console.log(this.props.coinHistoryDisplay)
         
             return (
+              
                 <View> 
                     <Header 
                     navigation = {this.props.navigation} 
                     enable = "true" />    
+  <ScrollView>
+                   <CoinChart 
+                    coinHistory = {this.props.coinHistoryDisplay}
+                   />
 
                     <CoinChartStatus 
                     coinDetails = {this.props.coinCompleteDisplay}
                     />
+                            </ScrollView>
                 </View>
+        
 
                 
             )
@@ -77,7 +80,7 @@ export default connect(mapStateToProps,
 
 
 
-
+//cHT: 1536892140000, cHTVU: 6519.44, cHTVF: "$6,519.44", no: 0
 
 
 

@@ -7,11 +7,11 @@ import {
 
 const coinStatus = (props) => {
    
-        console.log(props.coinDetails)
+
     return (
         <View style={coinDetailsMain}> 
             <View style={coinDetailsH}>
-            <Text styles={mainHeading}> Coin Complete Details </Text>
+            <Text style={mainHeading}> Coin Complete Details </Text>
             </View>
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>Display Name:</Text>
@@ -24,7 +24,7 @@ const coinStatus = (props) => {
           
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>Market Cap: </Text>
-                <Text style={subHeadingValue}> {props.coinDetails.market_cap}</Text>
+                <Text style={subHeadingValue}> {[props.coinDetails.market_cap].toLocaleString()}</Text>
             </View>
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>24H Cap Change: </Text>
@@ -36,15 +36,15 @@ const coinStatus = (props) => {
             </View>
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>Price in Euro: </Text>
-                <Text style={subHeadingValue}> €{props.coinDetails.price_eur} </Text>
+                <Text style={subHeadingValue}> €{[props.coinDetails.price_eur].toLocaleString()} </Text>
             </View>
             <View style={coinDetails}>
-                <Text>Price in Sel Currency: </Text>
-                <Text style={subHeadingValue}> {props.coinDetails.price_usd} </Text>
+                <Text style={subHeadingContent}>Price in Sel Currency: </Text>
+                <Text style={subHeadingValue}> {[props.coinDetails.price_usd].toLocaleString()} </Text>
             </View>
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>Price in Bitcoin: </Text>
-                <Text style={subHeadingContent}> {props.coinDetails.price_btc} </Text>
+                <Text style={subHeadingValue}> {props.coinDetails.price_btc} </Text>
             </View>
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>Global Coin Rank:</Text>
@@ -69,8 +69,10 @@ const styles = StyleSheet.create({
     coinDetails: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "flex-start",
-        marginBottom: 20
+        justifyContent:  "space-between",
+        marginBottom: 20,
+        marginLeft: 15,
+        marginRight: 15,
     }, 
     coinDetailsH: {
         display: "flex",
@@ -82,15 +84,17 @@ const styles = StyleSheet.create({
     },
     mainHeading: {
         textAlign: 'center',
-        fontSize: 20, 
+        fontSize: 25, 
         color: "#4A708B"
     }, 
     subHeadingContent: {
-        fontSize: 15 
+        fontSize: 15,
+        color: "#808080"
     },
     subHeadingValue: {
-        fontSize: 15
-
+        fontSize: 15,
+        color: "black",
+        textAlign: "left"
     }
   })
   
