@@ -37,7 +37,6 @@ class CoinCapCharts extends PureComponent {
     }
 
     render ()  {   
-console.log(this.props.coinHistoryDisplay)
         
             return (
               
