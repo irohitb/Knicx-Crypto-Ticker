@@ -1,10 +1,12 @@
 import React, { PureComponent} from "react"
 import { 
     VictoryBar,
+    VictoryArea,
      VictoryChart, 
      VictoryTheme 
 } from "victory-native";
 import { 
+    Text,
     View, 
     StyleSheet,
     ScrollView 
@@ -12,15 +14,40 @@ import {
 
 
 class CoinChart extends PureComponent {
+    constructor() {
+        super()
+            this.coinHistoryData
+    }
+
+    state = {
+        loaded: false
+    }
+
     render () {
+
+        if (this.props.coinHistory.length > 1) {
+        this.coinHistoryData = this.props.coinHistory
+            if (!this.state.loaded ) {
+            this.setState({loaded: true})
+          }
+        } 
+
+
         return (
-            <ScrollView>
+ 
+  
         <View style={container}>
-                <VictoryChart width={350} theme={VictoryTheme.material}>
-                <VictoryBar data={this.props.coinHistory} x="no" y="cHTVU" />
-                </VictoryChart>
-            </View>
-            </ScrollView>
+          { this.state.loaded ? 
+                            (<VictoryChart
+                    theme={VictoryTheme.material}>
+                    <VictoryArea
+                        style={{ data: { fill: "#c43a31" } }}
+                        data={this.coinHistoryData} 
+                    
+                        domain={{ y: [7000, 10000] }}
+                    />
+                    </VictoryChart>)
+          : (<Text> Loading..</Text>)}</View>
         )
     }
 }
