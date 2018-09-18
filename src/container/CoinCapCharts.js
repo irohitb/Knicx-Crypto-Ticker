@@ -44,15 +44,16 @@ class CoinCapCharts extends PureComponent {
                     <Header 
                     navigation = {this.props.navigation} 
                     enable = "true" />    
-  <ScrollView>
+                <ScrollView>
                    <CoinChart 
                     coinHistory = {this.props.coinHistoryDisplay}
+                    chartColor = {this.props.coinCompleteDisplay}
                    />
 
                     <CoinChartStatus 
                     coinDetails = {this.props.coinCompleteDisplay}
                     />
-                            </ScrollView>
+                 </ScrollView>
                 </View>
         
 
