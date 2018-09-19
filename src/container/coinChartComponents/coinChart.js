@@ -85,8 +85,6 @@ class CoinChart extends PureComponent {
 
 
         return (
- 
-  
         <View style={container}>
           { this.state.loaded ? 
              (<VictoryGroup 
