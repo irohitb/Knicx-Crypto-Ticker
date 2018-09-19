@@ -24,11 +24,14 @@ const findClosestPointSorted = (data, value) => {
   // 1. data is sorted by x
   // 2. data points are equally spaced
   // 3. the search is 1-dimentional (x, not x and y)
+ 
   if (value === null) return null;
-	const start = first(data).y;
-	const range = (last(data).y - start);
+    const start = first(data).x;
+	const range = (last(data).x - start);
   const index = Math.round((value - start)/range * (data.length - 1));
+  
   return data[index];
+
 };
 
 class CoinChart extends PureComponent {
@@ -43,37 +46,40 @@ class CoinChart extends PureComponent {
 
     state = {
         loaded: false,
-        activePoint: "null"
+        activePoint: null
     }
 
     handleCursorChange = (value) => {
-        console.log("here")
         this.setState({
-          activePoint: findClosestPointSorted(this.coinHistoryData, value)
+          activePoint: findClosestPointSorted(this.coinHistoryData , value)
       });
     }
  
 
     
     render () {
+     
 
-    const { activePoint } = this.state;
+    let  activePoint  = this.state.activePoint;
+    point = activePoint ?
+    (<VictoryScatter data={[activePoint]} style={{data: {size: 100} }}/>)
+  : null;
         if (this.props.coinHistory.length > 1) {
-          
-            let point = activePoint ?
-            (<VictoryScatter data={[activePoint]} style={{data: {size: 100} }}/>)
-          : (<Text> Second</Text>);
+         
         this.coinHistoryData = this.props.coinHistory
                 coinMinimumA =[]
             for (let i = 0; i < this.props.coinHistory.length; i++ ) {
                 coinMinimumA.push(this.props.coinHistory[i]["y"])
             }
+            //Making minimum and maximum Domain for the chart 
+
                 this.coinMinimum = Math.min(...coinMinimumA)
                 this.coinMaximum = Math.max(...coinMinimumA)
+
+                //Setting up color for the chart depending on the market cap
             if (this.props.chartColor.cap24hrChange > 0) {
                 this.chartColor = "#4CAF50"
             } else if (this.props.chartColor.cap24hrChange < 0) {
-       
                 this.chartColor = "#F44336"
             }
             if (!this.state.loaded ) {
@@ -95,10 +101,10 @@ class CoinChart extends PureComponent {
                     <VictoryCursorContainer
                     cursorDimension="x"
                     onCursorChange={(value, props) => this.handleCursorChange(value,props)}
-                            cursorLabel={(cursor) => `${cursor.x}, ${Math.round(cursor.y)}`}
+                            cursorLabel={(cursor) => ` ${cursor.y}`}
                         />
                      }>
-                 
+        
                     <VictoryArea
                         style={{ data: { fill: this.chartColor } }}
                         data={this.coinHistoryData} 
