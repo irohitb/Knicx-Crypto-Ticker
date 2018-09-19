@@ -4,7 +4,9 @@ import {
     VictoryArea,
     VictoryGroup,
      VictoryChart, 
-     VictoryTheme 
+     VictoryTheme,
+     VictoryVoronoiContainer,
+     VictoryTooltip
 } from "victory-native";
 import { 
     Text,
@@ -63,13 +65,21 @@ class CoinChart extends PureComponent {
           { this.state.loaded ? 
              (<VictoryGroup 
                  padding={0}
-                 height= {200}>
+                 height= {200}
+                containerComponent={
+                            <VictoryVoronoiContainer/>
+                          }>
                     <VictoryArea
                         style={{ data: { fill: this.chartColor } }}
                         data={this.coinHistoryData} 
                         domain={{ 
                             y: [this.coinMinimum, this.coinMaximum] 
                         }}
+                        labels={(d) => `y: ${d.y}`}
+                        labelComponent={
+                            <VictoryTooltip   />
+                          }
+            
                     />
                     </VictoryGroup>)
           : (<Text> Loading..</Text>)}</View>
@@ -105,3 +115,4 @@ const styles = StyleSheet.create({
 ////cHT: 1536892140000, cHTVU: 6519.44, cHTVF: "$6,519.44", no: 0
 
 //coinHistory
+//https://jsfiddle.net/boygirl/pqn3aub8/
