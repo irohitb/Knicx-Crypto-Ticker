@@ -1,12 +1,13 @@
 import React, { PureComponent} from "react"
+var _ = require('lodash');
 import { 
-    VictoryBar,
     VictoryArea,
     VictoryGroup,
-     VictoryChart, 
-     VictoryTheme,
+    VictoryChart,
      VictoryVoronoiContainer,
-     VictoryTooltip
+     VictoryTooltip,
+     VictoryScatter, 
+     VictoryCursorContainer
 } from "victory-native";
 import { 
     Text,
@@ -16,6 +17,20 @@ import {
 } from 'react-native'
 
 let coinMinimumA = []
+let point;
+const { range, first, last } = _;
+const findClosestPointSorted = (data, value) => {
+	// assumes 3 things:
+  // 1. data is sorted by x
+  // 2. data points are equally spaced
+  // 3. the search is 1-dimentional (x, not x and y)
+  if (value === null) return null;
+	const start = first(data).y;
+	const range = (last(data).y - start);
+  const index = Math.round((value - start)/range * (data.length - 1));
+  return data[index];
+};
+
 class CoinChart extends PureComponent {
     constructor() {
         super()
@@ -27,15 +42,26 @@ class CoinChart extends PureComponent {
     }
 
     state = {
-        loaded: false
+        loaded: false,
+        activePoint: "null"
     }
 
+    handleCursorChange(value) {
+        this.setState({
+          activePoint: findClosestPointSorted(allData, value)
+      });
+    }
  
 
     
     render () {
 
+    const { activePoint } = this.state;
         if (this.props.coinHistory.length > 1) {
+          
+            let point = activePoint ?
+            (<VictoryScatter data={[activePoint]} style={{data: {size: 100} }}/>)
+          : (<Text> Second</Text>);
         this.coinHistoryData = this.props.coinHistory
                 coinMinimumA =[]
             for (let i = 0; i < this.props.coinHistory.length; i++ ) {
@@ -67,20 +93,22 @@ class CoinChart extends PureComponent {
                  padding={0}
                  height= {200}
                 containerComponent={
-                            <VictoryVoronoiContainer/>
-                          }>
+                    <VictoryCursorContainer
+                            dimension="x"
+                            onChange={this.handleCursorChange.bind(this)}
+                            cursorLabel={cursor => `${activePoint.x}, ${Math.round(activePoint.y)}`}
+                        />
+                     }>
+                     {point}
                     <VictoryArea
                         style={{ data: { fill: this.chartColor } }}
                         data={this.coinHistoryData} 
                         domain={{ 
                             y: [this.coinMinimum, this.coinMaximum] 
                         }}
-                        labels={(d) => `y: ${d.y}`}
-                        labelComponent={
-                            <VictoryTooltip   />
-                          }
-            
+                        
                     />
+                
                     </VictoryGroup>)
           : (<Text> Loading..</Text>)}</View>
         )
