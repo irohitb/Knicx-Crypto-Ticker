@@ -46,9 +46,10 @@ class CoinChart extends PureComponent {
         activePoint: "null"
     }
 
-    handleCursorChange(value) {
+    handleCursorChange = (value) => {
+        console.log("here")
         this.setState({
-          activePoint: findClosestPointSorted(allData, value)
+          activePoint: findClosestPointSorted(this.coinHistoryData, value)
       });
     }
  
@@ -92,12 +93,12 @@ class CoinChart extends PureComponent {
                  height= {200}
                 containerComponent={
                     <VictoryCursorContainer
-                            dimension="x"
-                            onChange={this.handleCursorChange.bind(this)}
-                            cursorLabel={cursor => `${activePoint.x}, ${Math.round(activePoint.y)}`}
+                    cursorDimension="x"
+                    onCursorChange={(value, props) => this.handleCursorChange(value,props)}
+                            cursorLabel={(cursor) => `${cursor.x}, ${Math.round(cursor.y)}`}
                         />
                      }>
-                     {point}
+                 
                     <VictoryArea
                         style={{ data: { fill: this.chartColor } }}
                         data={this.coinHistoryData} 
@@ -106,6 +107,7 @@ class CoinChart extends PureComponent {
                         }}
                         
                     />
+                        {point}
                 
                     </VictoryGroup>)
           : (<Text> Loading..</Text>)}</View>
