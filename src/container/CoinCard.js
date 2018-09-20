@@ -6,9 +6,11 @@ import { StyleSheet, Text, View , Image, TouchableOpacity, TouchableWithoutFeedb
 
 
 
+
 class  CoinCard extends PureComponent {
 
     state = {
+        loaded: false,
         increased: false,
         decreased: false,
         selectedPostId: "none",
@@ -62,7 +64,7 @@ class  CoinCard extends PureComponent {
         return (
             
             <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('CoinCapCharts', {
-                coinShortName: this.props.coinShortName
+                coinShortName: this.props.coinShortName, coinCurrentPrice: this.props.coinPrice
             })}>
                <View style={container1}>
                     <View style={upperRow}>

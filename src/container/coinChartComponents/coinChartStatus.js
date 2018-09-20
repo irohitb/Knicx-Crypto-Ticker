@@ -31,16 +31,13 @@ const coinStatus = (props) => {
                 <Text style={subHeadingValue}> {props.coinDetails.cap24hrChange}</Text>
             </View>
             <View style={coinDetails}>
-                <Text style={subHeadingContent}>Price</Text>
-                <Text style={subHeadingValue}> {[props.coinDetails.price_usd].toLocaleString()} </Text>
+                <Text style={subHeadingContent}>Current Price</Text>
+                <Text style={subHeadingValue}> ${[props.coinDetails.price_usd].toLocaleString()} </Text>
             </View>
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>Price in Bitcoin: </Text>
                 <Text style={subHeadingValue}> {props.coinDetails.price_btc} </Text>
             </View>
-
-
-
         </View>
     )
 }

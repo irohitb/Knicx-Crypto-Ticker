@@ -14,6 +14,8 @@ import {
 
  import CoinChartStatus from './coinChartComponents/coinChartStatus'
  import CoinChart from "./coinChartComponents/coinChart.js"
+ 
+
 
 
 
@@ -34,7 +36,6 @@ class CoinCapCharts extends PureComponent {
     componentDidMount() {
         this.props.coinHistory(this.state.days, this.props.navigation.state.params.coinShortName) 
         this.props.coinComplete(this.props.navigation.state.params.coinShortName)
-        
     }
 
     render ()  {   
@@ -53,7 +54,7 @@ class CoinCapCharts extends PureComponent {
                    <CoinChart 
                     coinHistory = {this.props.coinHistoryDisplay}
                     chartColor = {this.props.coinCompleteDisplay} 
-                    
+
                     //  Chart color here is actually sending everything and we are using it for more than color operations now
                    />
 

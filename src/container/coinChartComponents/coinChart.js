@@ -39,14 +39,13 @@ const findClosestPointSorted = (data, value) => {
 class CoinChart extends PureComponent {
     constructor() {
         super()
-         
             this.coinMinimum
             this.coinMaximum
             this.chartColor
             this.chartBorder
-            this.valueAtSelectedTime  
+            this.valueAtSelectedTime
             this.selectedTime
-
+            this.chartPriceColorMain
     }
 
     state = {
@@ -54,16 +53,17 @@ class CoinChart extends PureComponent {
         activePoint: null
     }
 
+
     handleCursorChange = (value, props) => {
 
         //Converting the value we want to show 
         const numberSearch = Math.round(value)
         this.selectedTime = this.props.coinHistory[numberSearch]["cHT"]
-        this.selectedTime  = new Date(this.selectedTime).toString();
+        this.selectedTime  = new Date(this.selectedTime).toString()
         this.selectedTime = this.selectedTime.split(' ').slice(0, 5).join(' ');
         this.valueAtSelectedTime = this.props.coinHistory[numberSearch]["cHTVF"]
 
-         
+        //This will call function which declared in the global modular scope 
         this.setState({
           activePoint: findClosestPointSorted(this.props.coinHistory, value)
       });
@@ -80,6 +80,7 @@ class CoinChart extends PureComponent {
     (<VictoryScatter data={[activePoint]} style={{data: {size: 200, fill: "#FFC107"} }}/>)
   : null;
         if (this.props.coinHistory.length > 1) {
+            
                 coinMinimumA =[]
             //Making aray of all the value in Y axis to make domain 
             for (let i = 0; i < this.props.coinHistory.length; i++ ) {
@@ -92,10 +93,12 @@ class CoinChart extends PureComponent {
 
                 //Setting up color for the chart depending on the market cap
             if (this.props.chartColor.cap24hrChange > 0) {
+                this.chartPriceColorMain = "#689F38"
                 this.chartColor = "#8BC34A"
                 this.chartBorder = "#689F38"
 
             } else if (this.props.chartColor.cap24hrChange < 0) {
+                this.chartPriceColorMain = "#F44336"
                 this.chartColor = "#ff4c4c"
                 this.chartBorder = "#D32F2F"
             }
@@ -103,22 +106,22 @@ class CoinChart extends PureComponent {
             if (!this.state.loaded ) {
             this.setState({loaded: true})
           }
+
+       //Intially when user does not scroll the value of selected coin is null and hence we ae giving to the current coin value
+          if (!this.valueAtSelectedTime && this.props.chartColor["price_usd"]) {
+              this.valueAtSelectedTime = "$" + this.props.chartColor["price_usd"].toLocaleString()
+              this.selectedTime = new Date().toString()
+              this.selectedTime = this.selectedTime.split(' ').slice(0, 5).join(' ');
+          }
         } 
-
-
-
-
-
         return (
         <View style={container}>
             <View style={heading}> 
                 <Text style={heading1}> {this.props.chartColor.display_name} ({this.props.chartColor.id}) </Text>
-                <Text style={[heading1, {color:this.chartColor}]}> {this.valueAtSelectedTime}</Text>
+                <Text style={[heading1, {color:this.chartPriceColorMain}]}> {this.valueAtSelectedTime}</Text>
                 <Text style={[heading2, {color:this.chartColor}]}> {this.selectedTime}</Text>
-               
-
             </View>
-          { this.state.loaded ? 
+            { this.state.loaded ? 
              (<VictoryGroup 
                  padding={0}
                  height= {150}
@@ -150,7 +153,7 @@ export default CoinChart;
 
 const styles = StyleSheet.create({
     container: {
-        display: "flex",
+      display: "flex",
       backgroundColor: "#f5fcff"
     }, 
     heading: {

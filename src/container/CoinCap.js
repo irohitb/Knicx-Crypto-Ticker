@@ -16,7 +16,8 @@ import {
 import CoinCard from "./CoinCard.js"
 import Header from '../components/header.js';
 import {CurrencyRate} from '../actions/currencyData.js'
-
+import Spinner from 'react-native-loading-spinner-overlay';
+ 
 
 
 
@@ -27,14 +28,14 @@ class cryptoTicker extends PureComponent {
 
   constructor() {
     super();
-  this.updateCoinData = []
-   this.displaySearchCrypto = []
-   this.socket = openSocket('https://coincap.io');
-}
+      this.updateCoinData = []
+      this.displaySearchCrypto = []
+      this.socket = openSocket('https://coincap.io');
+  }
   
   state = {
     searchCoin: false, 
-    updateCoinData: false
+    loading: true
 
   }
 
@@ -113,11 +114,17 @@ componentWillUnmount() {
 
 
   render() {
+
     
   return (
 
      
-             <View style={mainView}>
+             <View>
+          { this.props.cryptoLoading ? 
+            (  <View style={{ flex: 1 }}>
+                <Spinner visible={this.props.cryptoLoading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+            </View> ) :
+            (<View style={mainView}>
              <Header />
              {/* Custom Search Input */}
            
@@ -153,11 +160,10 @@ componentWillUnmount() {
                   vwapData={item["vwapData"].toFixed(2)}
                   coinImage={"https://coincap.io/images/coins/" + newlong + ".png"}
                   />
-
-                 )}}
-             
+                 
+                 )}}          
       />
-  
+       </View>)}
       </View>
          
        )

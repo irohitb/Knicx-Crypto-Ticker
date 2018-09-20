@@ -56,3 +56,6 @@ const Root = () => (
 
 //https://facebook.github.io/react-native/blog/2018/01/18/implementing-twitters-app-loading-animation-in-react-native 
 //Implementing Twitter Animation
+
+//react-native-spinkit
+//https://www.npmjs.com/package/react-native-spinkit
