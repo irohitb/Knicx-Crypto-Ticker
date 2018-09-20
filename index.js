@@ -53,3 +53,6 @@ const Root = () => (
 //Implement loading 
 //Implement Reddit, Twitter, News Integration 
 //Implement Prices at various exchange 
+
+//https://facebook.github.io/react-native/blog/2018/01/18/implementing-twitters-app-loading-animation-in-react-native 
+//Implementing Twitter Animation

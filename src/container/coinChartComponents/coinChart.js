@@ -7,6 +7,7 @@ import {
      VictoryVoronoiContainer,
      VictoryTooltip,
      VictoryScatter, 
+     VictoryClipContainer,
      VictoryCursorContainer
 } from "victory-native";
 import { 
@@ -20,6 +21,8 @@ let coinMinimumA = []
 let point;
 const { range, first, last } = _;
 const findClosestPointSorted = (data, value) => {
+
+
 	// assumes 3 things:
   // 1. data is sorted by x
   // 2. data points are equally spaced
@@ -27,9 +30,8 @@ const findClosestPointSorted = (data, value) => {
  
   if (value === null) return null;
     const start = first(data).x;
-	const range = (last(data).x - start);
+    const range = (last(data).x - start);
   const index = Math.round((value - start)/range * (data.length - 1));
-  
   return data[index];
 
 };
@@ -37,11 +39,14 @@ const findClosestPointSorted = (data, value) => {
 class CoinChart extends PureComponent {
     constructor() {
         super()
-            this.coinHistoryData
+         
             this.coinMinimum
             this.coinMaximum
             this.chartColor
-         
+            this.chartBorder
+            this.valueAtSelectedTime  
+            this.selectedTime
+
     }
 
     state = {
@@ -49,9 +54,18 @@ class CoinChart extends PureComponent {
         activePoint: null
     }
 
-    handleCursorChange = (value) => {
+    handleCursorChange = (value, props) => {
+
+        //Converting the value we want to show 
+        const numberSearch = Math.round(value)
+        this.selectedTime = this.props.coinHistory[numberSearch]["cHT"]
+        this.selectedTime  = new Date(this.selectedTime).toString();
+        this.selectedTime = this.selectedTime.split(' ').slice(0, 5).join(' ');
+        this.valueAtSelectedTime = this.props.coinHistory[numberSearch]["cHTVF"]
+
+         
         this.setState({
-          activePoint: findClosestPointSorted(this.coinHistoryData , value)
+          activePoint: findClosestPointSorted(this.props.coinHistory, value)
       });
     }
  
@@ -60,14 +74,14 @@ class CoinChart extends PureComponent {
     render () {
      
 
+ //THis is that dot which would appear on the slected point 
     let  activePoint  = this.state.activePoint;
     point = activePoint ?
-    (<VictoryScatter data={[activePoint]} style={{data: {size: 100} }}/>)
+    (<VictoryScatter data={[activePoint]} style={{data: {size: 200, fill: "#FFC107"} }}/>)
   : null;
         if (this.props.coinHistory.length > 1) {
-         
-        this.coinHistoryData = this.props.coinHistory
                 coinMinimumA =[]
+            //Making aray of all the value in Y axis to make domain 
             for (let i = 0; i < this.props.coinHistory.length; i++ ) {
                 coinMinimumA.push(this.props.coinHistory[i]["y"])
             }
@@ -78,10 +92,14 @@ class CoinChart extends PureComponent {
 
                 //Setting up color for the chart depending on the market cap
             if (this.props.chartColor.cap24hrChange > 0) {
-                this.chartColor = "#4CAF50"
+                this.chartColor = "#8BC34A"
+                this.chartBorder = "#689F38"
+
             } else if (this.props.chartColor.cap24hrChange < 0) {
-                this.chartColor = "#F44336"
+                this.chartColor = "#ff4c4c"
+                this.chartBorder = "#D32F2F"
             }
+
             if (!this.state.loaded ) {
             this.setState({loaded: true})
           }
@@ -93,28 +111,34 @@ class CoinChart extends PureComponent {
 
         return (
         <View style={container}>
+            <View style={heading}> 
+                <Text style={heading1}> {this.props.chartColor.display_name} ({this.props.chartColor.id}) </Text>
+                <Text style={[heading1, {color:this.chartColor}]}> {this.valueAtSelectedTime}</Text>
+                <Text style={[heading2, {color:this.chartColor}]}> {this.selectedTime}</Text>
+               
+
+            </View>
           { this.state.loaded ? 
              (<VictoryGroup 
                  padding={0}
-                 height= {200}
+                 height= {150}
                 containerComponent={
                     <VictoryCursorContainer
                     cursorDimension="x"
                     onCursorChange={(value, props) => this.handleCursorChange(value,props)}
-                            cursorLabel={(cursor) => ` ${cursor.y}`}
+                            cursorLabel={(cursor) => ``}
                         />
                      }>
-        
                     <VictoryArea
                         style={{ data: { fill: this.chartColor } }}
-                        data={this.coinHistoryData} 
+                        data={this.props.coinHistory} 
                         domain={{ 
                             y: [this.coinMinimum, this.coinMaximum] 
                         }}
-                        
+                        groupComponent={<VictoryClipContainer clipPadding={{ top: 1, right: 1 }}/>}
+                            style={{ data: { fill: this.chartColor, stroke: this.chartBorder, strokeWidth: 3, strokeLinecap: "round" } }}
                     />
                         {point}
-                
                     </VictoryGroup>)
           : (<Text> Loading..</Text>)}</View>
         )
@@ -127,24 +151,30 @@ export default CoinChart;
 const styles = StyleSheet.create({
     container: {
         display: "flex",
-        flexDirection: "row",
       backgroundColor: "#f5fcff"
     }, 
-    graphStyle: {
-        flex: 1,
+    heading: {
+        marginTop: 10,
+        marginBottom: 20,
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        padding: 0
-    
-
-
+        flexDirection: "column"
+    },
+    heading1: {
+        fontSize: 20,
+        textAlign: 'center', 
+    },
+    heading2: {
+        fontSize: 14,
+        textAlign: 'center',  
     }
+
   });
 
   const {
     container,
-    graphStyle
+    heading,
+    heading1,
+    heading2
   } = styles
 ////cHT: 1536892140000, cHTVU: 6519.44, cHTVF: "$6,519.44", no: 0
 

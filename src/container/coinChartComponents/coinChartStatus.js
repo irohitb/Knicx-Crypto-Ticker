@@ -11,12 +11,12 @@ const coinStatus = (props) => {
     return (
         <View style={coinDetailsMain}> 
             <View style={coinDetailsH}>
-            <Text style={mainHeading}> Coin Complete Details </Text>
+            <Text style={mainHeading}> Coin Additional Details </Text>
             </View>
-            <View style={coinDetails}>
+            {/* <View style={coinDetails}>
                 <Text style={subHeadingContent}>Display Name:</Text>
                 <Text> {props.coinDetails.display_name} ({props.coinDetails.id})</Text>
-            </View>
+            </View> */}
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>Volume 24 Hour:  </Text>
                 <Text style={subHeadingValue}> {props.coinDetails.volume} </Text>
@@ -31,26 +31,14 @@ const coinStatus = (props) => {
                 <Text style={subHeadingValue}> {props.coinDetails.cap24hrChange}</Text>
             </View>
             <View style={coinDetails}>
-                <Text style={subHeadingContent}>Price in USD: </Text>
-                <Text> ${props.coinDetails.price_usd} </Text>
-            </View>
-            <View style={coinDetails}>
-                <Text style={subHeadingContent}>Price in Euro: </Text>
-                <Text style={subHeadingValue}> €{[props.coinDetails.price_eur].toLocaleString()} </Text>
-            </View>
-            <View style={coinDetails}>
-                <Text style={subHeadingContent}>Price in Sel Currency: </Text>
+                <Text style={subHeadingContent}>Price</Text>
                 <Text style={subHeadingValue}> {[props.coinDetails.price_usd].toLocaleString()} </Text>
             </View>
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>Price in Bitcoin: </Text>
                 <Text style={subHeadingValue}> {props.coinDetails.price_btc} </Text>
             </View>
-            <View style={coinDetails}>
-                <Text style={subHeadingContent}>Global Coin Rank:</Text>
-                <Text style={subHeadingValue}> {props.coinDetails.rank}</Text>
-            </View>
-        
+
 
 
         </View>
@@ -61,10 +49,14 @@ export default coinStatus;
 
 const styles = StyleSheet.create({ 
     coinDetailsMain: {
+      marginTop: 15,
       display: "flex",
       flexDirection: "column",
       borderWidth: 0,
-      backgroundColor: "white"
+      backgroundColor: "white",
+      borderRadius: 15,
+      marginLeft: 5,
+      marginRight: 5
     }, 
     coinDetails: {
         display: "flex",

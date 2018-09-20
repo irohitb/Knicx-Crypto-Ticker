@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { 
     View, 
     StyleSheet,
-    ScrollView 
+    ScrollView,
+    Button
 } from 'react-native'
 import Header from '../components/header.js';
 import { 
@@ -43,13 +44,20 @@ class CoinCapCharts extends PureComponent {
                 <View> 
                     <Header 
                     navigation = {this.props.navigation} 
-                    enable = "true" />    
-                <ScrollView>
+                    enable = "true" />   
+
+
+
+                   <ScrollView>
+              
                    <CoinChart 
                     coinHistory = {this.props.coinHistoryDisplay}
-                    chartColor = {this.props.coinCompleteDisplay}
+                    chartColor = {this.props.coinCompleteDisplay} 
+                    
+                    //  Chart color here is actually sending everything and we are using it for more than color operations now
                    />
 
+                
                     <CoinChartStatus 
                     coinDetails = {this.props.coinCompleteDisplay}
                     />
