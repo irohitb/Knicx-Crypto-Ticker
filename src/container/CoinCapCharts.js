@@ -36,7 +36,7 @@ class CoinCapCharts extends PureComponent {
     //1, 7, 30, 90, 180, 365
     changeHistoryChart = (value) => {
         this.setState({activeButton: value}, () => {
-            this.props.coinHistory(this.state.days, this.props.navigation.state.params.coinShortName)
+            this.props.coinHistory(this.state.activeButton, this.props.navigation.state.params.coinShortName)
         })
     }
 
