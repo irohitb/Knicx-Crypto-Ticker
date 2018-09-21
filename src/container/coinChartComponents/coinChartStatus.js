@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     },
     mainHeading: {
         textAlign: 'center',
-        fontSize: 25, 
+        fontSize: 23, 
         color: "#4A708B",
         marginBottom: 5
     }, 

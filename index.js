@@ -59,3 +59,7 @@ const Root = () => (
 
 //react-native-spinkit
 //https://www.npmjs.com/package/react-native-spinkit
+
+
+//Twitter API 
+//https://developer.twitter.com/en/docs/twitter-for-websites/javascript-api/overview
