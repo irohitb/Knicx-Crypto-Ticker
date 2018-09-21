@@ -1,6 +1,11 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, View , Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
-
+import { 
+    StyleSheet, 
+    Text, 
+    View, 
+    Image, 
+    TouchableWithoutFeedback 
+} from 'react-native';
 
 
 
@@ -10,7 +15,6 @@ import { StyleSheet, Text, View , Image, TouchableOpacity, TouchableWithoutFeedb
 class  CoinCard extends PureComponent {
 
     state = {
-        loaded: false,
         increased: false,
         decreased: false,
         selectedPostId: "none",

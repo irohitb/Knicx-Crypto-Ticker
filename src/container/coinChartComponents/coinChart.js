@@ -3,9 +3,6 @@ var _ = require('lodash');
 import { 
     VictoryArea,
     VictoryGroup,
-    VictoryChart,
-     VictoryVoronoiContainer,
-     VictoryTooltip,
      VictoryScatter, 
      VictoryClipContainer,
      VictoryCursorContainer
@@ -14,15 +11,14 @@ import {
     Text,
     View, 
     StyleSheet,
-    ScrollView 
 } from 'react-native'
 
 let coinMinimumA = []
 let point;
 const { range, first, last } = _;
+
+
 const findClosestPointSorted = (data, value) => {
-
-
 	// assumes 3 things:
   // 1. data is sorted by x
   // 2. data points are equally spaced

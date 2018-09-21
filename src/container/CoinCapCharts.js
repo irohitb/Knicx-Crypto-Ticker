@@ -4,7 +4,8 @@ import {
     View, 
     StyleSheet,
     ScrollView,
-    Button
+    Button,
+    TouchableWithoutFeedback
 } from 'react-native'
 import Header from '../components/header.js';
 import { 
@@ -24,19 +25,25 @@ import {
 
 class CoinCapCharts extends PureComponent {
 
-    state = {
-        days: 1
+   
+
+
+    //Coin Chart to display function 
+    //Accepted value 
+    //1, 7, 30, 90, 180, 365
+    changeHistoryChart = (value) => {
+            this.props.coinHistory(value, this.props.navigation.state.params.coinShortName)
     }
 
-    constructor () {
-        super()
-    }
+
     
 
     componentDidMount() {
-        this.props.coinHistory(this.state.days, this.props.navigation.state.params.coinShortName) 
+        this.props.coinHistory(1, this.props.navigation.state.params.coinShortName) 
         this.props.coinComplete(this.props.navigation.state.params.coinShortName)
     }
+
+
 
     render ()  {   
         
@@ -57,11 +64,38 @@ class CoinCapCharts extends PureComponent {
 
                     //  Chart color here is actually sending everything and we are using it for more than color operations now
                    />
+                <View style={button}>
+                     <Button
+                        style
+                        onPress={() => this.changeHistoryChart(1)}
+                        title="Today"
+                        color="#03A9F4" />
+                    <Button
+                        onPress={() => this.changeHistoryChart(7)}
+                        title="1W"
+                        color="#03A9F4" />
+                   <Button
+                        onPress={() => this.changeHistoryChart(30)}
+                        title="1M"
+                        color="#03A9F4" />
+                   <Button
+                        onPress={() => this.changeHistoryChart(90)}
+                        title="3M"
+                        color="#03A9F4" />
+                    <Button
+                        onPress={() => this.changeHistoryChart(180)}
+                        title="6M"
+                        color="#03A9F4" />
+                    <Button
+                        onPress={() => this.changeHistoryChart(365)}
+                        title="1Y"
+                        color="#03A9F4"  />
+                    </View>
 
-                
                     <CoinChartStatus 
                     coinDetails = {this.props.coinCompleteDisplay}
                     />
+                    
                  </ScrollView>
                 </View>
         
@@ -85,7 +119,17 @@ export default connect(mapStateToProps,
 
   })(CoinCapCharts);
 
+  const styles = StyleSheet.create({ 
+      button: {
+        display: "flex", 
+        flexDirection: "row",
+        justifyContent: "space-between"
+      }
+  })
 
+  const { 
+      button 
+    } = styles
 
 
 
