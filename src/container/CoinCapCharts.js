@@ -5,7 +5,8 @@ import {
     StyleSheet,
     ScrollView,
     Button,
-    TouchableWithoutFeedback
+    Text,
+    TouchableOpacity
 } from 'react-native'
 import Header from '../components/header.js';
 import { 
@@ -26,13 +27,17 @@ import {
 class CoinCapCharts extends PureComponent {
 
    
-
+ state = {
+     activeButton: 1
+ }
 
     //Coin Chart to display function 
     //Accepted value 
     //1, 7, 30, 90, 180, 365
     changeHistoryChart = (value) => {
-            this.props.coinHistory(value, this.props.navigation.state.params.coinShortName)
+        this.setState({activeButton: value}, () => {
+            this.props.coinHistory(this.state.days, this.props.navigation.state.params.coinShortName)
+        })
     }
 
 
@@ -64,32 +69,50 @@ class CoinCapCharts extends PureComponent {
 
                     //  Chart color here is actually sending everything and we are using it for more than color operations now
                    />
-                <View style={button}>
-                     <Button
-                        style
-                        onPress={() => this.changeHistoryChart(1)}
-                        title="Today"
-                        color="#03A9F4" />
-                    <Button
-                        onPress={() => this.changeHistoryChart(7)}
-                        title="1W"
-                        color="#03A9F4" />
-                   <Button
-                        onPress={() => this.changeHistoryChart(30)}
-                        title="1M"
-                        color="#03A9F4" />
-                   <Button
-                        onPress={() => this.changeHistoryChart(90)}
-                        title="3M"
-                        color="#03A9F4" />
-                    <Button
-                        onPress={() => this.changeHistoryChart(180)}
-                        title="6M"
-                        color="#03A9F4" />
-                    <Button
-                        onPress={() => this.changeHistoryChart(365)}
-                        title="1Y"
-                        color="#03A9F4"  />
+                <View style={buttonMain}>
+                    <View>
+                        <TouchableOpacity
+                            style
+                            onPress={() => this.changeHistoryChart(1)}
+                            style={button}>
+                               <Text style={[buttonT, this.state.activeButton == 1 ? {color: "#3F51B5"} : {color: "#9E9E9E"} ]}>Today</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        <TouchableOpacity
+                            onPress={() => this.changeHistoryChart(7)}
+                            style={button}>
+                            <Text style={[buttonT, this.state.activeButton == 7 ? {color: "#3F51B5"} : {color: "#9E9E9E"} ]}>7D</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        <TouchableOpacity
+                                onPress={() => this.changeHistoryChart(30)}
+                                style={button}>
+                                <Text style={[buttonT, this.state.activeButton == 30 ? {color: "#3F51B5"} : {color: "#9E9E9E"} ]}>1M </Text>
+                        </TouchableOpacity>
+                        </View>
+                        <View>
+                        <TouchableOpacity
+                                onPress={() => this.changeHistoryChart(90)}
+                                style={button}>
+                                <Text style={[buttonT, this.state.activeButton == 90 ? {color: "#3F51B5"} : {color: "#9E9E9E"} ]}>3M</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View>
+                            <TouchableOpacity
+                                onPress={() => this.changeHistoryChart(180)}
+                                style={button}>
+                                <Text style={[buttonT, this.state.activeButton == 180 ? {color: "#3F51B5"} : {color: "#9E9E9E"} ]}>6M</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={button}>
+                            <TouchableOpacity
+                                onPress={() => this.changeHistoryChart(365)}
+                                style={button}>
+                                <Text style={[buttonT, this.state.activeButton == 365 ? {color: "#3F51B5"} : {color: "#9E9E9E"} ]}>1Y </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
 
                     <CoinChartStatus 
@@ -120,15 +143,25 @@ export default connect(mapStateToProps,
   })(CoinCapCharts);
 
   const styles = StyleSheet.create({ 
-      button: {
+    buttonMain: {
         display: "flex", 
         flexDirection: "row",
-        justifyContent: "space-between"
-      }
+        justifyContent: "space-between",
+        backgroundColor: "white"
+      },
+    button: {
+    
+    },
+    buttonT: {
+        padding: 5,
+        fontSize: 15
+    }
   })
 
   const { 
-      button 
+    buttonMain,
+    button,
+    buttonT
     } = styles
 
 

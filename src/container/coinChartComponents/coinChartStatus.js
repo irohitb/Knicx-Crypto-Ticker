@@ -11,7 +11,7 @@ const coinStatus = (props) => {
     return (
         <View style={coinDetailsMain}> 
             <View style={coinDetailsH}>
-            <Text style={mainHeading}> Coin Additional Details </Text>
+            <Text style={mainHeading}> Coin Details </Text>
             </View>
             {/* <View style={coinDetails}>
                 <Text style={subHeadingContent}>Display Name:</Text>
@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
     mainHeading: {
         textAlign: 'center',
         fontSize: 25, 
-        color: "#4A708B"
+        color: "#4A708B",
+        marginBottom: 5
     }, 
     subHeadingContent: {
         fontSize: 15,

@@ -12,6 +12,8 @@ import {
     View, 
     StyleSheet,
 } from 'react-native'
+import Spinner from 'react-native-loading-spinner-overlay';
+
 
 let coinMinimumA = []
 let point;
@@ -139,7 +141,9 @@ class CoinChart extends PureComponent {
                     />
                         {point}
                     </VictoryGroup>)
-          : (<Text> Loading..</Text>)}</View>
+          : (<View style={{ flex: 1 }}>
+          <Spinner visible={this.props.cryptoLoading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+      </View> )}</View>
         )
     }
 }
