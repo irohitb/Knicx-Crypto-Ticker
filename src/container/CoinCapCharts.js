@@ -136,13 +136,17 @@ class CoinCapCharts extends PureComponent {
                     <FlatList
                         data={this.props.redditCryptoNews.slice(0,5)}
                         renderItem={({index, item}) => {
-                            if (item["data"]["thumbnail"] == "none") {
+                            console.log(index + item["data"]["thumbnail"] )
+                            
+                            if (item["data"]["thumbnail"] == "self") {
+                                console.log("here inside none")
                                 this.image = require('./../images/reddit.png');
                               } else {
+                    
                                 this.image = { uri: item["data"]["thumbnail"] };
                               }
                             return (
-                            <View > 
+                            <View style={redditMain} > 
                                  <Image 
                                      source={ this.image }
                                      style={img}
@@ -197,27 +201,29 @@ export default connect(mapStateToProps,
     reddit: {
         marginTop: 15,
         display: "flex",
-        flexDirection: "column",
-        borderWidth: 0,
         backgroundColor: "white",
+        flexDirection: "column",
         borderRadius: 15,
         marginLeft: 5,
         marginRight: 5
     },
+    redditMain: {
+        display: "flex",
+        flexDirection: "row",
+        marginTop: 10,
+    
+    },
     RedditList: {
-       paddingTop: 8,
-       paddingBottom: 8,
-       paddingLeft: 6,
-       paddingRight: 2,
        fontSize: 17,
+       marginLeft: 5,
+       marginRight: 5
      }, 
      mainView: {
          marginBottom: 10
      },
      img: {
-        width: 30,
-        height: 30,
-        marginTop: 6,
+        width: 40,
+        height: 40,
         marginLeft: 5
     }
   })
@@ -229,7 +235,9 @@ export default connect(mapStateToProps,
     reddit,
     RedditList,
     mainView,
-    img
+    img,
+    redditMain
+  
     } = styles
 
 
