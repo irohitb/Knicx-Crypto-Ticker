@@ -7,12 +7,6 @@ import {
   GLOBAL_DATA,
   COIN_HISTORY,
   COIN_COMPLETE
-  // COIN_CAP_1DAYS,
-  // COIN_CAP_7DAYS,
-  // COIN_CAP_30DAYS,
-  // COIN_CAP_90DAYS,
-  // COIN_CAP_180DAYS,
-  // COIN_CAP_365DAYS
 } from './type.js';
 import {
   ApiCoinCap, 

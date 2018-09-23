@@ -1,6 +1,13 @@
 import axios from 'axios';
-import {CURRENCY_RATE, CURRENCY_FETCHING, CURRENCY_ERROR} from './type.js';
-import {CurrencyRateLink} from '../urls.js';
+import {
+  CURRENCY_RATE, 
+  CURRENCY_FETCHING, 
+  CURRENCY_ERROR
+ } from './type.js';
+
+import {
+  CurrencyRateLink
+} from '../urls.js';
 
 
 export const CurrencyRate = () => {

@@ -10,7 +10,7 @@ import {
 
 
 const initialState = {
-  itemsFetching: true,
+  itemsFetching: false,
   itemsSucess: [],
   itemsFail: [],
   itemGlobal: [],

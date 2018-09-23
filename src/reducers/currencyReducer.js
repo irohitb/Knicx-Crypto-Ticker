@@ -1,7 +1,11 @@
-import {CURRENCY_RATE, CURRENCY_FETCHING, CURRENCY_ERROR} from './../actions/type.js';
+import {
+  CURRENCY_RATE, 
+  CURRENCY_FETCHING, 
+  CURRENCY_ERROR
+} from './../actions/type.js';
 
 const initialState = {
-  DataFetching: true,
+  DataFetching: false,
   DataSucess: [],
   DateError: []
 }

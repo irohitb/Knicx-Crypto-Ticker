@@ -9,13 +9,11 @@ export const COIN_HISTORY = "COIN_HISTORY";
 export const COIN_COMPLETE = "COIN_COMPLETE";
 
 
-//CoinCap API History Data 
-// export const COIN_CAP_1DAYS = "COIN_CAP_1DAYS";
-// export const COIN_CAP_7DAYS = "COIN_CAP_7DAYS";
-// export const COIN_CAP_30DAYS = "COIN_CAP_30DAYS";
-// export const COIN_CAP_90DAYS = "COIN_CAP_90DAYS";
-// export const COIN_CAP_180DAYS = "COIN_CAP_180DAYS";
-// export const COIN_CAP_365DAYS = "COIN_CAP_365DAYS";
+//Social Media and News
+export const REDDIT_FETCHED = 'REDDIT_FETCHED'
+export const REDDIT_FETCHING = 'REDDIT_FETCHING'
+export const REDDIT_DATA_FAIL = 'REDDIT_DATA_FAIL'
+
 
 
 //Currency Rate

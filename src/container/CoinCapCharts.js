@@ -14,6 +14,10 @@ import {
     coinComplete 
 } from "../actions/coinCapAction.js"
 
+import {
+    fetchRedditPosts
+} from "../actions/socialAndNews.js"
+
  import CoinChartStatus from './coinChartComponents/coinChartStatus'
  import CoinChart from "./coinChartComponents/coinChart.js"
  
@@ -46,11 +50,13 @@ class CoinCapCharts extends PureComponent {
     componentDidMount() {
         this.props.coinHistory(1, this.props.navigation.state.params.coinShortName) 
         this.props.coinComplete(this.props.navigation.state.params.coinShortName)
+        this.props.fetchRedditPosts("bitcoin")
     }
 
 
 
     render ()  {   
+        console.log(this.props.cryptoNews)
         
             return (
               
@@ -133,13 +139,14 @@ const mapStateToProps = state => {
       coinCompleteDisplay: state.coincap.itemComplete,
       coinHistoryDisplay: state.coincap.itemHistory ,
       cryptoLoading: state.coincap.itemsFetching, 
+      cryptoNews: state.news.DataSucess
     }
   };
 
 export default connect(mapStateToProps, 
   {coinHistory, 
     coinComplete, 
-
+    fetchRedditPosts
   })(CoinCapCharts);
 
   const styles = StyleSheet.create({ 
