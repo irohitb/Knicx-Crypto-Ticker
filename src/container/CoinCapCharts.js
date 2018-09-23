@@ -214,6 +214,8 @@ export default connect(mapStateToProps,
     
     },
     RedditList: {
+       flex: 1, 
+       flexWrap: 'wrap',
        fontSize: 17,
        marginLeft: 5,
        marginRight: 5
