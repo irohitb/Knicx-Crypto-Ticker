@@ -6,7 +6,7 @@ import {
 
 
 const initialState = {
-    DataFetching: false,
+    DataFetching: true,
     DataSucess: [],
     DateError: []
   }

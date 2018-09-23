@@ -6,15 +6,19 @@ import {
     REDDIT_FETCHING
 } from './type.js';
 
+import {
+    RedditFetch
+  } from '../urls.js';
+
 
 export const fetchRedditPosts = (subreddit) => {
     return function (dispatch)  {
         dispatch({type: REDDIT_FETCHING})
-        axios.get('https://www.reddit.com/r/' + subreddit +  '/new.json?sort=new').then((response) => {
+        axios.get(RedditFetch + subreddit).then((response) => {
         return (
             dispatch({
                 type: REDDIT_FETCHED,
-                payload: response.data
+                payload: response.data.data.children
               })
            )
         }).catch((error) => dispatch({

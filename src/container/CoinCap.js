@@ -67,8 +67,6 @@ class cryptoTicker extends PureComponent {
   }
 
   componentWillReceiveProps(newProps){
-
-    
           this.updateCoinData = [...newProps.cryptoLoaded];
   }
 
@@ -107,12 +105,6 @@ onSearch = (text) => {
 componentWillUnmount() {
  this.socket.disconnect();
 }
-
-
-
-
-
-
   render() {
 
     
@@ -145,22 +137,22 @@ componentWillUnmount() {
                    renderItem={({ item, index }) => {
                  let newlong  = item["long"]
                  //Removing spaces in image name
-                 newlong = newlong.replace(/\s+/g, '');
+                newlong = newlong.replace(/\s+/g, '');
                 newlong = newlong.trim()
                  return (
-               <CoinCard
-                  navigation = {this.props.navigation}
-                  key = {index}
-                  no = {index + 1}
-                  coinShortName = {item["short"]}
-                  coinName = {item["long"]}
-                  coinPrice = {item["price"].toFixed(2)}
-                  marketCap = {(item["mktcap"]/1000000000).toFixed(4)}
-                  percentChange = {item["perc"].toFixed(2)}
-                  vwapData={item["vwapData"].toFixed(2)}
-                  coinImage={"https://coincap.io/images/coins/" + newlong + ".png"}
-                  />
-                 
+                  <CoinCard
+                      navigation = {this.props.navigation}
+                      key = {index}
+                      no = {index + 1}
+                      coinShortName = {item["short"]}
+                      coinName = {item["long"]}
+                      coinPrice = {item["price"].toFixed(2)}
+                      marketCap = {(item["mktcap"]/1000000000).toFixed(4)}
+                      percentChange = {item["perc"].toFixed(2)}
+                      vwapData={item["vwapData"].toFixed(2)}
+                      coinImage={"https://coincap.io/images/coins/" + newlong + ".png"}
+                      />
+                    
                  )}}          
       />
        </View>)}

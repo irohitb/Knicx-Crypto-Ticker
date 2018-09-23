@@ -4,9 +4,10 @@ import {
     View, 
     StyleSheet,
     ScrollView,
-    Button,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+    FlatList,
+    Image
 } from 'react-native'
 import Header from '../components/header.js';
 import { 
@@ -17,9 +18,10 @@ import {
 import {
     fetchRedditPosts
 } from "../actions/socialAndNews.js"
-
+ var RedditImage = require('../images/reddit.png')
  import CoinChartStatus from './coinChartComponents/coinChartStatus'
  import CoinChart from "./coinChartComponents/coinChart.js"
+ import Reddit from "./coinChartComponents/reddit.js"
  
 
 
@@ -30,6 +32,11 @@ import {
 
 class CoinCapCharts extends PureComponent {
 
+
+    constructor(){
+        super() 
+        this.image
+    }
    
  state = {
      activeButton: 1
@@ -44,30 +51,31 @@ class CoinCapCharts extends PureComponent {
         })
     }
 
-
-    
-
     componentDidMount() {
         this.props.coinHistory(1, this.props.navigation.state.params.coinShortName) 
         this.props.coinComplete(this.props.navigation.state.params.coinShortName)
-        this.props.fetchRedditPosts("bitcoin")
+        this.props.fetchRedditPosts(this.props.navigation.state.params.coinShortName)
+        
     }
 
+   
 
-
-    render ()  {   
-        console.log(this.props.cryptoNews)
-        
+    render ()  {
+    
+        if (!this.props.redditFetching) {
+            console.log(this.props.redditCryptoNews)
+            //thumbnail
+        }
             return (
-              
-                <View> 
+                <ScrollView>
+                <View style={mainView}> 
                     <Header 
                     navigation = {this.props.navigation} 
                     enable = "true" />   
 
 
 
-                   <ScrollView>
+                
               
                    <CoinChart 
                     coinHistory = {this.props.coinHistoryDisplay}
@@ -124,9 +132,31 @@ class CoinCapCharts extends PureComponent {
                     <CoinChartStatus 
                     coinDetails = {this.props.coinCompleteDisplay}
                     />
-                    
-                 </ScrollView>
+                    <View style={reddit}>
+                    <FlatList
+                        data={this.props.redditCryptoNews.slice(0,5)}
+                        renderItem={({index, item}) => {
+                            if (item["data"]["thumbnail"] == "none") {
+                                this.image = require('./../images/reddit.png');
+                              } else {
+                                this.image = { uri: item["data"]["thumbnail"] };
+                              }
+                            return (
+                            <View > 
+                                 <Image 
+                                     source={ this.image }
+                                     style={img}
+                                     /> 
+                            <Text style={RedditList}>{item["data"]["title"]}</Text>
+                            </View>
+                            
+                            )}}
+               
+                    />
                 </View>
+               
+                </View>
+                </ScrollView>
         
 
                 
@@ -139,7 +169,8 @@ const mapStateToProps = state => {
       coinCompleteDisplay: state.coincap.itemComplete,
       coinHistoryDisplay: state.coincap.itemHistory ,
       cryptoLoading: state.coincap.itemsFetching, 
-      cryptoNews: state.news.DataSucess
+      redditCryptoNews: state.news.DataSucess,
+      redditFetching: state.news.DataFetching
     }
   };
 
@@ -162,13 +193,43 @@ export default connect(mapStateToProps,
     buttonT: {
         padding: 5,
         fontSize: 15
+    }, 
+    reddit: {
+        marginTop: 15,
+        display: "flex",
+        flexDirection: "column",
+        borderWidth: 0,
+        backgroundColor: "white",
+        borderRadius: 15,
+        marginLeft: 5,
+        marginRight: 5
+    },
+    RedditList: {
+       paddingTop: 8,
+       paddingBottom: 8,
+       paddingLeft: 6,
+       paddingRight: 2,
+       fontSize: 17,
+     }, 
+     mainView: {
+         marginBottom: 10
+     },
+     img: {
+        width: 30,
+        height: 30,
+        marginTop: 6,
+        marginLeft: 5
     }
   })
 
   const { 
     buttonMain,
     button,
-    buttonT
+    buttonT, 
+    reddit,
+    RedditList,
+    mainView,
+    img
     } = styles
 
 
