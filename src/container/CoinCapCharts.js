@@ -7,7 +7,8 @@ import {
     Text,
     TouchableOpacity,
     FlatList,
-    Image
+    Image,
+    Linking
 } from 'react-native'
 import Header from '../components/header.js';
 import { 
@@ -18,10 +19,9 @@ import {
 import {
     fetchRedditPosts
 } from "../actions/socialAndNews.js"
- var RedditImage = require('../images/reddit.png')
  import CoinChartStatus from './coinChartComponents/coinChartStatus'
  import CoinChart from "./coinChartComponents/coinChart.js"
- import Reddit from "./coinChartComponents/reddit.js"
+ 
  
 
 
@@ -36,6 +36,7 @@ class CoinCapCharts extends PureComponent {
     constructor(){
         super() 
         this.image
+        this.text
     }
    
  state = {
@@ -61,11 +62,7 @@ class CoinCapCharts extends PureComponent {
    
 
     render ()  {
-    
-        if (!this.props.redditFetching) {
-            console.log(this.props.redditCryptoNews)
-            //thumbnail
-        }
+
             return (
                 <ScrollView>
                 <View style={mainView}> 
@@ -133,26 +130,32 @@ class CoinCapCharts extends PureComponent {
                     coinDetails = {this.props.coinCompleteDisplay}
                     />
                     <View style={reddit}>
+                        <Text style={redditTextMain}> Latest on Reddit</Text>
                     <FlatList
-                        data={this.props.redditCryptoNews.slice(0,5)}
+                        data={this.props.redditCryptoNews.slice(0,8)}
                         renderItem={({index, item}) => {
-                            console.log(index + item["data"]["thumbnail"] )
-                            
-                            if (item["data"]["thumbnail"] == "self") {
+                            if (item["data"]["title"].length < 90) {
+                            this.text = item["data"]["title"]
+                            } else {
+                                this.text = item["data"]["title"].substring(0, 90) + ".."
+                            }
+                            console.log(index, item["data"]["thumbnail"])
+                            if (item["data"]["thumbnail"] == "self" || item["data"]["thumbnail"] == "none" || item["data"]["thumbnail"] == "default") {
                                 console.log("here inside none")
                                 this.image = require('./../images/reddit.png');
                               } else {
-                    
                                 this.image = { uri: item["data"]["thumbnail"] };
                               }
                             return (
-                            <View style={redditMain} > 
+                        <TouchableOpacity
+                            onPress={() => {Linking.openURL(item["data"]["url"])}}
+                            style={redditMain} > 
                                  <Image 
                                      source={ this.image }
                                      style={img}
                                      /> 
-                            <Text style={RedditList}>{item["data"]["title"]}</Text>
-                            </View>
+                            <Text style={RedditList}>{this.text}</Text>
+                            </TouchableOpacity>
                             
                             )}}
                
@@ -205,20 +208,22 @@ export default connect(mapStateToProps,
         flexDirection: "column",
         borderRadius: 15,
         marginLeft: 5,
-        marginRight: 5
+        marginRight: 5,
+        paddingBottom: 5
     },
     redditMain: {
         display: "flex",
         flexDirection: "row",
         marginTop: 10,
-    
+        alignItems: "center"
     },
     RedditList: {
        flex: 1, 
        flexWrap: 'wrap',
-       fontSize: 17,
+       fontSize: 14,
        marginLeft: 5,
-       marginRight: 5
+       marginRight: 5,
+       color: "#323232"
      }, 
      mainView: {
          marginBottom: 10
@@ -227,6 +232,13 @@ export default connect(mapStateToProps,
         width: 40,
         height: 40,
         marginLeft: 5
+    },
+    redditTextMain: {
+        textAlign: 'center',
+        fontSize: 23, 
+        color: "#4A708B",
+        marginBottom: 5,
+        marginTop: 5
     }
   })
 
@@ -238,7 +250,8 @@ export default connect(mapStateToProps,
     RedditList,
     mainView,
     img,
-    redditMain
+    redditMain,
+    redditTextMain
   
     } = styles
 
