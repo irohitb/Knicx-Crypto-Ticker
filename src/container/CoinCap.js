@@ -17,6 +17,7 @@ import CoinCard from "./CoinCard.js"
 import Header from '../components/header.js';
 import {CurrencyRate} from '../actions/currencyData.js'
 import Spinner from 'react-native-loading-spinner-overlay';
+import BottomNavigation from '../components/BottomNavigation.js'
  
 
 
@@ -111,7 +112,7 @@ componentWillUnmount() {
   return (
 
      
-             <View>
+             <View style={superMainView}>
           { this.props.cryptoLoading ? 
             (  <View style={{ flex: 1 }}>
                 <Spinner visible={this.props.cryptoLoading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
@@ -155,7 +156,10 @@ componentWillUnmount() {
                     
                  )}}          
       />
+        <BottomNavigation />
        </View>)}
+
+      
       </View>
          
        )
@@ -173,15 +177,20 @@ const styles = StyleSheet.create({
     textAlign: "center"
   }, 
   mainView: {
+    flex: 1,
     height: "100%", 
     backgroundColor: "#f3f3f3"
+  },
+  superMainView:{
+    flex: 1
   }
 })
 
 const {
   textInput,
   cryptoName,
-  mainView
+  mainView,
+  superMainView
 } = styles
 
 
