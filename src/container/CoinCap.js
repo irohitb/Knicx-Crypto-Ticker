@@ -18,6 +18,7 @@ import Header from '../components/header.js';
 import {CurrencyRate} from '../actions/currencyData.js'
 import Spinner from 'react-native-loading-spinner-overlay';
 import BottomNavigation from '../components/BottomNavigation.js'
+import ModalDropdown from 'react-native-modal-dropdown';
  
 
 
@@ -43,24 +44,18 @@ class cryptoTicker extends PureComponent {
   componentDidMount() {
     this.props.globalData()
     this.props.fetchCoin()
-    this.props.CurrencyRate()
-
+    this.props.CurrencyRate("AUD")
       this.socket.on('trades', (tradeMsg) => {
- 
           for (let i=0; i< this.updateCoinData.length; i++) {
-
               if (this.updateCoinData[i]["short"] == tradeMsg.coin ) {
-
                   //Search for changed Crypto Value
                   this.updateCoinData[i]["long"] = tradeMsg["message"]["msg"]["long"]
                   this.updateCoinData["short"] = tradeMsg["message"]["msg"]["short"]
                   this.updateCoinData[i]["perc"] = tradeMsg["message"]["msg"]["perc"]
                   this.updateCoinData[i]["mktcap"]= tradeMsg["message"]['msg']["mktcap"]
                   this.updateCoinData[i]["price"] = tradeMsg["message"]['msg']['price']
-
                   //Update the crypto Value state in Redux
                   this.props.updateCrypto(this.updateCoinData);
-
               }
           }
       })
@@ -73,7 +68,6 @@ class cryptoTicker extends PureComponent {
 
   //On Search type 
 onSearch = (text) => {
-
   if (text == "") {
     this.socket = openSocket('https://coincap.io');
     this.setState({searchCoin: false})
@@ -107,7 +101,6 @@ componentWillUnmount() {
  this.socket.disconnect();
 }
   render() {
-
     
   return (
 
@@ -120,12 +113,15 @@ componentWillUnmount() {
             (<View style={mainView}>
              <Header />
              {/* Custom Search Input */}
-           
+           <View style={searchDrop}> 
              <TextInput
               style={textInput}
               placeholder="Search Coin"
               onChangeText={(text) => this.onSearch(text)} />
-
+              <ModalDropdown 
+              options={['option 1', 'option 2']}
+              defaultValue="USD"/>
+            </View>
             
               <FlatList
                      data={this.state.searchCoin ? this.displaySearchCrypto : this.props.cryptoLoaded}
@@ -169,7 +165,8 @@ componentWillUnmount() {
 //Creating Stylesheet 
 const styles = StyleSheet.create({ 
   textInput: {
-    flex: 0.08,
+    flex: 0.9,
+    height: 40,
     borderWidth: 0,
     backgroundColor: "white"
   }, 
@@ -183,6 +180,13 @@ const styles = StyleSheet.create({
   },
   superMainView:{
     flex: 1
+  },
+  searchDrop: {
+    flex: 0.1,
+    display: "flex",
+    flexDirection: "row",
+    height: 40
+
   }
 })
 
@@ -190,7 +194,8 @@ const {
   textInput,
   cryptoName,
   mainView,
-  superMainView
+  superMainView,
+  searchDrop
 } = styles
 
 
