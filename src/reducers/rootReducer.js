@@ -6,7 +6,7 @@ import newsReducer from "./newsReducer"
 const rootReducer = combineReducers({
   coincap: coincapReducer,
   currency: currencyReducer,
-  news: newsReducer
+  news: newsReducer,
 })
 
 export default rootReducer
