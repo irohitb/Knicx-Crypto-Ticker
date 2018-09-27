@@ -36,7 +36,8 @@ export default function(state = initialState, action) {
       case CRYPTO_DATA_FAIL:
       return {
       ...state,
-      itemsFail: action.payload
+      itemsFail: action.payload,
+      itemsFetching: false
      }
       case UPDATE_CRYPTO_DATA:
       return {

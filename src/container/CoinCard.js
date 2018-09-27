@@ -64,7 +64,7 @@ class  CoinCard extends PureComponent {
 
 
     render () { 
-  
+ 
         return (
             
             <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('CoinCapCharts', {

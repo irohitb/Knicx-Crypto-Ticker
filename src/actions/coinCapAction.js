@@ -19,6 +19,7 @@ import {
 
 //Fetching an Error Hanling of Crypto Data (of all coins)
 export const fetchCoin = () => {
+  console.log("Coin Api Call")
   return function (dispatch) {
     dispatch({type: CRYPTO_FETCHING}) 
     axios.get(ApiCoinCap).then((response) => {

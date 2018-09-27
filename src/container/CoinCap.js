@@ -101,7 +101,7 @@ componentWillUnmount() {
  this.socket.disconnect();
 }
   render() {
-    
+    console.log(this.props.currencyLoaded)
   return (
 
      
