@@ -11,6 +11,7 @@ import {
     Linking
 } from 'react-native'
 import Header from '../components/header.js';
+import BottomNavigation from '../components/BottomNavigation';
 import { 
     coinHistory, 
     coinComplete 
@@ -64,8 +65,9 @@ class CoinCapCharts extends PureComponent {
     render ()  {
 
             return (
+       
+                <View style={CoinCapChartsMain}> 
                 <ScrollView>
-                <View style={mainView}> 
                     <Header 
                     navigation = {this.props.navigation} 
                     enable = "true" />   
@@ -139,9 +141,9 @@ class CoinCapCharts extends PureComponent {
                             } else {
                                 this.text = item["data"]["title"].substring(0, 90) + ".."
                             }
-                            console.log(index, item["data"]["thumbnail"])
+                        
                             if (item["data"]["thumbnail"] == "self" || item["data"]["thumbnail"] == "none" || item["data"]["thumbnail"] == "default") {
-                                console.log("here inside none")
+                              
                                 this.image = require('./../images/reddit.png');
                               } else {
                                 this.image = { uri: item["data"]["thumbnail"] };
@@ -162,8 +164,10 @@ class CoinCapCharts extends PureComponent {
                     />
                 </View>
                
-                </View>
                 </ScrollView>
+               <BottomNavigation />
+                </View>
+            
         
 
                 
@@ -225,9 +229,7 @@ export default connect(mapStateToProps,
        marginRight: 5,
        color: "#323232"
      }, 
-     mainView: {
-         marginBottom: 10
-     },
+    
      img: {
         width: 40,
         height: 40,
@@ -239,6 +241,9 @@ export default connect(mapStateToProps,
         color: "#4A708B",
         marginBottom: 5,
         marginTop: 5
+    },
+    CoinCapChartsMain:{
+        flex: 1
     }
   })
 
@@ -248,10 +253,10 @@ export default connect(mapStateToProps,
     buttonT, 
     reddit,
     RedditList,
-    mainView,
     img,
     redditMain,
-    redditTextMain
+    redditTextMain,
+    CoinCapChartsMain
   
     } = styles
 

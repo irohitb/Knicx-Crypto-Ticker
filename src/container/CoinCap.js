@@ -6,20 +6,20 @@ import {
   StyleSheet, 
   FlatList, 
   View, 
-  Text
+  Text, 
+  TouchableOpacity
 } from 'react-native';
 import {
   fetchCoin, 
   updateCrypto, 
-  globalData
+  // globalData
 } from "../actions/coinCapAction.js"
 import CoinCard from "./CoinCard.js"
 import Header from '../components/header.js';
-import {CurrencyRate} from '../actions/currencyData.js'
 import Spinner from 'react-native-loading-spinner-overlay';
 import BottomNavigation from '../components/BottomNavigation.js'
 import ModalDropdown from 'react-native-modal-dropdown';
- 
+import { currencyKey } from "../actions/currencyDetails.js";
 
 
 
@@ -42,9 +42,9 @@ class cryptoTicker extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.globalData()
+    // this.props.globalData()
     this.props.fetchCoin()
-    this.props.CurrencyRate("AUD")
+
       this.socket.on('trades', (tradeMsg) => {
           for (let i=0; i< this.updateCoinData.length; i++) {
               if (this.updateCoinData[i]["short"] == tradeMsg.coin ) {
@@ -101,7 +101,8 @@ componentWillUnmount() {
  this.socket.disconnect();
 }
   render() {
-    console.log(this.props.currencyLoaded)
+
+
   return (
 
      
@@ -118,9 +119,11 @@ componentWillUnmount() {
               style={textInput}
               placeholder="Search Coin"
               onChangeText={(text) => this.onSearch(text)} />
-              <ModalDropdown 
-              options={['option 1', 'option 2']}
-              defaultValue="USD"/>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("CurrencySelection")}>
+         
+                      <Text> Chosoe Language</Text>
+      
+              </TouchableOpacity>
             </View>
             
               <FlatList
@@ -186,8 +189,29 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     height: 40
-
+  },
+  modelDropdown: {
+    flex: 0.5,
+    backgroundColor: "white",
+    height: 40,
+    textAlign: "center",
+    justifyContent: "center"
+  },
+  modelDropdown1: {
+    backgroundColor: "white",
+    width: 250,
+    display: "flex",
+    flexDirection: "column",
+    textAlign: "center"
+  },
+  modelDropdown2: {
+    backgroundColor: "white",
+    width: 250,
+    fontSize: 15,
+    display: "flex",
+    textAlign: "center"
   }
+
 })
 
 const {
@@ -195,7 +219,10 @@ const {
   cryptoName,
   mainView,
   superMainView,
-  searchDrop
+  searchDrop,
+  modelDropdown,
+  modelDropdown1,
+  modelDropdown2
 } = styles
 
 
@@ -214,6 +241,5 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, 
   {fetchCoin, 
     updateCrypto, 
-    CurrencyRate, 
-    globalData
+    // globalData
   })(cryptoTicker);

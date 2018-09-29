@@ -6,7 +6,8 @@ import {
     Image, 
     TouchableWithoutFeedback 
 } from 'react-native';
-
+import { connect } from 'react-redux';
+// import {CurrencyRate} from '../actions/currencyData.js'
 
 
 
@@ -64,7 +65,7 @@ class  CoinCard extends PureComponent {
 
 
     render () { 
- 
+         
         return (
             
             <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('CoinCapCharts', {
@@ -235,4 +236,12 @@ const {
 } = styles;
 
 
-export default CoinCard
+// export default CoinCard
+
+const mapStateToProps = state => {
+    return {
+        currencyLoaded: state.currency.DataSucess,
+    }
+}
+
+export default connect(mapStateToProps)(CoinCard);

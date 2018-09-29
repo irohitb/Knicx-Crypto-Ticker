@@ -3,8 +3,6 @@ import {
   StyleSheet,  
   View 
 } from 'react-native';
-
-
 import CoinCap from './src/container/CoinCap.js';
 
 

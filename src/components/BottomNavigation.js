@@ -71,7 +71,9 @@ const styles = StyleSheet.create({
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-around",
-      padding: 5
+      padding: 5,
+      bottom: 0, 
+      marginTop: 5
     }
   })
 

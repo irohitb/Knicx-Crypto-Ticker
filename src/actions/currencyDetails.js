@@ -1,3 +1,94 @@
+
+
+let currenciesKey = {
+      "USD": 1,
+      "AUD": 1.3804,
+      "BGN": 1.6664,
+      "BRL": 4.0884,
+      "CAD": 1.2962,
+      "CHF": 0.9686,
+      "CNY": 6.8744,
+      "CZK": 21.8156,
+      "DKK": 6.3546,
+      "EUR": 0.852,
+      "GBP": 0.759,
+      "HKD": 7.8109,
+      "HRK": 6.3283,
+      "HUF": 275.9223,
+      "IDR": 14937.5479,
+      "ILS": 3.5884,
+      "INR": 72.6071,
+      "ISK": 109.8236,
+      "JPY": 112.9846,
+      "KRW": 1115.4384,
+      "MXN": 19.0317,
+      "MYR": 4.141,
+      "NOK": 8.1337,
+      "NZD": 1.5053,
+      "PHP": 54.2967,
+      "PLN": 3.6488,
+      "RON": 3.9713,
+      "RUB": 65.9517,
+      "SEK": 8.8407,
+      "SGD": 1.3655,
+      "THB": 32.4597,
+      "TRY": 6.1191,
+      "ZAR": 14.299
+    }
+
+ export const currencyKey = Object.keys(currenciesKey)
+
+ 
+//  for (let i=0; i<currencyKey.length; i++) {
+// 	for (let j=0; j<currencyDKey.length; j++) {
+// 		if (currencyKey[i] == currencyDKey[j]) {
+// 				let newName = currencyKey[i]
+// 			newArr.push({
+// 				short: currencyKey[i], 
+// 				long: currencyDetails[newName]["name"],
+// 				symbol: currencyDetails[newName]["symbol_native"]
+//             })
+//     	}
+//     }
+// }
+
+export const CurrencyDisplay = [
+{key:1,short: "USD", long: "US Dollar", symbol: "$"},
+{key:2,short: "AUD", long: "Australian Dollar", symbol: "$"},
+{key:3,short: "BGN", long: "Bulgarian Lev", symbol: "лв."},
+{key:4,short: "BRL", long: "Brazilian Real", symbol: "R$"},
+{key:5,short: "CAD", long: "Canadian Dollar", symbol: "$"},
+{key:6,short: "CHF", long: "Swiss Franc", symbol: "CHF"},
+{key:7,short: "CNY", long: "Chinese Yuan", symbol: "CN¥"},
+{key:8,short: "CZK", long: "Czech Republic Koruna", symbol: "Kč"},
+{key:9,short: "DKK", long: "Danish Krone", symbol: "kr"},
+{key:10,short: "EUR", long: "Euro", symbol: "€"},
+ {key:11,short: "GBP", long: "British Pound Sterling", symbol: "£"},
+ {key:12,short: "HKD", long: "Hong Kong Dollar", symbol: "$"},
+ {key:13,short: "HRK", long: "Croatian Kuna", symbol: "kn"},
+ {key:14,short: "HUF", long: "Hungarian Forint", symbol: "Ft"},
+ {key:15,short: "IDR", long: "Indonesian Rupiah", symbol: "Rp"},
+ {key:16,short: "ILS", long: "Israeli New Sheqel", symbol: "₪"},
+ {key:17,short: "INR", long: "Indian Rupee", symbol: "টকা"},
+ {key:18,short: "ISK", long: "Icelandic Króna", symbol: "kr"},
+ {key:19,short: "JPY", long: "Japanese Yen", symbol: "￥"},
+ {key:20,short: "KRW", long: "South Korean Won", symbol: "₩"},
+ {key:21,short: "MXN", long: "Mexican Peso", symbol: "$"},
+ {key:22,short: "MYR", long: "Malaysian Ringgit", symbol: "RM"},
+ {key:23,short: "NOK", long: "Norwegian Krone", symbol: "kr"},
+ {key:24,short: "NZD", long: "New Zealand Dollar", symbol: "$"},
+ {key:25,short: "PHP", long: "Philippine Peso", symbol: "₱"},
+ {key:26,short: "PLN", long: "Polish Zloty", symbol: "zł"},
+ {key:27,short: "RON", long: "Romanian Leu", symbol: "RON"},
+ {key:28,short: "RUB", long: "Russian Ruble", symbol: "руб."},
+ {key:29,short: "SEK", long: "Swedish Krona", symbol: "kr"},
+ {key:30,short: "SGD", long: "Singapore Dollar", symbol: "$"},
+ {key:31,short: "THB", long: "Thai Baht", symbol: "฿"},
+ {key:32,short: "TRY", long: "Turkish Lira", symbol: "TL"},
+ {key:33,short: "ZAR", long: "South African Rand", symbol: "R"}
+]
+
+
 export const currencyDetails = {
     "USD": {
         "symbol": "$",

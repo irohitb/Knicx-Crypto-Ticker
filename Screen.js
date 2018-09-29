@@ -5,7 +5,7 @@ import {
    } from 'react-navigation';
 
 import CoinCapCharts from "./src/container/CoinCapCharts.js"
-
+import CurrencySelection from './src/container/CurrencySelection.js'
 import CoinCap from './src/container/CoinCap.js';
 
 
@@ -29,7 +29,11 @@ export const MyScreen = createStackNavigator({
   },
   CoinCapCharts: {
      screen: CoinCapCharts
-    }
+    },
+  CurrencySelection: {
+    screen: CurrencySelection
+  }
+
 },{
     initialRouteName: 'Home',
     headerMode: 'none'
@@ -40,3 +44,10 @@ export const MyScreen = createStackNavigator({
 //   Tabs: { screen: Tab },
 //   Stack: { screen: MyScreen },
 // })
+
+//Adding Navigation in React Native 
+//Import the component You want to import 
+//Screen which tells the component name 
+//Then we navigate and pass any props we want like this 
+// this.props.navigation.navigate('CoinCapCharts', {
+//   coinShortName: this.props.coinShortName, coinLongName: this.props.coinName
