@@ -7,7 +7,7 @@ import {
     TouchableWithoutFeedback 
 } from 'react-native';
 import { connect } from 'react-redux';
-// import {CurrencyRate} from '../actions/currencyData.js'
+import Icons from 'react-native-vector-icons/Entypo';
 
 
 
@@ -22,8 +22,6 @@ class  CoinCard extends PureComponent {
         stateToDisplay: false, 
         searchable: ''
     }
-
-
 
     componentWillReceiveProps(nextProps) {
 
@@ -48,22 +46,14 @@ class  CoinCard extends PureComponent {
                 }.bind(this), 1500)
            }
         }
-
-     
     }
 
     touched = (id) => {
-
         this.setState({selectedPostId: id})
         if (this.props.coinShortName == this.state.selectedPostId ) {
            this.setState({stateToDisplay: !this.state.stateToDisplay})
         }
     }
-
-
-
-
-
     render () { 
          
         return (
@@ -88,7 +78,13 @@ class  CoinCard extends PureComponent {
                           </View>
                           <View style={aboveHeading}>
                              <Text style={sno}>Price</Text>
-                             <Text style={[coinPrice, this.state.increased ? {color: "green"} : null,this.state.decreased ? {color: "red"} : null]}>${this.props.coinPrice}</Text>
+             
+                                {/* <Text style={[this.state.increased ? {color: "green"} : null,this.state.decreased ? {color: "red"} : null]}></Text> */}
+                                 <Text style={[coinPrice, this.state.increased ? {color: "green"} : null,this.state.decreased ? {color: "red"} : null]}>
+                                 {[this.state.increased ? <Icons name="triangle-up" size={20} color="green" /> : null, this.state.decreased ? <Icons name="triangle-down" size={20} color="red" /> : null]}
+                                 {this.props.coinPrice}
+                                 </Text>
+                           
                           </View>
                            <View style={aboveHeading}>
                              <Text style={sno}>%Change</Text>
@@ -122,7 +118,8 @@ const styles = StyleSheet.create({
     },
     sno: {
         marginTop: 10,
-        color: "#808080"
+        color: "#808080",
+        textAlign: 'center',
     },
     upperRow: {
         padding: 2,
@@ -211,6 +208,10 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginRight: 5,
         marginTop: 10,
+    }, 
+    arrowTick: {
+        display: "flex",
+        flexDirection: "row"
     }
 })
 

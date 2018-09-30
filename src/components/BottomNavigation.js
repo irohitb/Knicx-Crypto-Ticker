@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     NavBarBottom : {
       paddingTop: 8,
       borderTopWidth: 2,
-      backgroundColor: "#005cb2",
+      backgroundColor: "#3b5998",
     //   borderTopColor: '#fbc02d',
       display: "flex",
       flexDirection: "row",

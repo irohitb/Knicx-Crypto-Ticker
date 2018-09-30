@@ -3,7 +3,8 @@ import {
   StyleSheet, 
   Text, 
   View, 
-  Button 
+  Button,
+  StatusBar
 } from 'react-native';
 import Display from 'react-native-display';
 
@@ -11,6 +12,10 @@ import Display from 'react-native-display';
 const Header = (props) => {
   return (
   <View style={headerContainer}>
+     <View>
+   <StatusBar backgroundColor="white" 
+         barStyle="light-content"/>
+   </View>
     <Display style={GoBack} enable={props.enable == "true"}>
       <Button onPress={() => props.navigation.navigate('Home')} 
         title="Go Back"
@@ -28,7 +33,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: 'center',
-    backgroundColor: "#005cb2",
+    backgroundColor: "#2979ff",
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0
   },
@@ -39,7 +44,7 @@ const styles = StyleSheet.create({
     color: "white",
   }, 
   headerSecondary: {
-    color: "#63B8FF",
+    color: "white",
   },
   GoBack: {
     color: "white",

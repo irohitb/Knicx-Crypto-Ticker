@@ -15,6 +15,7 @@
     "react-native-display": "^1.0.8",
     "react-native-git-upgrade": "^0.2.7",
     "react-native-highcharts": "^1.0.2",
+    "react-native-linear-gradient": "^2.4.2",
     "react-native-loading-placeholder": "0.0.6",
     "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-material-dropdown": "^0.11.1",

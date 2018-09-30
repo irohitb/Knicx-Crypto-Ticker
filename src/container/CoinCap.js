@@ -7,7 +7,8 @@ import {
   FlatList, 
   View, 
   Text, 
-  TouchableOpacity
+  TouchableOpacity,
+  StatusBar
 } from 'react-native';
 import {
   fetchCoin, 
@@ -20,8 +21,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import BottomNavigation from '../components/BottomNavigation.js'
 import ModalDropdown from 'react-native-modal-dropdown';
 import { currencyKey } from "../actions/currencyDetails.js";
-
-
+import Icons from 'react-native-vector-icons/FontAwesome';
 
 
 
@@ -107,39 +107,47 @@ componentWillUnmount() {
 
      
              <View style={superMainView}>
+            <View>
+               <StatusBar backgroundColor="white" 
+                barStyle="light-content"/>
+            </View>
           { this.props.cryptoLoading ? 
             (  <View style={{ flex: 1 }}>
                 <Spinner visible={this.props.cryptoLoading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
             </View> ) :
+
+
             (<View style={mainView}>
-             <Header />
+    
              {/* Custom Search Input */}
            <View style={searchDrop}> 
+
              <TextInput
               style={textInput}
               placeholder="Search Coin"
               onChangeText={(text) => this.onSearch(text)} />
+
               <TouchableOpacity onPress={() => this.props.navigation.navigate("CurrencySelection")}>
-         
-                      <Text> Chosoe Language</Text>
-      
+              <View style={{flexDirection: "column"}}>
+                  <Text style={money}> Currency </Text>
+                  <Text style={money}> Selection </Text>
+              </View>
               </TouchableOpacity>
+
             </View>
             
               <FlatList
-                     data={this.state.searchCoin ? this.displaySearchCrypto : this.props.cryptoLoaded}
-                     style={{flex:1}}
-                    extraData={[this.displaySearchCrypto, this.props.cryptoLoaded]}
-                    keyExtractor={item => item.short}
-                    initialNumToRender={50}
-                    windowSize={21}
-                    removeClippedSubviews={true}
-                   renderItem={({ item, index }) => {
-                 let newlong  = item["long"]
-                 //Removing spaces in image name
+              data={this.state.searchCoin ? this.displaySearchCrypto : this.props.cryptoLoaded}
+              extraData={[this.displaySearchCrypto, this.props.cryptoLoaded]}
+              keyExtractor={item => item.short}
+              initialNumToRender={50}
+              windowSize={21}
+              removeClippedSubviews={true}
+              renderItem={({ item, index }) => {
+                let newlong  = item["long"]
                 newlong = newlong.replace(/\s+/g, '');
                 newlong = newlong.trim()
-                 return (
+                return (
                   <CoinCard
                       navigation = {this.props.navigation}
                       key = {index}
@@ -152,9 +160,9 @@ componentWillUnmount() {
                       vwapData={item["vwapData"].toFixed(2)}
                       coinImage={"https://coincap.io/images/coins/" + newlong + ".png"}
                       />
-                    
-                 )}}          
-      />
+                 )
+                }}          
+              />
         <BottomNavigation />
        </View>)}
 
@@ -165,52 +173,44 @@ componentWillUnmount() {
   }
 }
 
+//triangle-up
+
 //Creating Stylesheet 
 const styles = StyleSheet.create({ 
-  textInput: {
-    flex: 0.9,
-    height: 40,
+  textInput: { 
+    width: "78%",
+    height: 35,
+    marginLeft: 5,
+    marginRight: 5,
     borderWidth: 0,
-    backgroundColor: "white"
+    backgroundColor: "white",
+    borderRadius: 15,
+    textAlign: 'center'
   }, 
   cryptoName: {
     textAlign: "center"
   }, 
   mainView: {
-    flex: 1,
     height: "100%", 
     backgroundColor: "#f3f3f3"
   },
   superMainView:{
-    flex: 1
   },
   searchDrop: {
-    flex: 0.1,
+    justifyContent:  "space-between",
+    paddingTop: 32,
+    paddingBottom: 5,
     display: "flex",
     flexDirection: "row",
-    height: 40
-  },
-  modelDropdown: {
-    flex: 0.5,
-    backgroundColor: "white",
-    height: 40,
-    textAlign: "center",
-    justifyContent: "center"
-  },
-  modelDropdown1: {
-    backgroundColor: "white",
-    width: 250,
-    display: "flex",
-    flexDirection: "column",
-    textAlign: "center"
-  },
-  modelDropdown2: {
-    backgroundColor: "white",
-    width: 250,
-    fontSize: 15,
-    display: "flex",
+    height: 80,
+    backgroundColor: "#3b5998"
+  }, 
+  money: {
+    marginRight: 5,
+    color: "white",
     textAlign: "center"
   }
+
 
 })
 
@@ -222,7 +222,8 @@ const {
   searchDrop,
   modelDropdown,
   modelDropdown1,
-  modelDropdown2
+  modelDropdown2,
+  money
 } = styles
 
 
