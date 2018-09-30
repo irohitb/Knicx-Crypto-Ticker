@@ -35,9 +35,7 @@ class Language extends Component {
 
 
 
-    componentDidMount() {
-        this.props.CurrencyRate("usd")
-    }
+ 
 
     onSearch = (text) => {
         console.log(text)

@@ -15,50 +15,52 @@ import {currencyDetails} from './currencyDetails'
 
 
 export const CurrencyRate = (selectedCurrency) => {
+ 
   return function (dispatch) {
     dispatch({type: CURRENCY_FETCHING})
+    let Currency = []
+    console.log(selectedCurrency)
+    if (selectedCurrency == "USD" || selectedCurrency == "usd") {
+      console.log(selectedCurrency)
+      console.log("here in USD")
+      Currency.push({
+        currencySymbol: "$",
+        currencyName :   "USD",
+        currencyPrice : 1
+        })
+        return (
+          dispatch({
+            type: CURRENCY_RATE,
+            payload: Currency
+          })
+        )
+      } else {
+        console.log("here not in USD")
     axios.get(CurrencyRateLink).then((response) => {
-      let Currency = []
-      console.log("Inside CUrrency Rate")
-      if ( selectedCurrency != "USD") {
       let CurrencyRates = Object.keys(response.data.rates)
-      console.log(CurrencyRates[1])
-
         for (let i=0; i<CurrencyRates.length; i++) {
-           
            if (selectedCurrency == CurrencyRates[i]) {  
-             console.log("Inside if ")
             let currencySymbol = currencyDetails[selectedCurrency]["symbol"]
               Currency.push({
               currencySymbol: currencySymbol,
               currencyName : CurrencyRates[i],
               currencyPrice : response.data.rates[selectedCurrency]
               })
-              console.log(Currency)
            }
         }
-      } else if ( selectedCurrency == "USD") {
-        let currencySymbol = currencyDetails[selectedCurrency]["symbol"]
-        Currency.push({
-          currencySymbol: currencySymbol,
-          currencyName :   "USD",
-          currencyPrice : 1
-          })
-        console.log(Currency)
-      }
     return (
     dispatch({
       type: CURRENCY_RATE,
       payload: Currency
     })
   )}).catch((error) => {
-    console.log(error)
-  return (
-  dispatch({
-      type: CURRENCY_ERROR,
-      payload: error.data
+    return (
+      dispatch({
+          type: CURRENCY_ERROR,
+          payload: error.data
+        })
+      )
     })
-    )
-  })
   }
+ }
 }

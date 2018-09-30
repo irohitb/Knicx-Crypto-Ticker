@@ -16,12 +16,11 @@ import {
   // globalData
 } from "../actions/coinCapAction.js"
 import CoinCard from "./CoinCard.js"
-import Header from '../components/header.js';
 import Spinner from 'react-native-loading-spinner-overlay';
 import BottomNavigation from '../components/BottomNavigation.js'
-import ModalDropdown from 'react-native-modal-dropdown';
-import { currencyKey } from "../actions/currencyDetails.js";
-import Icons from 'react-native-vector-icons/FontAwesome';
+import {
+  CurrencyRate
+} from '../actions/currencyData.js'
 
 
 
@@ -42,6 +41,11 @@ class cryptoTicker extends PureComponent {
   }
 
   componentDidMount() {
+
+    if (this.props.currencyLoaded.length == 0 || !this.props.currencyLoaded) {
+      console.log("here")
+      this.props.CurrencyRate("usd")
+    }
     // this.props.globalData()
     this.props.fetchCoin()
 
@@ -101,6 +105,7 @@ componentWillUnmount() {
  this.socket.disconnect();
 }
   render() {
+   
   return (
 
      
@@ -214,13 +219,9 @@ const styles = StyleSheet.create({
 
 const {
   textInput,
-  cryptoName,
   mainView,
   superMainView,
   searchDrop,
-  modelDropdown,
-  modelDropdown1,
-  modelDropdown2,
   money
 } = styles
 
@@ -240,5 +241,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, 
   {fetchCoin, 
     updateCrypto, 
+    CurrencyRate
     // globalData
   })(cryptoTicker);

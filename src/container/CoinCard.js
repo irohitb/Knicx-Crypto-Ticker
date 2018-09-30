@@ -55,7 +55,7 @@ class  CoinCard extends PureComponent {
         }
     }
     render () { 
-         
+       
         return (
             
             <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('CoinCapCharts', {
@@ -82,7 +82,7 @@ class  CoinCard extends PureComponent {
                                 {/* <Text style={[this.state.increased ? {color: "green"} : null,this.state.decreased ? {color: "red"} : null]}></Text> */}
                                  <Text style={[coinPrice, this.state.increased ? {color: "green"} : null,this.state.decreased ? {color: "red"} : null]}>
                                  {[this.state.increased ? <Icons name="triangle-up" size={20} color="green" /> : null, this.state.decreased ? <Icons name="triangle-down" size={20} color="red" /> : null]}
-                                 {this.props.coinPrice}
+                                {this.props.currencyLoaded[0]["currencySymbol"]}  {(this.props.coinPrice*this.props.currencyLoaded[0]["currencyPrice"]).toFixed(2)}
                                  </Text>
                            
                           </View>
@@ -125,14 +125,12 @@ const styles = StyleSheet.create({
         padding: 2,
         display: "flex",
         flexDirection: "row",
-        //marginBottom: 15,
     },
     lowerRow: {
         marginTop: 7,
         display: "flex",
         flexDirection: "row",
         justifyContent: 'space-between'
-        //marginBottom: 15,
     },
     aboveHeading: {
         display: "flex",
