@@ -1,4 +1,4 @@
-import React, { PureComponent} from 'react';
+import React, { Component} from 'react';
 import {
     View, 
     Text, 
@@ -11,58 +11,109 @@ import {
 } from "react-native";
 import { connect } from 'react-redux';
 import  { 
-    CurrencyDisplay
+    CurrencyDisplay 
 } from "../actions/currencyDetails.js"
 
-import {CurrencyRate} from '../actions/currencyData.js'
+import {
+    CurrencyRate
+} from '../actions/currencyData.js'
 import BottomNavigation from '../components/BottomNavigation';
+import Icons from 'react-native-vector-icons/Entypo';
 
 let k=1;
-class Language extends PureComponent {
+class Language extends Component {
 
     constructor() {
         super() 
-        this.selectedLanguage = "AUD"
+       
+        this.displaySearch
+        this.CurrencyDisplay = CurrencyDisplay
     }
+     state = {
+         searchCurrency: false,
+     }
+
+
 
     componentDidMount() {
-        this.props.CurrencyRate(this.selectedLanguage)
+        this.props.CurrencyRate("usd")
     }
 
+    onSearch = (text) => {
+        console.log(text)
+        // Set State to false
+        if (text == "" || text == " ") {
+         this.CurrencyDisplay = []
+         this.CurrencyDisplay = CurrencyDisplay
+          this.setState({searchCurrency: false})
+        } else {     
+            if (!this.state.searchCurrency) {
+                this.setState({searchCurrency: true})
+                }
+         this.CurrencyDisplay = []
+         for (let i=0; i<CurrencyDisplay.length; i++) {
+          let currencyVal = CurrencyDisplay[i]["long"] + CurrencyDisplay[i]["short"]
+         if (currencyVal.indexOf(text) > -1) {
+            this.CurrencyDisplay.push({
+             no: {i},
+             short: CurrencyDisplay[i]["short"],
+             long: CurrencyDisplay[i]["long"],
+             Co: CurrencyDisplay[i]["Co"]
+            })
+          }
+        }
+      }
+    }
+
+    setGlobalLanguage = (event) => {
+        this.props.CurrencyRate(event)
+    }
+
+
     render() {
+        
         return (
             <View style={currencySlectionMain}> 
-                    <TextInput
-                    style={textInput}
-                    placeholder="Search Coin"
-                    onChangeText={(text) => this.onSearch(text)} />
+                   
+                    <View style={searchText}>    
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
+                     <Text> 
+                         <Icons name="chevron-left" size={30} color="white" />
+                    </Text> 
+                   </TouchableOpacity>
+    
+
+                        <TextInput
+                        style={textInput}
+                        placeholder="Search Currnecy"
+                        onChangeText={(text) => this.onSearch(text)} />
+
+
+
                     </View> 
-                       <ScrollView>
+                <ScrollView>
                   <View style={listOfCurrencies}>
                
-                  { CurrencyDisplay.map(data => {
+                  { this.CurrencyDisplay.map(data => {
                   let CurrencyURl = "https://www.countryflags.io/" + data["Co"] + "/flat/32.png"
-                  console.log(CurrencyURl)
+                  let dataShort = data["short"]
                   return (
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.setGlobalLanguage(data["short"])}>
                       <View style={IndvidualCurrencyMain}> 
                       <View style={imagDataLong}>
-                      <Image 
-                            source={{uri: CurrencyURl}}
-                            style={currencyFlagImage}
-                            /> 
-                       
-                          <Text  style={dataLong}> {data["long"]}</Text>
-                        </View>
-                          <Text  style={dataShort}>{data["short"]}</Text> 
-                         
+                        <Image 
+                        source={{uri: CurrencyURl}}
+                        style={currencyFlagImage}/> 
+                        <Text  style={dataLong}> {data["long"]}</Text>
+                     </View>
+                         <Text  style={dataShort}>{data["short"]}</Text> 
                       </View>
                   </TouchableOpacity>)})}
                 
                 </View>
-                </ScrollView> 
-                <BottomNavigation />
-             </View>
+             </ScrollView> 
+             <BottomNavigation />
+            </View>
        
         )
     }
@@ -123,16 +174,22 @@ export default connect(null,
             flexDirection: "row"
         }, 
         textInput: { 
+            width: "80%",
             height: 35,
             marginLeft: 5,
             marginRight: 5,
             borderWidth: 0,
             backgroundColor: "white",
             borderRadius: 15,
-            textAlign: 'center'
+            textAlign: 'center',
+           
           },
           searchText: {
-            backgroundColor: "#3b5998"
+            backgroundColor: "#3b5998",
+            paddingTop: 30,
+            paddingBottom: 10,
+            display: "flex",
+            flexDirection: "row"
           }
     
     })
