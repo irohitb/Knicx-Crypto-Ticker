@@ -8,7 +8,8 @@ import {
   View, 
   Text, 
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  AsyncStorage
 } from 'react-native';
 import {
   fetchCoin, 
@@ -32,6 +33,7 @@ class cryptoTicker extends PureComponent {
       this.updateCoinData = []
       this.displaySearchCrypto = []
       this.socket = openSocket('https://coincap.io');
+      this.currencySelected = "USD"
   }
   
   state = {
@@ -43,9 +45,18 @@ class cryptoTicker extends PureComponent {
   componentDidMount() {
 
     if (this.props.currencyLoaded.length == 0 || !this.props.currencyLoaded) {
-      console.log("here")
-      this.props.CurrencyRate("usd")
+      this.props.CurrencyRate(this.currencySelected)
     }
+
+    displayData = async () => {
+      this.currencySelected = await AsyncStorage.getItem("currencySelected").catch((error) => {
+          console.log("Error in display Data", error)
+      })
+      this.currencySelected = await this.props.CurrencyRate(this.currencySelected)
+  }  
+    
+  displayData()
+
     // this.props.globalData()
     this.props.fetchCoin()
 
@@ -105,7 +116,7 @@ componentWillUnmount() {
  this.socket.disconnect();
 }
   render() {
-   
+   console.log(this.currencySelected)
   return (
 
      
@@ -234,7 +245,6 @@ const mapStateToProps = state => {
     cryptoLoading: state.coincap.itemsFetching,
     cryptoGlobal: state.coincap.itemGlobal,
     currencyLoaded: state.currency.DataSucess,
-
   }
 };
 

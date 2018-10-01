@@ -22,21 +22,14 @@ import Icons from 'react-native-vector-icons/Entypo';
 
 let k=1;
 class Language extends Component {
-
     constructor() {
         super() 
-       
         this.displaySearch
         this.CurrencyDisplay = CurrencyDisplay
     }
      state = {
          searchCurrency: false,
      }
-
-
-
- 
-
     onSearch = (text) => {
         console.log(text)
         // Set State to false
@@ -66,7 +59,10 @@ class Language extends Component {
     setGlobalLanguage = (event) => {
         this.props.CurrencyRate(event)
         this.props.navigation.navigate('Home')
+        let currencySelected = event
+        AsyncStorage.setItem('currencySelected', currencySelected)
     }
+
 
 
     render() {
@@ -80,19 +76,13 @@ class Language extends Component {
                          <Icons name="chevron-left" size={30} color="white" />
                     </Text> 
                    </TouchableOpacity>
-    
-
                         <TextInput
                         style={textInput}
                         placeholder="Search Currnecy"
                         onChangeText={(text) => this.onSearch(text)} />
-
-
-
                     </View> 
                 <ScrollView>
-                  <View style={listOfCurrencies}>
-               
+                  <View style={listOfCurrencies}> 
                   { this.CurrencyDisplay.map(data => {
                   let CurrencyURl = "https://www.countryflags.io/" + data["Co"] + "/flat/32.png"
                   let dataShort = data["short"]
@@ -108,30 +98,23 @@ class Language extends Component {
                          <Text  style={dataShort}>{data["short"]}</Text> 
                       </View>
                   </TouchableOpacity>)})}
-                
                 </View>
              </ScrollView> 
              <BottomNavigation />
             </View>
-       
         )
     }
 }
-
-
 export default connect(null, 
     {
       CurrencyRate, 
     })(Language);
 
-    //Creating StyleSheet 
-
     const styles = StyleSheet.create({ 
         listOfCurrencies: {
             display: "flex",
             flexDirection: "column",
-            marginBottom: 60,
-            
+            marginBottom: 60,       
         }, 
         IndvidualCurrencyMain: {
             backgroundColor: "white",
@@ -146,8 +129,6 @@ export default connect(null,
             marginTop: 5,
             marginBottom: 5,
             justifyContent:  "space-between"
-           
-
         },
         dataLong:{
             fontSize: 13,
@@ -181,7 +162,6 @@ export default connect(null,
             backgroundColor: "white",
             borderRadius: 15,
             textAlign: 'center',
-           
           },
           searchText: {
             backgroundColor: "#3b5998",
@@ -192,17 +172,13 @@ export default connect(null,
           }
     
     })
-
     const {
         listOfCurrencies,
         IndvidualCurrencyMain,
         dataLong, 
-        dataShort,
-        index,
         currencySlectionMain,
         currencyFlagImage,
         imagDataLong,
         textInput,
         searchText
-
     } = styles

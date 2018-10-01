@@ -19,10 +19,8 @@ export const CurrencyRate = (selectedCurrency) => {
   return function (dispatch) {
     dispatch({type: CURRENCY_FETCHING})
     let Currency = []
-    console.log(selectedCurrency)
     if (selectedCurrency == "USD" || selectedCurrency == "usd") {
       console.log(selectedCurrency)
-      console.log("here in USD")
       Currency.push({
         currencySymbol: "$",
         currencyName :   "USD",

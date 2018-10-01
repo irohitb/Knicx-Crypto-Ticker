@@ -44,6 +44,8 @@ const Root = () => (
 
 //Fix Currency Rate 
 
+//https://api.cryptonator.com/api/full/btc-usd
+
 
 
 //Things to implement 
