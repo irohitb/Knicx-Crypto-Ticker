@@ -1,12 +1,11 @@
 import { 
   createStackNavigator,
-   TabNavigator,
-   DrawerNavigator
    } from 'react-navigation';
 
 import CoinCapCharts from "./src/container/CoinCapCharts.js"
 import CurrencySelection from './src/container/CurrencySelection.js'
 import CoinCap from './src/container/CoinCap.js';
+import CoinChart from './src/container/coinChartComponents/coinChart.js'
 
 
 //THis is being Exported to App.js
@@ -32,6 +31,9 @@ export const MyScreen = createStackNavigator({
     },
   CurrencySelection: {
     screen: CurrencySelection
+  },
+  CoinChart: {
+    screen: CoinChart
   }
 
 },{

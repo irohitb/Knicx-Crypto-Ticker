@@ -11,8 +11,11 @@ import {
     Text,
     View, 
     StyleSheet,
+    TouchableOpacity
 } from 'react-native'
 import Spinner from 'react-native-loading-spinner-overlay';
+import Icons from 'react-native-vector-icons/Entypo';
+import { connect } from 'react-redux';
 
 
 let coinMinimumA = []
@@ -59,8 +62,9 @@ class CoinChart extends PureComponent {
         this.selectedTime = this.props.coinHistory[numberSearch]["cHT"]
         this.selectedTime  = new Date(this.selectedTime).toString()
         this.selectedTime = this.selectedTime.split(' ').slice(0, 5).join(' ');
-        this.valueAtSelectedTime = this.props.coinHistory[numberSearch]["cHTVF"]
+        this.valueAtSelectedTime = this.props.coinHistory[numberSearch]["y"]
 
+        console.log(this.props.coinHistory)
         //This will call function which declared in the global modular scope 
         this.setState({
           activePoint: findClosestPointSorted(this.props.coinHistory, value)
@@ -71,7 +75,7 @@ class CoinChart extends PureComponent {
     
     render () {
      
-
+       
  //THis is that dot which would appear on the slected point 
     let  activePoint  = this.state.activePoint;
     point = activePoint ?
@@ -107,7 +111,8 @@ class CoinChart extends PureComponent {
 
        //Intially when user does not scroll the value of selected coin is null and hence we ae giving to the current coin value
           if (!this.valueAtSelectedTime && this.props.chartColor["price_usd"]) {
-              this.valueAtSelectedTime = "$" + this.props.chartColor["price_usd"].toLocaleString()
+              console.log(this.props.chartColor["price_usd"], typeof this.props.chartColor["price_usd"])
+              this.valueAtSelectedTime =  this.props.chartColor["price_usd"]
               this.selectedTime = new Date().toString()
               this.selectedTime = this.selectedTime.split(' ').slice(0, 5).join(' ');
           }
@@ -115,8 +120,15 @@ class CoinChart extends PureComponent {
         return (
         <View style={container}>
             <View style={heading}> 
+                <View>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
+                        <Text> 
+                            <Icons name="chevron-left" size={30} color="black" />
+                        </Text> 
+                    </TouchableOpacity>
+                </View>
                 <Text style={heading1}> {this.props.chartColor.display_name} ({this.props.chartColor.id}) </Text>
-                <Text style={[heading1, {color:this.chartPriceColorMain}]}> {this.valueAtSelectedTime}</Text>
+                <Text style={[heading1, {color:this.chartPriceColorMain}]}> {this.props.currencyLoaded[0]["currencySymbol"]} {(this.valueAtSelectedTime*this.props.currencyLoaded[0]["currencyPrice"]).toFixed(4)}</Text>
                 <Text style={[heading2, {color:this.chartColor}]}> {this.selectedTime}</Text>
             </View>
             { this.state.loaded ? 
@@ -148,7 +160,14 @@ class CoinChart extends PureComponent {
     }
 }
 
-export default CoinChart;
+
+const mapStateToProps = state => {
+    return {
+        currencyLoaded: state.currency.DataSucess,
+    }
+}
+
+export default connect(mapStateToProps)(CoinChart);
 
 
 const styles = StyleSheet.create({

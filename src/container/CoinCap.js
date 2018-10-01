@@ -166,7 +166,7 @@ componentWillUnmount() {
                  )
                 }}          
               />
-        <BottomNavigation />
+        <BottomNavigation navigation={this.props.navigation}/>
        </View>)}
 
       

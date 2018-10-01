@@ -85,7 +85,7 @@ export const coinHistory = (days, coinName) => {
         coinHistoryV.push({
             cHT : respone.data["price"][i][0],
             y : respone.data["price"][i][1],
-            cHTVF : "$" + respone.data["price"][i][1].toLocaleString(),
+            cHTVF :  respone.data["price"][i][1].toLocaleString(),
             x: i
         })
     }

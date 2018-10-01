@@ -27,6 +27,7 @@ class BottomNavigation extends PureComponent {
 
     activeTab = (activeTab) => {
         this.setState({activeTab: activeTab})
+        this.props.navigation.navigate('Home')
 
     }
 

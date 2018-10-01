@@ -65,6 +65,7 @@ class Language extends Component {
 
     setGlobalLanguage = (event) => {
         this.props.CurrencyRate(event)
+        this.props.navigation.navigate('Home')
     }
 
 

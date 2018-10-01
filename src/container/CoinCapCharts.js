@@ -8,7 +8,8 @@ import {
     TouchableOpacity,
     FlatList,
     Image,
-    Linking
+    Linking,
+    StatusBar
 } from 'react-native'
 import Header from '../components/header.js';
 import BottomNavigation from '../components/BottomNavigation';
@@ -67,18 +68,15 @@ class CoinCapCharts extends PureComponent {
             return (
        
                 <View style={CoinCapChartsMain}> 
+                  <View>
+                    <StatusBar hidden={true}  />
+                 </View>
                 <ScrollView>
-                    <Header 
-                    navigation = {this.props.navigation} 
-                    enable = "true" />   
-
-
-
                 
-              
                    <CoinChart 
                     coinHistory = {this.props.coinHistoryDisplay}
                     chartColor = {this.props.coinCompleteDisplay} 
+                    navigation={this.props.navigation}
 
                     //  Chart color here is actually sending everything and we are using it for more than color operations now
                    />
@@ -163,9 +161,8 @@ class CoinCapCharts extends PureComponent {
                
                     />
                 </View>
-               
                 </ScrollView>
-               <BottomNavigation />
+               <BottomNavigation navigation={this.props.navigation}/>
                 </View>
             
         

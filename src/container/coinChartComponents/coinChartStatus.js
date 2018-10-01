@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {  
     StyleSheet, 
     View, 
     Text
   } from 'react-native';
+  import { connect } from 'react-redux';
 
-const coinStatus = (props) => {
-   
+class coinStatus extends PureComponent {
+   render () {
 
     return (
         <View style={coinDetailsMain}> 
@@ -19,30 +20,36 @@ const coinStatus = (props) => {
             </View> */}
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>Volume 24 Hour:  </Text>
-                <Text style={subHeadingValue}> {props.coinDetails.volume} </Text>
+                <Text style={subHeadingValue}> {this.props.coinDetails.volume} </Text>
             </View>
           
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>Market Cap: </Text>
-                <Text style={subHeadingValue}> {[props.coinDetails.market_cap].toLocaleString()}</Text>
+                <Text style={subHeadingValue}> {[this.props.coinDetails.market_cap].toLocaleString()}</Text>
             </View>
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>24H Cap Change: </Text>
-                <Text style={subHeadingValue}> {props.coinDetails.cap24hrChange}</Text>
+                <Text style={subHeadingValue}> {this.props.coinDetails.cap24hrChange}</Text>
             </View>
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>Current Price</Text>
-                <Text style={subHeadingValue}> ${[props.coinDetails.price_usd].toLocaleString()} </Text>
+                <Text style={subHeadingValue}> {this.props.currencyLoaded[0]["currencySymbol"]} {[(this.props.coinDetails.price_usd*this.props.currencyLoaded[0]["currencyPrice"])].toLocaleString()} </Text>
             </View>
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>Price in Bitcoin: </Text>
-                <Text style={subHeadingValue}> {props.coinDetails.price_btc} </Text>
+                <Text style={subHeadingValue}> {this.props.coinDetails.price_btc} </Text>
             </View>
         </View>
     )
+  }
+}
+const mapStateToProps = state => {
+    return {
+        currencyLoaded: state.currency.DataSucess,
+    }
 }
 
-export default coinStatus;
+export default connect(mapStateToProps)(coinStatus);
 
 const styles = StyleSheet.create({ 
     coinDetailsMain: {
