@@ -177,8 +177,8 @@ const mapStateToProps = state => {
       coinCompleteDisplay: state.coincap.itemComplete,
       coinHistoryDisplay: state.coincap.itemHistory ,
       cryptoLoading: state.coincap.itemsFetching, 
-      redditCryptoNews: state.news.DataSucess,
-      redditFetching: state.news.DataFetching
+      redditCryptoNews: state.redditNews.DataSucess,
+      redditFetching: state.redditNews.DataFetching
     }
   };
 
