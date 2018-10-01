@@ -33,7 +33,7 @@ class cryptoTicker extends PureComponent {
       this.updateCoinData = []
       this.displaySearchCrypto = []
       this.socket = openSocket('https://coincap.io');
-      this.currencySelected = "USD"
+      this.currencySelected = "usd"
   }
   
   state = {
@@ -52,7 +52,10 @@ class cryptoTicker extends PureComponent {
       this.currencySelected = await AsyncStorage.getItem("currencySelected").catch((error) => {
           console.log("Error in display Data", error)
       })
-      this.currencySelected = await this.props.CurrencyRate(this.currencySelected)
+       if (this.currencySelected != "undefined" && this.currencySelected != null) {
+         console.log(this.currencySelected)
+        this.props.CurrencyRate(this.currencySelected)
+       }
   }  
     
   displayData()
@@ -212,7 +215,7 @@ const styles = StyleSheet.create({
   },
   searchDrop: {
     justifyContent:  "space-between",
-    paddingTop: 32,
+    paddingTop: 38,
     paddingBottom: 5,
     display: "flex",
     flexDirection: "row",
