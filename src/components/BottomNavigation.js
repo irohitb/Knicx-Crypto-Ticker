@@ -18,17 +18,18 @@ class BottomNavigation extends PureComponent {
         this.News = (<Icons name="news" size={30} color="white" />);
         this.Exchange = (<Icons2 name="bar-chart-2" size={30} color="white" />);
         this.about = (<Icons2 name="user" size={30} color="white" />)
+        this.socket
     }
 
     state = {
-        activeTab: "home"
+        activeTab: "Home"
     }
     
 
     activeTab = (activeTab) => {
+        //Note keep the activeTab name same as that of screen
         this.setState({activeTab: activeTab})
-        this.props.navigation.navigate('Home')
-
+        this.props.navigation.navigate(activeTab)
     }
 
     render () {
@@ -37,8 +38,8 @@ class BottomNavigation extends PureComponent {
                 <View style={styles.NavBarBottom}>
 
                     <TouchableOpacity
-                    onPress={() => this.activeTab("home")}>
-                        <Text> <Icon name="bitcoin" size={30} color={ this.state.activeTab == "home" ? "#fbc02d" : "white"} /></Text>
+                    onPress={() => this.activeTab("Home")}>
+                        <Text> <Icon name="bitcoin" size={30} color={ this.state.activeTab == "Home" ? "#fbc02d" : "white"} /></Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity

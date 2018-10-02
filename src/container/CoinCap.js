@@ -43,21 +43,19 @@ class cryptoTicker extends PureComponent {
   }
 
   componentDidMount() {
-
+    //If currency is not loaded it will set the default value to dollar
     if (this.props.currencyLoaded.length == 0 || !this.props.currencyLoaded) {
       this.props.CurrencyRate(this.currencySelected)
     }
 
+    //Async Storage
     displayData = async () => {
       this.currencySelected = await AsyncStorage.getItem("currencySelected").catch((error) => {
-          console.log("Error in display Data", error)
       })
        if (this.currencySelected != "undefined" && this.currencySelected != null) {
-         console.log(this.currencySelected)
         this.props.CurrencyRate(this.currencySelected)
        }
   }  
-    
   displayData()
 
     // this.props.globalData()
@@ -119,7 +117,6 @@ componentWillUnmount() {
  this.socket.disconnect();
 }
   render() {
-   console.log(this.currencySelected)
   return (
 
      

@@ -10,6 +10,7 @@ import {
 } from '../urls.js';
 
 export const coinNews = () => {
+    return function (dispatch) {
     dispatch({type: NEWS_FETCHING})
     axios.get(cryptoCompareNews).then((response) => {
         console.log(response.data)
@@ -27,6 +28,7 @@ export const coinNews = () => {
         })
        )
     })
+    }
  }
     
     
