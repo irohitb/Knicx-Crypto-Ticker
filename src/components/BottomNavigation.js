@@ -5,9 +5,11 @@ import {
     Text,
     TouchableOpacity
   } from 'react-native';
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/Entypo';
 import Icons2 from "react-native-vector-icons/Feather";
+import { navbarState }  from "../actions/bottomNavigation"
 
 //user
 class BottomNavigation extends PureComponent {
@@ -20,41 +22,43 @@ class BottomNavigation extends PureComponent {
         this.about = (<Icons2 name="user" size={30} color="white" />)
         this.socket
     }
-
-    state = {
-        activeTab: "Home"
-    }
     
 
     activeTab = (activeTab) => {
+    
         //Note keep the activeTab name same as that of screen
-        this.setState({activeTab: activeTab})
+        this.props.navbarState(activeTab)
+            console.log(this.props.navbarActive)
+            console.log(this.props.navbarActive1)
         this.props.navigation.navigate(activeTab)
     }
 
     render () {
+        console.log(this.props.navbarActive)
+        console.log(this.props.navbarActive)
+        console.log(this.props.navbarActive1)
         return (
      
                 <View style={styles.NavBarBottom}>
 
                     <TouchableOpacity
                     onPress={() => this.activeTab("Home")}>
-                        <Text> <Icon name="bitcoin" size={30} color={ this.state.activeTab == "Home" ? "#fbc02d" : "white"} /></Text>
+                        <Text> <Icon name="bitcoin" size={30} color={ this.props.navbarActive == "Home" ? "#fbc02d" : "white"} /></Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                     onPress={() => this.activeTab("News")}>
-                        <Text> <Icons name="news" size={30} color={this.state.activeTab == "News" ? "#fbc02d" : "white"} /> </Text>
+                        <Text> <Icons name="news" size={30} color={this.props.navbarActive == "News" ? "#fbc02d" : "white"} /> </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                     onPress={() => this.activeTab("Exchange")}>
-                        <Text> <Icons2 name="bar-chart-2" size={30} color={this.state.activeTab == "Exchange" ? "#fbc02d" : "white"} /> </Text>
+                        <Text> <Icons2 name="bar-chart-2" size={30} color={this.props.navbarActive== "Exchange" ? "#fbc02d" : "white"} /> </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                     onPress={() => this.activeTab("about")}>
-                        <Text> <Icons2 name="user" size={30} color={this.state.activeTab == "about" ? "#fbc02d" : "white"} /> </Text>
+                        <Text> <Icons2 name="user" size={30} color={this.props.navbarActive == "about" ? "#fbc02d" : "white"} /> </Text>
                     </TouchableOpacity>
 
                 </View>
@@ -62,7 +66,16 @@ class BottomNavigation extends PureComponent {
     }
 }
 
-export default BottomNavigation;
+const mapStateToProps = state => {
+    return {
+        navbarActive: state.navBar.activeTab,
+        navbarActive1: state.navBar
+    }
+}
+
+export default connect(mapStateToProps,
+    { navbarState
+    })(BottomNavigation);
 
 const styles = StyleSheet.create({
     NavBarBottom : {

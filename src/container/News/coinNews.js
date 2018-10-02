@@ -1,12 +1,13 @@
 import React, {PureComponent} from "react"
 import {
-    View
+    View,
+    StyleSheet
 } from 'react-native'
 import { connect } from 'react-redux';
 import {
     coinNews 
 } from "../../actions/coinNews.js"
-
+import BottomNavigation from '../../components/BottomNavigation.js'
 
 
 
@@ -17,8 +18,8 @@ class News extends PureComponent {
     render() {
    
         return (
-            <View>
-
+            <View style={coinNewsMain}>
+                    <BottomNavigation navigation={this.props.navigation}/>
             </View>
         )
     }
@@ -38,3 +39,19 @@ export default connect(mapStateToProps,
     {
     coinNews 
 })(News);
+
+const styles = StyleSheet.create({ 
+    coinNewsMain: {
+        marginTop: 40,
+        display: "flex",
+        flex: 1
+    },
+    BottomNavigator: {
+        bottom: 0 
+    }
+})
+
+const {
+ coinNewsMain,
+ BottomNavigator
+} = styles

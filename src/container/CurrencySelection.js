@@ -31,7 +31,6 @@ class Language extends Component {
          searchCurrency: false,
      }
     onSearch = (text) => {
-        console.log(text)
         // Set State to false
         if (text == "" || text == " ") {
          this.CurrencyDisplay = []

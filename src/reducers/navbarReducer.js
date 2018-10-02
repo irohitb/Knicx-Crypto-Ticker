@@ -4,18 +4,17 @@ import {
 
 
   const intialState = {
-      activeTab: ""
+      activeTab: "Home"
   }
 
-  export default function(state = initialState, action) {
+  export default function(state = intialState,  action) {
     switch(action.type) {
         case NAVBAR_ACTIVE_STATE :
         return {
+          ...state,
           activeTab: action.payload
         }
         default:
-        return {
-            activeTab: "home"
-        }
+          return state
       }
     }

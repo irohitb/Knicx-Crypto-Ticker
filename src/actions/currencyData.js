@@ -20,7 +20,6 @@ export const CurrencyRate = (selectedCurrency) => {
     dispatch({type: CURRENCY_FETCHING})
     let Currency = []
     if (selectedCurrency == "USD" || selectedCurrency == "usd") {
-      console.log(selectedCurrency)
       Currency.push({
         currencySymbol: "$",
         currencyName :   "USD",
@@ -33,7 +32,6 @@ export const CurrencyRate = (selectedCurrency) => {
           })
         )
       } else {
-        console.log("here not in USD")
     axios.get(CurrencyRateLink).then((response) => {
       let CurrencyRates = Object.keys(response.data.rates)
         for (let i=0; i<CurrencyRates.length; i++) {
