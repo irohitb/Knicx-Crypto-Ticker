@@ -233,9 +233,10 @@ const styles = StyleSheet.create({
   },
   loadingComponent: {
     flexDirection: 'column',
-justifyContent: 'center',
-alignItems: 'center',
-height: '80%'
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '80%',
+
   }
 
 

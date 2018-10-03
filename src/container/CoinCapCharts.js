@@ -17,12 +17,18 @@ import {
     coinHistory, 
     coinComplete 
 } from "../actions/coinCapAction.js"
-
+import Spinner from 'react-native-loading-spinner-overlay';
 import {
     fetchRedditPosts
 } from "../actions/socialAndNews.js"
  import CoinChartStatus from './coinChartComponents/coinChartStatus'
  import CoinChart from "./coinChartComponents/coinChart.js"
+ import { 
+    Bubbles,
+    DoubleBounce, 
+    Bars, 
+    Pulse 
+   } from 'react-native-loader';
  
  
 
@@ -64,22 +70,29 @@ class CoinCapCharts extends PureComponent {
    
 
     render ()  {
-
+            console.log(this.props.itemHistoryFetching)
             return (
        
                 <View style={CoinCapChartsMain}> 
                   <View>
                     <StatusBar hidden={true}  />
                  </View>
-                <ScrollView>
-                
-                   <CoinChart 
+
+                { this.props.cryptoLoading ?  
+              (  <View style={loadingComponent}>       
+                <Bars  size={15} color="#4CAF50" /> 
+            </View> ) : 
+                (<ScrollView>
+                  { this.props.itemHistoryFetching ?  (  <View style={historyBarLoading}>       
+                           <Bars  size={15} color="#4CAF50" /> 
+                        </View> )  : 
+                  ( <CoinChart 
                     coinHistory = {this.props.coinHistoryDisplay}
                     chartColor = {this.props.coinCompleteDisplay} 
                     navigation={this.props.navigation}
 
                     //  Chart color here is actually sending everything and we are using it for more than color operations now
-                   />
+                   />)}
                 <View style={buttonMain}>
                     <View>
                         <TouchableOpacity
@@ -161,7 +174,7 @@ class CoinCapCharts extends PureComponent {
                
                     />
                 </View>
-                </ScrollView>
+                </ScrollView>)}
                <BottomNavigation navigation={this.props.navigation}/>
                 </View>
             
@@ -178,7 +191,8 @@ const mapStateToProps = state => {
       coinHistoryDisplay: state.coincap.itemHistory ,
       cryptoLoading: state.coincap.itemsFetching, 
       redditCryptoNews: state.redditNews.DataSucess,
-      redditFetching: state.redditNews.DataFetching
+      redditFetching: state.redditNews.DataFetching,
+      itemHistoryFetching: state.coincap.itemHistoryFetching
     }
   };
 
@@ -241,7 +255,20 @@ export default connect(mapStateToProps,
     },
     CoinCapChartsMain:{
         flex: 1
-    }
+    },
+    loadingComponent: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '80%',
+      },
+      historyBarLoading: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 75,
+        marginBottom: 75 
+      }
   })
 
   const { 
@@ -253,7 +280,9 @@ export default connect(mapStateToProps,
     img,
     redditMain,
     redditTextMain,
-    CoinCapChartsMain
+    CoinCapChartsMain,
+    loadingComponent,
+    historyBarLoading
   
     } = styles
 

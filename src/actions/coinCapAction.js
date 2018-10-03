@@ -6,7 +6,8 @@ import {
   UPDATE_CRYPTO_DATA, 
   GLOBAL_DATA,
   COIN_HISTORY,
-  COIN_COMPLETE
+  COIN_COMPLETE,
+  CRYPTO_FETCHING_HISTORY
 } from './type.js';
 import {
   ApiCoinCap, 
@@ -78,7 +79,7 @@ export const updateCrypto = (updatedData) => {
 //Coin history 
 export const coinHistory = (days, coinName) => {
     return function (dispatch) {
-    dispatch({type: CRYPTO_FETCHING}) 
+    dispatch({type: CRYPTO_FETCHING_HISTORY}) 
     axios.get(coinCapHistory + days + "day/" + coinName).then(respone => {
       let coinHistoryV = []
       for (let i = 0; i<respone.data["price"].length; i++) {

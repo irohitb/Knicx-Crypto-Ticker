@@ -7,7 +7,7 @@ export const UPDATE_CRYPTO_DATA = 'UPDATE_CRYPTO_DATA';
 export const GLOBAL_DATA = "GLOBAL_DATA";
 export const COIN_HISTORY = "COIN_HISTORY";
 export const COIN_COMPLETE = "COIN_COMPLETE";
-
+export const CRYPTO_FETCHING_HISTORY ="CRYPTO_FETCHING_HISTORY"
 
 //Social Media and News
 export const REDDIT_FETCHED = 'REDDIT_FETCHED'
