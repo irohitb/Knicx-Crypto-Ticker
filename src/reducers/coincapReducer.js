@@ -42,8 +42,7 @@ export default function(state = initialState, action) {
       case UPDATE_CRYPTO_DATA:
       return {
       ...state,
-      itemsSucess: action.payload,
-      itemsFetching: false
+      itemsSucess: action.payload
       }
       //GLOBAL_DATA
       case GLOBAL_DATA:

@@ -28,15 +28,10 @@ class BottomNavigation extends PureComponent {
     
         //Note keep the activeTab name same as that of screen
         this.props.navbarState(activeTab)
-            console.log(this.props.navbarActive)
-            console.log(this.props.navbarActive1)
         this.props.navigation.navigate(activeTab)
     }
 
     render () {
-        console.log(this.props.navbarActive)
-        console.log(this.props.navbarActive)
-        console.log(this.props.navbarActive1)
         return (
      
                 <View style={styles.NavBarBottom}>
@@ -82,6 +77,8 @@ const styles = StyleSheet.create({
       paddingTop: 8,
       borderTopWidth: 2,
       backgroundColor: "#3b5998",
+      position: "absolute",
+      width: "100%",
     //   borderTopColor: '#fbc02d',
       display: "flex",
       flexDirection: "row",

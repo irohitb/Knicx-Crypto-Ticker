@@ -9,7 +9,8 @@ import {
   Text, 
   TouchableOpacity,
   StatusBar,
-  AsyncStorage
+  AsyncStorage,
+  ART
 } from 'react-native';
 import {
   fetchCoin, 
@@ -18,6 +19,12 @@ import {
 } from "../actions/coinCapAction.js"
 import CoinCard from "./CoinCard.js"
 import Spinner from 'react-native-loading-spinner-overlay';
+import { 
+   Bubbles,
+   DoubleBounce, 
+   Bars, 
+   Pulse 
+  } from 'react-native-loader';
 import BottomNavigation from '../components/BottomNavigation.js'
 import {
   CurrencyRate
@@ -125,13 +132,10 @@ componentWillUnmount() {
                <StatusBar backgroundColor="white" 
                 barStyle="light-content"/>
             </View>
-          { this.props.cryptoLoading ? 
-            (  <View style={{ flex: 1 }}>
-                <Spinner visible={this.props.cryptoLoading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
-            </View> ) :
+          
 
 
-            (<View style={mainView}>
+            <View style={mainView}>
     
              {/* Custom Search Input */}
            <View style={searchDrop}> 
@@ -149,8 +153,11 @@ componentWillUnmount() {
               </TouchableOpacity>
 
             </View>
-            
-              <FlatList
+            { this.props.cryptoLoading ?  
+              (  <View style={loadingComponent}>       
+                <Bars  size={15} color="#4CAF50" /> 
+            </View> ) : 
+             ( <FlatList
               data={this.state.searchCoin ? this.displaySearchCrypto : this.props.cryptoLoaded}
               extraData={[this.displaySearchCrypto, this.props.cryptoLoaded]}
               keyExtractor={item => item.short}
@@ -176,9 +183,9 @@ componentWillUnmount() {
                       />
                  )
                 }}          
-              />
+              />)}
         <BottomNavigation navigation={this.props.navigation}/>
-       </View>)}
+       </View>
 
       
       </View>
@@ -223,6 +230,12 @@ const styles = StyleSheet.create({
     marginRight: 5,
     color: "white",
     textAlign: "center"
+  },
+  loadingComponent: {
+    flexDirection: 'column',
+justifyContent: 'center',
+alignItems: 'center',
+height: '80%'
   }
 
 
@@ -233,7 +246,8 @@ const {
   mainView,
   superMainView,
   searchDrop,
-  money
+  money,
+  loadingComponent
 } = styles
 
 

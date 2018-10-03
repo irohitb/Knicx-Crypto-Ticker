@@ -16,7 +16,7 @@ class News extends PureComponent {
         this.props.coinNews()
     }
     render() {
-   
+   console.log(this.props.coinNewsMain)
         return (
             <View style={coinNewsMain}>
                     <BottomNavigation navigation={this.props.navigation}/>
@@ -42,7 +42,6 @@ export default connect(mapStateToProps,
 
 const styles = StyleSheet.create({ 
     coinNewsMain: {
-        marginTop: 40,
         display: "flex",
         flex: 1
     },
