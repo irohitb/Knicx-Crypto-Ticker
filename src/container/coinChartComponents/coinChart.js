@@ -63,8 +63,6 @@ class CoinChart extends PureComponent {
         this.selectedTime  = new Date(this.selectedTime).toString()
         this.selectedTime = this.selectedTime.split(' ').slice(0, 5).join(' ');
         this.valueAtSelectedTime = this.props.coinHistory[numberSearch]["y"]
-
-        console.log(this.props.coinHistory)
         //This will call function which declared in the global modular scope 
         this.setState({
           activePoint: findClosestPointSorted(this.props.coinHistory, value)
@@ -111,7 +109,7 @@ class CoinChart extends PureComponent {
 
        //Intially when user does not scroll the value of selected coin is null and hence we ae giving to the current coin value
           if (!this.valueAtSelectedTime && this.props.chartColor["price_usd"]) {
-              console.log(this.props.chartColor["price_usd"], typeof this.props.chartColor["price_usd"])
+   
               this.valueAtSelectedTime =  this.props.chartColor["price_usd"]
               this.selectedTime = new Date().toString()
               this.selectedTime = this.selectedTime.split(' ').slice(0, 5).join(' ');

@@ -14,3 +14,5 @@ export const cryptoCompareNews = "https://min-api.cryptocompare.com/data/v2/news
 //Exchanges 
 export const coinDelta = "https://api.coindelta.com/api/v1/public/getticker/"
 export const koinex = "https://koinex.in/api/ticker"
+// export const binance 
+// export const coinBase 

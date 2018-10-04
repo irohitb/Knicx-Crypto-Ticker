@@ -2,7 +2,8 @@ import axios from 'axios';
 import {
     NEWS_FETCHING_SUCESS,
     NEWS_FETCHING,
-    NEWS_FETCHING_FAIL
+    NEWS_FETCHING_FAIL,
+    COIN_NEWS_STATE 
 } from "./type.js";
 
 import {
@@ -13,7 +14,6 @@ export const coinNews = () => {
     return function (dispatch) {
     dispatch({type: NEWS_FETCHING})
     axios.get(cryptoCompareNews).then((response) => {
-        console.log(response.data)
         return(
             dispatch({
               type: NEWS_FETCHING_SUCESS,
@@ -33,3 +33,12 @@ export const coinNews = () => {
     
     
 
+//Tracks the news number 
+ export const coinNewsState = (number) => {
+     return function (dispatch) {
+         dispatch({
+             type: COIN_NEWS_STATE, 
+             payload: number
+         })
+     }
+ }

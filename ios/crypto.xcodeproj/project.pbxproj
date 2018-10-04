@@ -46,7 +46,6 @@
 		766D3EE814014A5A9EB905F1 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192D67919D745C0A1487569 /* FontAwesome5_Solid.ttf */; };
 		782C63B73E09487C9398A397 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C59CCF45C28543FC819CBB77 /* FontAwesome5_Regular.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		8A88CC29216442DB008FA5E5 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A88CBFE216442D0008FA5E5 /* libART.a */; };
 		8A912ADE215A6DAC00E77757 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A912AD0215A6DAC00E77757 /* Octicons.ttf */; };
 		8A912ADF215A6DAC00E77757 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A912AD1215A6DAC00E77757 /* Feather.ttf */; };
 		8A912AE0215A6DAC00E77757 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A912AD2215A6DAC00E77757 /* Entypo.ttf */; };
@@ -61,6 +60,7 @@
 		8A912AE9215A6DAC00E77757 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A912ADB215A6DAC00E77757 /* EvilIcons.ttf */; };
 		8A912AEA215A6DAC00E77757 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A912ADC215A6DAC00E77757 /* SimpleLineIcons.ttf */; };
 		8A912AEB215A6DAC00E77757 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A912ADD215A6DAC00E77757 /* MaterialIcons.ttf */; };
+		8A9DFF862164F616004E9CF8 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A88CBFE216442D0008FA5E5 /* libART.a */; };
 		969FCBA1B8FF41DDBEC32905 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02CB427AC7D24121ADB85B64 /* Feather.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B5B1CEC18CC64D1883F223A7 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3082F12BB507415382EAB64E /* MaterialCommunityIcons.ttf */; };
@@ -489,7 +489,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A88CC29216442DB008FA5E5 /* libART.a in Frameworks */,
+				8A9DFF862164F616004E9CF8 /* libART.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				F9884FD6214C52FC00D1548E /* libRNSVG.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,

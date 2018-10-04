@@ -70,7 +70,6 @@ class CoinCapCharts extends PureComponent {
    
 
     render ()  {
-            console.log(this.props.itemHistoryFetching)
             return (
        
                 <View style={CoinCapChartsMain}> 

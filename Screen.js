@@ -8,6 +8,7 @@ import CurrencySelection from './src/container/CurrencySelection.js'
 import CoinCap from './src/container/CoinCap.js';
 import CoinChart from './src/container/coinChartComponents/coinChart.js'
 import News from "./src/container/News/coinNews.js"
+import Exchange from "./src/container/Exchanges/coinExchange.js"
 
 
 //THis is being Exported to App.js
@@ -27,7 +28,7 @@ import News from "./src/container/News/coinNews.js"
 // createSwitchNavigator
 //ComponentWillUnmount 
 
-export const stackNavigator = createStackNavigator({
+export const homeStackNavigator = createStackNavigator({
   Home: {
     screen: CoinCap
   }, 
@@ -45,18 +46,29 @@ export const stackNavigator = createStackNavigator({
  }
 )
 
+export const exchangeStackNavigator = createStackNavigator({
+    Home: {
+      screen: Exchange
+    }
+}, {
+    headerMode: 'none'
+  }
+)
+
 
 export const MyScreen = createSwitchNavigator({
   Home: {  //Switch Navigator
-    screen: stackNavigator
+    screen: homeStackNavigator
   },
   News: { //Switch Navigator 
     screen: News
+  },
+  Exchange: {
+    screen: exchangeStackNavigator
   }
 
 },{
     initialRouteName: 'Home',
-    
 });
 
 
