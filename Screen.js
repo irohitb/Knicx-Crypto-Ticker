@@ -64,7 +64,7 @@ export const MyScreen = createSwitchNavigator({
     screen: News
   },
   Exchange: {
-    screen: exchangeStackNavigator
+    screen: Exchange
   }
 
 },{

@@ -14,5 +14,7 @@ export const cryptoCompareNews = "https://min-api.cryptocompare.com/data/v2/news
 //Exchanges 
 export const coinDelta = "https://api.coindelta.com/api/v1/public/getticker/"
 export const koinex = "https://koinex.in/api/ticker"
-// export const binance 
-// export const coinBase 
+ export const binance = "https://api.binance.com/api/v1/exchangeInfo"
+ export const coinBase = "https://api.coinbase.com/v2/exchange-rates?currency=usd"
+//-->
+export const multipleExchangeData = "https://api.cryptonator.com/api/full/" //incomplete URL 

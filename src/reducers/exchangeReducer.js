@@ -5,9 +5,10 @@ import {
 } from './../actions/type.js';
 
 const initialState = {
-    DataFetching: false,
+    DataFetching: true,
     DataSucess: [],
-    DateError: []
+    DateError: [],
+    DateError: false
   }
   
 
@@ -16,7 +17,6 @@ const initialState = {
     switch (action.type) {
       case EXCHANGE_CURRENCY_FETCHING:
       return {
-        ...state,
         DataFetching: true
       }
       case EXCHANGE_CURRENCY_FETCH_SUCCESS:
@@ -29,7 +29,8 @@ const initialState = {
       return {
         ...state,
         DateError: action.payload,
-        DataFetching: false
+        DataFetching: true,
+        DateError: true
         }
         default:
         return state
