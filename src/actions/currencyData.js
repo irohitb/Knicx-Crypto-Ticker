@@ -2,11 +2,13 @@ import axios from 'axios';
 import {
   CURRENCY_RATE, 
   CURRENCY_FETCHING, 
-  CURRENCY_ERROR
+  CURRENCY_ERROR,
+  CURRENCY_INR
  } from './type.js';
 
 import {
-  CurrencyRateLink
+  CurrencyRateLink,
+  CurrencyRateLinkINR
 } from '../urls.js';
 import {currencyDetails} from './currencyDetails'
 
@@ -59,4 +61,25 @@ export const CurrencyRate = (selectedCurrency) => {
     })
   }
  }
+}
+
+export const indianCurrency = () => {
+  return function (dispatch) {
+    dispatch({type: CURRENCY_FETCHING})
+    axios.get(CurrencyRateLinkINR).then((response) => {
+      return (
+        dispatch({
+          type: CURRENCY_INR,
+          payload: response.data
+        })
+      )
+    }).catch((error) => {
+      return (
+        dispatch({
+          type: CURRENCY_ERROR,
+          payload: error.data
+        })
+      )
+    })
+  }
 }

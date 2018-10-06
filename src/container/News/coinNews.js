@@ -28,10 +28,6 @@ class News extends PureComponent {
 
     constructor() {
         super()
-     
-        this.previousImage,
-        this.currentImage, 
-        this.nextImage,
         this.config
     }
     state = {
@@ -41,7 +37,6 @@ class News extends PureComponent {
 
 
         pageChangeNext = () => {
-            console.log("Gesture Perfromed left")
             let number
               if (this.state.number != 50) {
                   number = this.state.number
@@ -51,7 +46,6 @@ class News extends PureComponent {
           }
 
           pageChangePrev = () => {
-              console.log("Gesture Perfromed Right")
             let number
             if (this.state.number != 0) {
                 number = this.state.number
@@ -167,7 +161,7 @@ const styles = StyleSheet.create({
 
     },
     imageurl: {
-        height: 250,
+        height: 300,
         width: "100%"
     },
     loadingComponent: {

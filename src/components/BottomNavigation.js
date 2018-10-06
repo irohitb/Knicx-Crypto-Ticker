@@ -20,12 +20,10 @@ class BottomNavigation extends PureComponent {
         this.News = (<Icons name="news" size={30} color="white" />);
         this.Exchange = (<Icons2 name="bar-chart-2" size={30} color="white" />);
         this.about = (<Icons2 name="user" size={30} color="white" />)
-        this.socket
     }
     
 
     activeTab = (activeTab) => {
-    console.log(activeTab)
         //Note keep the activeTab name same as that of screen
         this.props.navbarState(activeTab)
         this.props.navigation.navigate(activeTab)

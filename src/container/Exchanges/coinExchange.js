@@ -12,6 +12,9 @@ import BottomNavigation from '../../components/BottomNavigation.js'
 import {
     exchangeToDisplay
 } from "../../actions/coinExchange.js"
+import {
+    indianCurrency
+} from "../../actions/currencyData.js"
 import { 
     Bubbles,
     DoubleBounce, 
@@ -25,55 +28,117 @@ class coinExchange extends PureComponent {
 
     constructor() {
         super () 
-        this.coinURL = "btc-usd"
+        this.coinURL = "BTC"
+        this.searchMarket = []
+        this.combineExchangeDate = false,
+        this.coinExchangeArray = []
     }
+
+    state = {
+        searchMarket: false
+    }
+
+    onSearch = (text) => {
+        //If no text 
+        if (text == "" || text == " ") {
+            this.setState({searchMarket: false})
+            this.searchMarket = []
+        } else {
+            this.setState({searchMarket: true})
+            this.searchMarket = []
+                 for (let i = 0; i< this.coinExchangeArray.length; i++ ) {
+                    let exchangeName = this.coinExchangeArray[i]["market"]
+                    if (exchangeName.indexOf(text) > - 1) {
+                        this.searchMarket.push({
+                            market: this.coinExchangeArray[i]["market"],
+                            value: this.coinExchangeArray[i]["value"]
+                           
+                        })
+                      }
+                 }
+        //When Text
+         }
+    }
+
+   
 
     componentDidMount() {
         this.props.exchangeToDisplay(this.coinURL)
+        this.props.indianCurrency()
     }
-    render () {
-        // console.log(this.props.exchangeLoading)
-        // if (!this.props.exchangeLoading && !this.props.exchangeError) {
-        // console.log(this.props.exchangeLoading)
-        // console.log(this.props.exchange.ticker)
-        // }
+    render () {     
+        
+        if (!this.props.exchangeSort && !this.props.exchangeError && !this.props.currencyFetching) {
+            console.log(this.props.currencyINR)
+            console.log(this.props.currencyINR["rates"]["USD"])
+                //Koinex
+                if (!this.combineExchangeDate && this.coinExchangeArray.length < 1) {
+                    this.coinExchangeArray.push({
+                    "market": "Koinex",
+                    "value" : parseFloat(this.props.exchange[0]["data"]["prices"]["inr"][this.coinURL])*(this.props.currencyINR["rates"]["USD"])
+                    })
+
+                    //Coin Delta 
+                    for (let i=0; i<this.props.exchange[1]["data"].length; i++) {
+                        let coinUrl = this.coinURL.toLocaleLowerCase()
+                        coinUrl = coinUrl + "-inr"
+                        if (coinUrl == this.props.exchange[1]["data"][i]["MarketName"] ) {
+                        this.coinExchangeArray.push({
+                            "market": "CoinDelta",
+                            "value" : this.props.exchange[1]["data"][i]["Last"]*(this.props.currencyINR["rates"]["USD"])
+                        })
+                        }
+                    }
+
+                    //Multiple Exchange 
+                    for (let i=0; i<this.props.exchange[2]["data"]["ticker"]["markets"].length; i++) { 
+                        this.coinExchangeArray.push({
+                            "market":  this.props.exchange[2]["data"]["ticker"]["markets"][i]["market"],
+                            "value": parseFloat(this.props.exchange[2]["data"]["ticker"]["markets"][i]["price"])
+                        })
+                    }
+                    console.log(this.coinExchangeArray)
+            }
+        }
+
         return (
             <View style={exchangeMain}> 
-                <View style={header}> 
-                    <Text style={textHeader}> Bitcoin</Text>
-                    <View style={viewSearchExchange}> 
-                         <TextInput
-                            style={searchExchange}
-                            placeholder="Search Coin"/>
-                    </View>
-                </View>
+           
                 { this.props.exchangeLoading ? 
                 <View style={loadingComponent}>       
                     <Bars  size={15} color="#4CAF50" /> 
                 { this.props.exchangeError ?  (<Text> There seems to be some problem fetching data </Text>) : null }
                 </View> :  
-                 <FlatList 
-                 style={flatlistStyle}
-                 data={this.props.exchange.ticker["markets"]}
-                 keyExtractor={item => item.short}
-                 renderItem={({ item, index }) => {
-                     return (
-                        <View style={exchangeList}>
-                            <View style={subExchangeHeading1}>
-                             <Text style={heading}>Market</Text>
-                              <Text style={Value}>{item["market"]}</Text>
+                    <View style={{flex: 1}}>
+                         <View style={header}> 
+                            <Text style={textHeader}> {this.coinURL} </Text>
+                            <View style={viewSearchExchange}> 
+                                <TextInput
+                                    style={searchExchange}
+                                    placeholder="Search Market"
+                                    onChangeText={(text) => this.onSearch(text)}/>
+                          </View>
+                       </View>
+                    <FlatList 
+                    style={flatlistStyle}
+                    data={this.state.searchMarket ?  this.searchMarket : this.coinExchangeArray}
+                    extraData={[this.coinExchangeArray, this.searchMarket]}
+                    keyExtractor={item => item.short}
+                    renderItem={({ item, index }) => {
+                        return (
+                            <View style={exchangeList}>
+                                <View style={subExchangeHeading1}>
+                                <Text style={heading}>Market</Text>
+                                <Text style={Value}>{item["market"]}</Text>
+                                </View>
+                                <View style={subExchangeHeading2}> 
+                                    <Text style={heading}>Price</Text>
+                                    <Text style={Value}>{this.props.currencyLoaded[0]["currencySymbol"]} {(parseFloat(item["value"])*(this.props.currencyLoaded[0]["currencyPrice"])).toFixed(3)} </Text>
+                                </View>
                             </View>
-                            <View style={subExchangeHeading}> 
-                                <Text style={heading}>Price</Text>
-                                <Text style={Value}> {parseFloat(item["price"]).toFixed(4)} </Text>
-                            </View>
-                            <View  style={subExchangeHeading}>
-                                <Text style={heading}>  Volume </Text>
-                               <Text  style={Value}> {item["volume"]}</Text>
-                            </View>
-                        </View>
-                     )
-                 }} /> }
+                        )
+                    }} /> 
+                    </View>}
                 
                 <BottomNavigation navigation={this.props.navigation}/>
             </View>
@@ -83,15 +148,19 @@ class coinExchange extends PureComponent {
 
 const mapStateToProps = state => {
     return {
+        currencyFetching: state.currency.DataFetching,
+        currencyINR: state.currency.DataINR,
         currencyLoaded: state.currency.DataSucess,
         exchange: state.exchange.DataSucess,
         exchangeLoading: state.exchange.DataFetching,
-        exchangeError: state.exchange.DateError
+        exchangeError: state.exchange.DateError,
+        exchangeSort: state.exchange.DataSort
     }
 }
 
 export default connect(mapStateToProps,{
-exchangeToDisplay
+exchangeToDisplay,
+indianCurrency
 } )(coinExchange);
 
 const styles = StyleSheet.create({ 
@@ -112,7 +181,7 @@ const styles = StyleSheet.create({
         color: "white"
     }, 
     viewSearchExchange:{
-        marginTop: 20, 
+        marginTop: 10, 
         marginLeft: 5,
         marginRight: 5,
     },
@@ -120,7 +189,7 @@ const styles = StyleSheet.create({
         width: "80%",
         borderRadius: 15,
         backgroundColor: "white",
-        height: 40,
+        height: 35,
         textAlign: "center"
     },
     loadingComponent: {
@@ -134,8 +203,6 @@ const styles = StyleSheet.create({
           flexDirection:"row",
           justifyContent: "space-between",
           marginTop: 8,
-          marginLeft: 5,
-          marginRight: 8,
           backgroundColor: "white",
           borderRadius: 15,
           textAlign: "center",
@@ -147,21 +214,26 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        width: "29%"
-        
+        width: "35%"
     },
     subExchangeHeading1: {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        width: "25%"
-        
+        width: "20%"
+    },
+    subExchangeHeading2: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        width: "30%"
     },
       heading: {
           textAlign: "center",
           fontSize: 12,
           marginBottom: 12,
-          paddingTop: 5
+          paddingTop: 5,
+          color: "#4A708B"
       },
       Value: {
         textAlign: "center",
@@ -170,7 +242,7 @@ const styles = StyleSheet.create({
         paddingBottom: 5
       },
       flatlistStyle: {
-          marginBottom: 35
+         
       }
   
 })
@@ -187,7 +259,8 @@ const {
     heading,
     Value,
     flatlistStyle,
-    subExchangeHeading1
+    subExchangeHeading1,
+    subExchangeHeading2
 } = styles
 
 //https://api.coindelta.com/api/v1/public/getticker/

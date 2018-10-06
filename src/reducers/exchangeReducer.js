@@ -8,7 +8,8 @@ const initialState = {
     DataFetching: true,
     DataSucess: [],
     DateError: [],
-    DateError: false
+    DateError: false, 
+    DataSort: true
   }
   
 
@@ -17,20 +18,23 @@ const initialState = {
     switch (action.type) {
       case EXCHANGE_CURRENCY_FETCHING:
       return {
-        DataFetching: true
+        DataFetching: true,
+        DataSort: true
       }
       case EXCHANGE_CURRENCY_FETCH_SUCCESS:
       return {
         ...state,
         DataSucess: action.payload,
-        DataFetching: false
+        DataFetching: false,
+        DataSort: false
       }
       case EXCHANGE_CURRENCY_FETCH_ERROR:
       return {
         ...state,
         DateError: action.payload,
         DataFetching: true,
-        DateError: true
+        DateError: true,
+        DataSort: true
         }
         default:
         return state

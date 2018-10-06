@@ -55,7 +55,7 @@ class cryptoTicker extends PureComponent {
       this.props.CurrencyRate(this.currencySelected)
     }
 
-    //Async Storage
+    //Async Storage -> We are storing currency in local storage (in currency selection) and calling it here 
     displayData = async () => {
       this.currencySelected = await AsyncStorage.getItem("currencySelected").catch((error) => {
       })

@@ -164,7 +164,7 @@ export default connect(null,
           },
           searchText: {
             backgroundColor: "#3b5998",
-            paddingTop: 30,
+            paddingTop: 35,
             paddingBottom: 10,
             display: "flex",
             flexDirection: "row"
