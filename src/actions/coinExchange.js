@@ -3,7 +3,8 @@ import axios from 'axios';
 import {
     EXCHANGE_CURRENCY_FETCHING,
     EXCHANGE_CURRENCY_FETCH_SUCCESS,
-    EXCHANGE_CURRENCY_FETCH_ERROR
+    EXCHANGE_CURRENCY_FETCH_ERROR,
+    COIN_UPDATE_STATE
 } from "./type.js"
  import {
     multipleExchangeData,
@@ -27,6 +28,7 @@ export const exchangeToDisplay = (exchangURL) => {
                     })
                 )   
             }).catch((error) => {
+                console.log(error)
                 return (
                     dispatch({
                         type: EXCHANGE_CURRENCY_FETCH_ERROR,
@@ -36,6 +38,16 @@ export const exchangeToDisplay = (exchangURL) => {
              })
     }
 }
+
+export const coinUpdateState = (booleanValue) => {
+    return function (dispatch) {
+        dispatch({
+            type: COIN_UPDATE_STATE,
+            payload: booleanValue
+        })
+    }
+}
+
 
 //Creating Multiple API call using Promise 
 // export const multipleExchangeToDisplay = (crypto) => {

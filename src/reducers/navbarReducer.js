@@ -4,7 +4,7 @@ import {
 
 
   const intialState = {
-      activeTab: "Home"
+      activeTab: "home"
   }
 
   export default function(state = intialState,  action) {

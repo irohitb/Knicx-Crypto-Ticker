@@ -3,13 +3,15 @@ import {
     StyleSheet,  
     View, 
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+
   } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/Entypo';
 import Icons2 from "react-native-vector-icons/Feather";
 import { navbarState }  from "../actions/bottomNavigation"
+
 
 //user
 class BottomNavigation extends PureComponent {
@@ -24,19 +26,22 @@ class BottomNavigation extends PureComponent {
     
 
     activeTab = (activeTab) => {
+
+
         //Note keep the activeTab name same as that of screen
         this.props.navbarState(activeTab)
         this.props.navigation.navigate(activeTab)
     }
 
     render () {
+        
         return (
      
                 <View style={styles.NavBarBottom}>
 
                     <TouchableOpacity
-                    onPress={() => this.activeTab("Home")}>
-                        <Text> <Icon name="bitcoin" size={30} color={ this.props.navbarActive == "Home" ? "#fbc02d" : "white"} /></Text>
+                    onPress={() => this.activeTab("home")}>
+                        <Text> <Icon name="bitcoin" size={30} color={ this.props.navbarActive == "home" ? "#fbc02d" : "white"} /></Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity

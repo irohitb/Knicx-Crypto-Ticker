@@ -5,37 +5,39 @@ import {
     StyleSheet,
     TextInput, 
     FlatList, 
-    ScrollView
+    ScrollView, 
+    TouchableOpacity,
+    AsyncStorage
 } from "react-native"
 import { connect } from 'react-redux';
 import BottomNavigation from '../../components/BottomNavigation.js'
 import {
-    exchangeToDisplay
+    exchangeToDisplay,
+    coinUpdateState
 } from "../../actions/coinExchange.js"
 import {
     indianCurrency
 } from "../../actions/currencyData.js"
 import { 
-    Bubbles,
-    DoubleBounce, 
     Bars, 
-    Pulse 
    } from 'react-native-loader';
-
-
+import Icons from "react-native-vector-icons/SimpleLineIcons"
+import Icons1 from "react-native-vector-icons/FontAwesome"
 class coinExchange extends PureComponent {
 
 
     constructor() {
         super () 
         this.coinURL = "BTC"
+        this.coinURLFull = ""
         this.searchMarket = []
-        this.combineExchangeDate = false,
+        this.combineExchangeDate = false
         this.coinExchangeArray = []
     }
 
     state = {
-        searchMarket: false
+        searchMarket: false,
+        coinExchangeArray: []
     }
 
     onSearch = (text) => {
@@ -56,29 +58,58 @@ class coinExchange extends PureComponent {
                         })
                       }
                  }
-        //When Text
          }
     }
 
    
 
     componentDidMount() {
-        this.props.exchangeToDisplay(this.coinURL)
         this.props.indianCurrency()
+        this.props.exchangeToDisplay(this.coinURL)
+        displayData()
+    //Set Timeout API Call
     }
+
+
+
+
     render () {     
-        
+          //Async Storage -> We are storing currency in local storage (in currency selection) and calling it here 
+        if (this.props.cryptoUpdateState) {
+      
+            displayData = async () => {
+                this.coinURL = await AsyncStorage.getItem("CryptoCurrencySelected").catch((error) => {
+                    console.log(error)
+                })
+
+                 if (this.coinURL != "undefined" && this.coinURL != null) {
+                  this.props.exchangeToDisplay(this.coinURL)
+                  this.props.coinUpdateState(false)
+                  this.coinExchangeArray = []
+                 }
+    
+                 if (this.coinURL == null || this.coinURL == "undefined") {
+                    this.props.coinUpdateState(false)
+                    this.coinExchangeArray = []
+                 }
+            }  
+            displayData()
+           
+        }
+
+   
         if (!this.props.exchangeSort && !this.props.exchangeError && !this.props.currencyFetching) {
-            console.log(this.props.currencyINR)
-            console.log(this.props.currencyINR["rates"]["USD"])
-                //Koinex
+            //Koinex
                 if (!this.combineExchangeDate && this.coinExchangeArray.length < 1) {
+
+                    if (!isNaN(parseFloat(this.props.exchange[0]["data"]["prices"]["inr"][this.coinURL])*(this.props.currencyINR["rates"]["USD"])))  {
                     this.coinExchangeArray.push({
                     "market": "Koinex",
                     "value" : parseFloat(this.props.exchange[0]["data"]["prices"]["inr"][this.coinURL])*(this.props.currencyINR["rates"]["USD"])
                     })
+                }
 
-                    //Coin Delta 
+                    //Coin Delta -> No Coin FIx exsist 
                     for (let i=0; i<this.props.exchange[1]["data"].length; i++) {
                         let coinUrl = this.coinURL.toLocaleLowerCase()
                         coinUrl = coinUrl + "-inr"
@@ -91,13 +122,29 @@ class coinExchange extends PureComponent {
                     }
 
                     //Multiple Exchange 
-                    for (let i=0; i<this.props.exchange[2]["data"]["ticker"]["markets"].length; i++) { 
-                        this.coinExchangeArray.push({
-                            "market":  this.props.exchange[2]["data"]["ticker"]["markets"][i]["market"],
-                            "value": parseFloat(this.props.exchange[2]["data"]["ticker"]["markets"][i]["price"])
-                        })
+                    if (this.props.exchange[2]["data"]["error"] != "Pair not found") {
+                        for (let i=0; i<this.props.exchange[2]["data"]["ticker"]["markets"].length; i++) { 
+                    
+                            this.coinExchangeArray.push({
+                                "market":  this.props.exchange[2]["data"]["ticker"]["markets"][i]["market"],
+                                "value": parseFloat(this.props.exchange[2]["data"]["ticker"]["markets"][i]["price"])
+                            })
+                        }
                     }
-                    console.log(this.coinExchangeArray)
+
+                    //CoinCap Api as well 
+                    for (let i=0; i<this.props.cryptoLoaded.length; i++) {
+                        if (this.coinURL == this.props.cryptoLoaded[i]["short"]) {
+                            this.coinURLFull = this.props.cryptoLoaded[i]["long"]
+                            this.coinExchangeArray.push({
+                                "market": "CoinCap Api",
+                                "value": this.props.cryptoLoaded[i]["price"]
+                            })
+                         }
+                    }
+
+                
+                this.setState({coinExchangeArray: [...this.coinExchangeArray]})
             }
         }
 
@@ -107,16 +154,23 @@ class coinExchange extends PureComponent {
                 { this.props.exchangeLoading ? 
                 <View style={loadingComponent}>       
                     <Bars  size={15} color="#4CAF50" /> 
-                { this.props.exchangeError ?  (<Text> There seems to be some problem fetching data </Text>) : null }
+                { this.props.exchangeError ?  (<Text> There seems to be some problem fetching data. Check your Internet connection or any available update. </Text>) : null }
                 </View> :  
                     <View style={{flex: 1}}>
                          <View style={header}> 
-                            <Text style={textHeader}> {this.coinURL} </Text>
+                            <Text style={textHeader}> {this.coinURLFull} ({this.coinURL}) </Text>
                             <View style={viewSearchExchange}> 
                                 <TextInput
                                     style={searchExchange}
                                     placeholder="Search Market"
                                     onChangeText={(text) => this.onSearch(text)}/>
+
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('cryptoToShow')}>
+                                    <View style={cryptoSelect}>
+                                        <Text> <Icons1 name="exchange" size={30} color="white"></Icons1></Text>
+                                    </View>
+                                </TouchableOpacity>
+                                
                           </View>
                        </View>
                     <FlatList 
@@ -148,19 +202,22 @@ class coinExchange extends PureComponent {
 
 const mapStateToProps = state => {
     return {
+        cryptoLoaded: state.coincap.itemsSucess,
         currencyFetching: state.currency.DataFetching,
         currencyINR: state.currency.DataINR,
         currencyLoaded: state.currency.DataSucess,
         exchange: state.exchange.DataSucess,
         exchangeLoading: state.exchange.DataFetching,
         exchangeError: state.exchange.DateError,
-        exchangeSort: state.exchange.DataSort
+        exchangeSort: state.exchange.DataSort,
+        cryptoUpdateState: state.exchange.DataUpdate
     }
 }
 
 export default connect(mapStateToProps,{
 exchangeToDisplay,
-indianCurrency
+indianCurrency,
+coinUpdateState
 } )(coinExchange);
 
 const styles = StyleSheet.create({ 
@@ -184,9 +241,12 @@ const styles = StyleSheet.create({
         marginTop: 10, 
         marginLeft: 5,
         marginRight: 5,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
     searchExchange: {
-        width: "80%",
+        width: "90%",
         borderRadius: 15,
         backgroundColor: "white",
         height: 35,
@@ -207,20 +267,21 @@ const styles = StyleSheet.create({
           borderRadius: 15,
           textAlign: "center",
           padding: 5,
+          paddingTop: 8,
           marginBottom: 10
       },
     
-      subExchangeHeading: {
+      subExchangeHeading3: {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        width: "35%"
+        width: "22%"
     },
     subExchangeHeading1: {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        width: "20%"
+        width: "30%"
     },
     subExchangeHeading2: {
         display: "flex",
@@ -241,8 +302,19 @@ const styles = StyleSheet.create({
         fontSize: 15,
         paddingBottom: 5
       },
-      flatlistStyle: {
-         
+      value1: {
+          textAlign: "center",
+         backgroundColor: "#32CD32",
+         padding: 3,
+         color: "white"
+      },
+      cryptoSelect: {
+          marginLeft: 3,
+          marginRight: 5,
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "row",
+          color: "white"
       }
   
 })
@@ -255,12 +327,14 @@ const {
     viewSearchExchange,
     loadingComponent,
     exchangeList,
-    subExchangeHeading,
+    subExchangeHeading3,
     heading,
     Value,
     flatlistStyle,
     subExchangeHeading1,
-    subExchangeHeading2
+    subExchangeHeading2,
+    value1,
+    cryptoSelect
 } = styles
 
 //https://api.coindelta.com/api/v1/public/getticker/

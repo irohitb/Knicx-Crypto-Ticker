@@ -1,7 +1,8 @@
 import {
     EXCHANGE_CURRENCY_FETCHING,
     EXCHANGE_CURRENCY_FETCH_SUCCESS,
-    EXCHANGE_CURRENCY_FETCH_ERROR
+    EXCHANGE_CURRENCY_FETCH_ERROR,
+    COIN_UPDATE_STATE
 } from './../actions/type.js';
 
 const initialState = {
@@ -9,7 +10,8 @@ const initialState = {
     DataSucess: [],
     DateError: [],
     DateError: false, 
-    DataSort: true
+    DataSort: true,
+    DataUpdate: true
   }
   
 
@@ -18,6 +20,7 @@ const initialState = {
     switch (action.type) {
       case EXCHANGE_CURRENCY_FETCHING:
       return {
+        ...state,
         DataFetching: true,
         DataSort: true
       }
@@ -36,6 +39,11 @@ const initialState = {
         DateError: true,
         DataSort: true
         }
+        case COIN_UPDATE_STATE: 
+          return {
+            ...state,
+            DataUpdate: action.payload
+          } 
         default:
         return state
       }

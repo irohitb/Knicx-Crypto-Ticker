@@ -9,36 +9,19 @@ import CoinCap from './src/container/CoinCap.js';
 import CoinChart from './src/container/coinChartComponents/coinChart.js'
 import News from "./src/container/News/coinNews.js"
 import Exchange from "./src/container/Exchanges/coinExchange.js"
-
-
-//THis is being Exported to App.js
-
-//  export const Tab = TabNavigator({
-//   TabA: {
-//     screen: CoinCap 
-//   },
-//   TabB: {
-//     screen: CoinCap
-//   }
-// }, {
-//   order: ['TabA', 'TabB'],
-//   animationEnabled: true,
-// })
-
-// createSwitchNavigator
-//ComponentWillUnmount 
+import CryptoToShowcase from "./src/container/Exchanges/coinSelect.js"
 
 export const homeStackNavigator = createStackNavigator({
   Home: {
     screen: CoinCap
   }, 
-  CoinCapCharts: { //Stack Navigator
+  CoinCapCharts: { 
     screen: CoinCapCharts
    },
- CurrencySelection: { //Stack Navigator 
+ CurrencySelection: { 
    screen: CurrencySelection
  },
- CoinChart: { //Stack Navigator 
+ CoinChart: { 
    screen: CoinChart
  }
 },{
@@ -49,26 +32,28 @@ export const homeStackNavigator = createStackNavigator({
 export const exchangeStackNavigator = createStackNavigator({
     Home: {
       screen: Exchange
+    },
+    cryptoToShow: {
+      screen: CryptoToShowcase
     }
 }, {
     headerMode: 'none'
   }
 )
 
-
 export const MyScreen = createSwitchNavigator({
-  Home: {  //Switch Navigator
+  home: {  //Switch Navigator
     screen: homeStackNavigator
   },
   News: { //Switch Navigator 
     screen: News
   },
   Exchange: {
-    screen: Exchange
+    screen: exchangeStackNavigator 
   }
 
 },{
-    initialRouteName: 'Home',
+    initialRouteName: 'home',
 });
 
 

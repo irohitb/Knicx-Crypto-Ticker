@@ -18,12 +18,9 @@ import {
   // globalData
 } from "../actions/coinCapAction.js"
 import CoinCard from "./CoinCard.js"
-import Spinner from 'react-native-loading-spinner-overlay';
+
 import { 
-   Bubbles,
-   DoubleBounce, 
    Bars, 
-   Pulse 
   } from 'react-native-loader';
 import BottomNavigation from '../components/BottomNavigation.js'
 import {
