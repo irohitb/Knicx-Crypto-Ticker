@@ -64,7 +64,6 @@ class coinSelect  extends Component {
 
     setCryptoCurrency = (text) => {
 
-        console.log(text)
         let CryptoCurrencySelected = text.toUpperCase()
    
         AsyncStorage.setItem('CryptoCurrencySelected', CryptoCurrencySelected).then(() => {

@@ -3,7 +3,8 @@ import {
   CURRENCY_RATE, 
   CURRENCY_FETCHING, 
   CURRENCY_ERROR,
-  CURRENCY_INR
+  CURRENCY_INR,
+  CURRENCY_IMAGE_STATE
  } from './type.js';
 
 import {
@@ -83,3 +84,12 @@ export const indianCurrency = () => {
     })
   }
 }
+
+export const CurrencyState = (booleanValue) => {
+  return function (dispatch) {
+    dispatch({
+      type: CURRENCY_IMAGE_STATE,
+      payload: booleanValue
+    })
+  }
+} 

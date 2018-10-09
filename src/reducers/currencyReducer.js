@@ -2,14 +2,16 @@ import {
   CURRENCY_RATE, 
   CURRENCY_FETCHING, 
   CURRENCY_ERROR,
-  CURRENCY_INR
+  CURRENCY_INR,
+  CURRENCY_IMAGE_STATE
 } from './../actions/type.js';
 
 const initialState = {
   DataFetching: false,
   DataSucess: [],
   DateError: [],
-  DataINR: []
+  DataINR: [],
+  DataUpdate: true
 }
 
 export default function(state = initialState, action) {
@@ -37,6 +39,11 @@ switch (action.type) {
     ...state,
     DateError: action.payload,
     DataFetching: false
+    }
+    case CURRENCY_IMAGE_STATE:
+    return {
+      ...state,
+      DataUpdate: action.payload
     }
     default:
     return state

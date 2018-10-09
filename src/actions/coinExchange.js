@@ -4,6 +4,7 @@ import {
     EXCHANGE_CURRENCY_FETCHING,
     EXCHANGE_CURRENCY_FETCH_SUCCESS,
     EXCHANGE_CURRENCY_FETCH_ERROR,
+    COINEXCHANGE_UPDATE_VALUE,
     COIN_UPDATE_STATE
 } from "./type.js"
  import {
@@ -13,10 +14,11 @@ import {
  } from "../urls.js"
 
 
-export const exchangeToDisplay = (exchangURL) => {
+export const exchangeToDisplay = (exchangURL, random) => {
     return function (dispatch) {
-        dispatch({type: EXCHANGE_CURRENCY_FETCHING })
-            // console.log(response)
+            if (random == undefined) {
+               dispatch({type: EXCHANGE_CURRENCY_FETCHING })
+             }
             let koinexApi = axios.get(koinex)
             let coinDeltaApi = axios.get(coinDelta)
             let multipleExchangeDataApi = axios.get(multipleExchangeData + exchangURL + "-usd") 
@@ -26,9 +28,8 @@ export const exchangeToDisplay = (exchangURL) => {
                         type: EXCHANGE_CURRENCY_FETCH_SUCCESS,
                         payload: values
                     })
-                )   
+                 )   
             }).catch((error) => {
-                console.log(error)
                 return (
                     dispatch({
                         type: EXCHANGE_CURRENCY_FETCH_ERROR,
@@ -49,37 +50,3 @@ export const coinUpdateState = (booleanValue) => {
 }
 
 
-//Creating Multiple API call using Promise 
-// export const multipleExchangeToDisplay = (crypto) => {
-//     return function (dispatch) {
-//         dispatch({type: EXCHANGE_CURRENCY_FETCHING })
-//         let combineArray = []
-//         let koinexApi = axios.get(koinex)
-//         let coinDeltaApi = axios.get(coinDelta)
-//         let multipleExchangeDataApi = axios.get(multipleExchangeData)
-//         Promise.all([koinexApi, coinDeltaApi , multipleExchangeDataApi]).then(function(values) {
-//             console.log(values);
-//         });
-//     }
-// }
-
-// // /export const fetchCoin = () => {
-//   return function (dispatch) {
-//     dispatch({type: CRYPTO_FETCHING}) 
-//     axios.get(ApiCoinCap).then((response) => {
-//     return(
-//     dispatch({
-//       type: CRYPTO_FETCH_SUCESS,
-//       payload: response.data
-//     })
-//   )
-//   }).catch((error) => {
-//     return (
-//   dispatch({
-//       type: CRYPTO_DATA_FAIL,
-//       payload: error.data
-//     })
-//   )
-// })
-//  }
-// }

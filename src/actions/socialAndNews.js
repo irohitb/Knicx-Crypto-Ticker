@@ -12,9 +12,11 @@ import {
 
 
 export const fetchRedditPosts = (subreddit) => {
+
+
     return function (dispatch)  {
         dispatch({type: REDDIT_FETCHING})
-        axios.get(RedditFetch + subreddit + "&t=all&sort=new").then((response) => {
+        axios.get(RedditFetch + subreddit).then((response) => {
         return (
             dispatch({
                 type: REDDIT_FETCHED,

@@ -45,10 +45,12 @@ class CoinCapCharts extends PureComponent {
         super() 
         this.image
         this.text
+        this.redditURL
     }
    
  state = {
-     activeButton: 1
+     activeButton: 1,
+     redditActiveButton: "newest"
  }
 
     //Coin Chart to display function 
@@ -60,11 +62,43 @@ class CoinCapCharts extends PureComponent {
         })
     }
 
+    redditsearch = (type) => {
+        if (type ==  "newest") {
+            this.props.fetchRedditPosts(this.props.navigation.state.params.coinShortName + "&t=all&sort=new")
+            this.setState({redditActiveButton: "newest"})
+        } 
+
+        if (type == "hour") {
+            this.props.fetchRedditPosts(this.props.navigation.state.params.coinShortName + "&t=hour&sort=relevance")
+            this.setState({redditActiveButton: "hour"})
+        }
+
+        if (type == "day") {
+            this.props.fetchRedditPosts(this.props.navigation.state.params.coinShortName + "&t=day&sort=relevance")
+            this.setState({redditActiveButton: "day"})
+        }
+
+        if (type == "week") {
+            this.props.fetchRedditPosts(this.props.navigation.state.params.coinShortName + "&t=week&sort=relevance")
+            this.setState({redditActiveButton: "week"})
+        }
+
+        if (type == "month") {
+            this.props.fetchRedditPosts(this.props.navigation.state.params.coinShortName + "&t=month&sort=relevance")
+            this.setState({redditActiveButton: "month"})
+        }
+
+        if (type == "allTime") {
+            this.props.fetchRedditPosts(this.props.navigation.state.params.coinShortName + "&t=all&sort=relevance")
+            this.setState({redditActiveButton: "allTime"})
+        }  
+    }
+
     componentDidMount() {
+        
         this.props.coinHistory(1, this.props.navigation.state.params.coinShortName) 
         this.props.coinComplete(this.props.navigation.state.params.coinShortName)
-        this.props.fetchRedditPosts(this.props.navigation.state.params.coinShortName)
-        
+        this.props.fetchRedditPosts(this.props.navigation.state.params.coinShortName + "&t=all&sort=new")
     }
 
    
@@ -142,8 +176,33 @@ class CoinCapCharts extends PureComponent {
                     coinDetails = {this.props.coinCompleteDisplay}
                     />
                     <View style={reddit}>
-                        <Text style={redditTextMain}> Latest on Reddit</Text>
+                        <View style={redditMainHeading}>
+                            <View>
+                                <Text style={redditTextMain}> Latest on Reddit</Text>
+                            </View>
+                            <View style={redditSearch}>
+                                <TouchableOpacity onPress={() => this.redditsearch("newest")}>
+                                    <Text style={[redditSearchText, this.state.redditActiveButton == "newest"  ? {fontSize: 16, fontWeight: 'bold'} : {fontSize: 13} ]}> Newest </Text>
+                                 </TouchableOpacity>
+                                 <TouchableOpacity onPress={() => this.redditsearch("hour")}>
+                                   <Text style={[redditSearchText, this.state.redditActiveButton == "hour" ? {fontSize: 16, fontWeight: 'bold'} : {fontSize: 13} ]}> Hour  </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.redditsearch("day")}>
+                                   <Text style={[redditSearchText, this.state.redditActiveButton == "day" ? {fontSize: 16, fontWeight: 'bold'} : {fontSize: 13} ]}> Day </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.redditsearch("week")}>   
+                                    <Text style={[redditSearchText, this.state.redditActiveButton == "week" ? {fontSize: 16, fontWeight: 'bold'} : {fontSize: 13} ]}> Week </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.redditsearch("month")}>
+                                    <Text style={[redditSearchText, this.state.redditActiveButton == "month" ? {fontSize: 16, fontWeight: 'bold'} : {fontSize: 13}]}> Month </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.redditsearch("allTime")}>
+                                    <Text style={[redditSearchText, this.state.redditActiveButton == "allTime" ? {fontSize: 16, fontWeight: 'bold'} : {fontSize: 13}]}> All TIme</Text> 
+                                 </TouchableOpacity>                 
+                            </View>
+                        </View>
                     <FlatList
+                     contentContainerStyle={{paddingBottom:60}}
                         data={this.props.redditCryptoNews.slice(0,8)}
                         renderItem={({index, item}) => {
                             if (item["data"]["title"].length < 90) {
@@ -218,18 +277,32 @@ export default connect(mapStateToProps,
     reddit: {
         marginTop: 15,
         display: "flex",
-        backgroundColor: "white",
         flexDirection: "column",
         borderRadius: 15,
         marginLeft: 5,
         marginRight: 5,
-        paddingBottom: 5
+        backgroundColor: "white", 
+    },
+    redditSearch: {
+        display: "flex",
+        flexDirection: "row",
+        marginTop: 5,
+        justifyContent: "space-between",
+        marginLeft: 3,
+        marginRight: 3
+    },
+    redditMainHeading:{
+        paddingBottom: 5,
+        paddingTop: 5,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        backgroundColor: "#f44336",
     },
     redditMain: {
         display: "flex",
         flexDirection: "row",
         marginTop: 10,
-        alignItems: "center"
+        backgroundColor: "white",   
     },
     RedditList: {
        flex: 1, 
@@ -246,9 +319,8 @@ export default connect(mapStateToProps,
         marginLeft: 5
     },
     redditTextMain: {
-        textAlign: 'center',
-        fontSize: 23, 
-        color: "#4A708B",
+        fontSize: 20, 
+        color: "white",
         marginBottom: 5,
         marginTop: 5
     },
@@ -267,6 +339,9 @@ export default connect(mapStateToProps,
         alignItems: 'center',
         marginTop: 75,
         marginBottom: 75 
+      },
+      redditSearchText: {
+          color: "white"
       }
   })
 
@@ -281,8 +356,10 @@ export default connect(mapStateToProps,
     redditTextMain,
     CoinCapChartsMain,
     loadingComponent,
-    historyBarLoading
-  
+    historyBarLoading,
+    redditMainHeading,
+    redditSearch,
+    redditSearchText
     } = styles
 
 

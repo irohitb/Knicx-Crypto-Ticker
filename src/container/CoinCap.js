@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   StatusBar,
   AsyncStorage,
-  ART
+  Image
 } from 'react-native';
 import {
   fetchCoin, 
@@ -24,8 +24,10 @@ import {
   } from 'react-native-loader';
 import BottomNavigation from '../components/BottomNavigation.js'
 import {
-  CurrencyRate
+  CurrencyRate,
+  CurrencyState
 } from '../actions/currencyData.js'
+import Icons from "react-native-vector-icons/Entypo";
 
 
 
@@ -38,6 +40,8 @@ class cryptoTicker extends PureComponent {
       this.displaySearchCrypto = []
       this.socket = openSocket('https://coincap.io');
       this.currencySelected = "usd"
+      this.currencyImage = "https://www.countryflags.io/US/flat/64.png"
+      this.asyncImage
   }
   
   state = {
@@ -47,6 +51,7 @@ class cryptoTicker extends PureComponent {
   }
 
   componentDidMount() {
+    this.props.CurrencyState(true)
     //If currency is not loaded it will set the default value to dollar
     if (this.props.currencyLoaded.length == 0 || !this.props.currencyLoaded) {
       this.props.CurrencyRate(this.currencySelected)
@@ -56,9 +61,11 @@ class cryptoTicker extends PureComponent {
     displayData = async () => {
       this.currencySelected = await AsyncStorage.getItem("currencySelected").catch((error) => {
       })
-       if (this.currencySelected != "undefined" && this.currencySelected != null) {
+      
+      if (!this.currencySelected && this.currencySelected != null) {
         this.props.CurrencyRate(this.currencySelected)
        }
+     
   }  
   displayData()
 
@@ -121,7 +128,24 @@ componentWillUnmount() {
  this.socket.disconnect();
 }
   render() {
+    if (this.props.currencyUpdateState) {
+      displayImage = async () => {
+        this.asyncImage = await AsyncStorage.getItem("ImageLong").catch((error) => {
+          console.log(error)
+        })
+
+
+        if (this.asyncImage != "undefined" && this.asyncImage != null) {
+          this.currencyImage = "https://www.countryflags.io/" + this.asyncImage + "/flat/64.png"
+         }   
+      }
+
+      displayImage()
+
+      this.props.CurrencyState(false)
+    }
   return (
+  
 
      
              <View style={superMainView}>
@@ -143,9 +167,11 @@ componentWillUnmount() {
               onChangeText={(text) => this.onSearch(text)} />
 
               <TouchableOpacity onPress={() => this.props.navigation.navigate("CurrencySelection")}>
-              <View style={{flexDirection: "column"}}>
-                  <Text style={money}> Currency </Text>
-                  <Text style={money}> Selection </Text>
+              <View style={currencySelectionC}>
+                 <Image 
+                 style={currencyImageStyle}
+                 source={{uri: this.currencyImage}}/>
+                 <Text style={iconImage}><Icons name="chevron-right" size={30} color="white"/></Text>
               </View>
               </TouchableOpacity>
 
@@ -196,7 +222,7 @@ componentWillUnmount() {
 //Creating Stylesheet 
 const styles = StyleSheet.create({ 
   textInput: { 
-    width: "78%",
+    width: "70%",
     height: 35,
     marginLeft: 5,
     marginRight: 5,
@@ -233,7 +259,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: '80%',
-
+  },
+  currencyImageStyle: {
+    width: 35,
+    height: 35
+  },
+  currencySelectionC: {
+    display: "flex",
+    flexDirection: "row",
+    marginRight: 3
+  },
+  iconImage: {
+    
   }
 
 
@@ -244,8 +281,10 @@ const {
   mainView,
   superMainView,
   searchDrop,
-  money,
-  loadingComponent
+  loadingComponent,
+  currencyImageStyle,
+  currencySelectionC,
+  iconImage
 } = styles
 
 
@@ -257,12 +296,13 @@ const mapStateToProps = state => {
     cryptoLoading: state.coincap.itemsFetching,
     cryptoGlobal: state.coincap.itemGlobal,
     currencyLoaded: state.currency.DataSucess,
+    currencyUpdateState: state.currency.DataUpdate
   }
 };
 
 export default connect(mapStateToProps, 
   {fetchCoin, 
     updateCrypto, 
-    CurrencyRate
-    // globalData
+    CurrencyRate,
+    CurrencyState
   })(cryptoTicker);

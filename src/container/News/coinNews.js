@@ -76,7 +76,8 @@ class News extends PureComponent {
                 <Bars  size={15} color="#4CAF50" /> 
             </View> ) :
                 ( 
-                    <ScrollView>
+                    <ScrollView
+                    contentContainerStyle={{paddingBottom:60}}>
                     
                       
                     <View style={layoutMain}>
@@ -182,10 +183,12 @@ const styles = StyleSheet.create({
       },
       newsBodyText: {
           marginTop: 20,
-          fontSize: 18,
+          fontSize: 16,
           textAlign: "justify",
           marginLeft: 5,
           marginRight: 10,
+          color: "#424242",
+          lineHeight: 20.5
       },
       newsBodyView: {
         width: "100%",

@@ -73,16 +73,21 @@ const styles = StyleSheet.create({
     coinDetailsH: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "center",
-        textAlign: 'center',
-        marginTop: 20,
-        marginBottom: 10
+        paddingTop: 5,
+        marginBottom: 10,
+        backgroundColor: "#ffc400",
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        paddingBottom: 5,
+        paddingLeft: 5
     },
     mainHeading: {
-        textAlign: 'center',
-        fontSize: 23, 
+        textAlign: 'left',
+        fontSize: 20, 
         color: "#4A708B",
-        marginBottom: 5
+        marginBottom: 5,
+        color: "white"
+     
     }, 
     subHeadingContent: {
         fontSize: 15,

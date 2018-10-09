@@ -5,9 +5,10 @@ import {
     StyleSheet,
     TextInput, 
     FlatList, 
-    ScrollView, 
     TouchableOpacity,
-    AsyncStorage
+    AsyncStorage,
+    Image,
+    StatusBar
 } from "react-native"
 import { connect } from 'react-redux';
 import BottomNavigation from '../../components/BottomNavigation.js'
@@ -21,7 +22,6 @@ import {
 import { 
     Bars, 
    } from 'react-native-loader';
-import Icons from "react-native-vector-icons/SimpleLineIcons"
 import Icons1 from "react-native-vector-icons/FontAwesome"
 class coinExchange extends PureComponent {
 
@@ -37,7 +37,8 @@ class coinExchange extends PureComponent {
 
     state = {
         searchMarket: false,
-        coinExchangeArray: []
+        coinExchangeArray: [],
+        isFetching: false
     }
 
     onSearch = (text) => {
@@ -61,11 +62,24 @@ class coinExchange extends PureComponent {
          }
     }
 
+ 
+    onRefresh = () => {
+        this.coinExchangeArray=[]
+        this.setState({coinExchangeArray: [...this.coinExchangeArray]})
+        this.setState({isFetching: true})
+            refreshData = async () => {
+                await this.props.indianCurrency()
+                await this.props.exchangeToDisplay(this.coinURL, true)
+                await this.setState({isFetching: false})
+            }
+            refreshData()
+    }
+
    
 
     componentDidMount() {
+        this.props.coinUpdateState(true)
         this.props.indianCurrency()
-        this.props.exchangeToDisplay(this.coinURL)
         displayData()
     //Set Timeout API Call
     }
@@ -82,13 +96,14 @@ class coinExchange extends PureComponent {
                     console.log(error)
                 })
 
-                 if (this.coinURL != "undefined" && this.coinURL != null) {
+                 if (await (this.coinURL != null)) {
                   this.props.exchangeToDisplay(this.coinURL)
                   this.props.coinUpdateState(false)
                   this.coinExchangeArray = []
                  }
     
-                 if (this.coinURL == null || this.coinURL == "undefined") {
+                 if (await (this.coinURL == null)) {
+                    this.coinURL = "BTC"
                     this.props.coinUpdateState(false)
                     this.coinExchangeArray = []
                  }
@@ -136,6 +151,8 @@ class coinExchange extends PureComponent {
                     for (let i=0; i<this.props.cryptoLoaded.length; i++) {
                         if (this.coinURL == this.props.cryptoLoaded[i]["short"]) {
                             this.coinURLFull = this.props.cryptoLoaded[i]["long"]
+                            this.coinURLFull = this.coinURLFull.replace(/\s+/g, '');
+                            this.coinURLFull = this.coinURLFull.trim()
                             this.coinExchangeArray.push({
                                 "market": "CoinCap Api",
                                 "value": this.props.cryptoLoaded[i]["price"]
@@ -150,7 +167,10 @@ class coinExchange extends PureComponent {
 
         return (
             <View style={exchangeMain}> 
-           
+            <View>
+               <StatusBar backgroundColor="white" 
+                barStyle="light-content"/>
+            </View>
                 { this.props.exchangeLoading ? 
                 <View style={loadingComponent}>       
                     <Bars  size={15} color="#4CAF50" /> 
@@ -158,13 +178,19 @@ class coinExchange extends PureComponent {
                 </View> :  
                     <View style={{flex: 1}}>
                          <View style={header}> 
-                            <Text style={textHeader}> {this.coinURLFull} ({this.coinURL}) </Text>
+                            <View style={imageHeader}>
+                                <Image 
+                                style={ImageHeading}
+                                source={{uri: "https://coincap.io/images/coins/" + this.coinURLFull + ".png"}}/>
+                                
+                                <Text style={textHeader}> {this.coinURLFull} ({this.coinURL}) </Text>
+                            </View>
                             <View style={viewSearchExchange}> 
                                 <TextInput
                                     style={searchExchange}
                                     placeholder="Search Market"
                                     onChangeText={(text) => this.onSearch(text)}/>
-
+                                   
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('cryptoToShow')}>
                                     <View style={cryptoSelect}>
                                         <Text> <Icons1 name="exchange" size={30} color="white"></Icons1></Text>
@@ -173,11 +199,15 @@ class coinExchange extends PureComponent {
                                 
                           </View>
                        </View>
+             
                     <FlatList 
                     style={flatlistStyle}
                     data={this.state.searchMarket ?  this.searchMarket : this.coinExchangeArray}
                     extraData={[this.coinExchangeArray, this.searchMarket]}
                     keyExtractor={item => item.short}
+                    contentContainerStyle={{paddingBottom:60}}
+                    onRefresh={() => this.onRefresh()}
+                    refreshing={this.state.isFetching}
                     renderItem={({ item, index }) => {
                         return (
                             <View style={exchangeList}>
@@ -294,7 +324,16 @@ const styles = StyleSheet.create({
           fontSize: 12,
           marginBottom: 12,
           paddingTop: 5,
-          color: "#4A708B"
+          color: "#4A708B",
+          display: "flex",
+          flexDirection: "row"
+      },
+      imageHeader: {
+        textAlign: "center",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        paddingTop: 2
       },
       Value: {
         textAlign: "center",
@@ -315,6 +354,14 @@ const styles = StyleSheet.create({
           display: "flex",
           flexDirection: "row",
           color: "white"
+      },
+      flatlistStyle: {
+          display: "flex",
+          flex: 1
+      },
+      ImageHeading: {
+          height: 30,
+          width: 30
       }
   
 })
@@ -334,7 +381,9 @@ const {
     subExchangeHeading1,
     subExchangeHeading2,
     value1,
-    cryptoSelect
+    cryptoSelect,
+    ImageHeading,
+    imageHeader
 } = styles
 
 //https://api.coindelta.com/api/v1/public/getticker/

@@ -15,7 +15,8 @@ import  {
 } from "../actions/currencyDetails.js"
 
 import {
-    CurrencyRate
+    CurrencyRate,
+    CurrencyState
 } from '../actions/currencyData.js'
 import BottomNavigation from '../components/BottomNavigation';
 import Icons from 'react-native-vector-icons/Entypo';
@@ -55,11 +56,14 @@ class Language extends Component {
       }
     }
 
-    setGlobalLanguage = (event) => {
+    setGlobalLanguage = (event, eventLong) => {
+        //Event is short Name here for currency and event long is large name for image 
         this.props.CurrencyRate(event)
         this.props.navigation.navigate('Home')
-        let currencySelected = event
-        AsyncStorage.setItem('currencySelected', currencySelected)
+        AsyncStorage.setItem('currencySelected', event)
+        AsyncStorage.setItem('ImageLong', eventLong, () => {
+            this.props.CurrencyState(true)
+        })
     }
 
 
@@ -80,13 +84,14 @@ class Language extends Component {
                         placeholder="Search Currnecy"
                         onChangeText={(text) => this.onSearch(text)} />
                     </View> 
-                <ScrollView>
+                <ScrollView
+                 contentContainerStyle={{paddingBottom:60}}>
                   <View style={listOfCurrencies}> 
                   { this.CurrencyDisplay.map(data => {
                   let CurrencyURl = "https://www.countryflags.io/" + data["Co"] + "/flat/32.png"
                   let dataShort = data["short"]
                   return (
-                  <TouchableOpacity onPress={() => this.setGlobalLanguage(data["short"])}>
+                  <TouchableOpacity onPress={() => this.setGlobalLanguage(data["short"], data["Co"])}>
                       <View style={IndvidualCurrencyMain}> 
                       <View style={imagDataLong}>
                         <Image 
@@ -106,7 +111,8 @@ class Language extends Component {
 }
 export default connect(null, 
     {
-      CurrencyRate, 
+      CurrencyRate,
+      CurrencyState 
     })(Language);
 
     const styles = StyleSheet.create({ 
