@@ -97,13 +97,16 @@ class coinExchange extends PureComponent {
                 })
 
                  if (await (this.coinURL != null)) {
+                    console.log("here")
                   this.props.exchangeToDisplay(this.coinURL)
                   this.props.coinUpdateState(false)
                   this.coinExchangeArray = []
                  }
     
                  if (await (this.coinURL == null)) {
+                    console.log("here")
                     this.coinURL = "BTC"
+                    this.props.exchangeToDisplay(this.coinURL)
                     this.props.coinUpdateState(false)
                     this.coinExchangeArray = []
                  }

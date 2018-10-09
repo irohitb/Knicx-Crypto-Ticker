@@ -22,7 +22,7 @@ export const exchangeToDisplay = (exchangURL, random) => {
             let koinexApi = axios.get(koinex)
             let coinDeltaApi = axios.get(coinDelta)
             let multipleExchangeDataApi = axios.get(multipleExchangeData + exchangURL + "-usd") 
-            Promise.all([koinexApi, coinDeltaApi , multipleExchangeDataApi]).then(function(values) {
+            return Promise.all([koinexApi, coinDeltaApi , multipleExchangeDataApi]).then(function(values) {
                 return(
                     dispatch({
                         type: EXCHANGE_CURRENCY_FETCH_SUCCESS,

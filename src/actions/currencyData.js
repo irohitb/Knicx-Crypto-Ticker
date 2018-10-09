@@ -35,7 +35,7 @@ export const CurrencyRate = (selectedCurrency) => {
           })
         )
       } else {
-    axios.get(CurrencyRateLink).then((response) => {
+   return axios.get(CurrencyRateLink).then((response) => {
       let CurrencyRates = Object.keys(response.data.rates)
         for (let i=0; i<CurrencyRates.length; i++) {
            if (selectedCurrency == CurrencyRates[i]) {  
@@ -67,7 +67,7 @@ export const CurrencyRate = (selectedCurrency) => {
 export const indianCurrency = () => {
   return function (dispatch) {
     dispatch({type: CURRENCY_FETCHING})
-    axios.get(CurrencyRateLinkINR).then((response) => {
+    return axios.get(CurrencyRateLinkINR).then((response) => {
       return (
         dispatch({
           type: CURRENCY_INR,

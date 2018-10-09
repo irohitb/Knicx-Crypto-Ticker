@@ -13,7 +13,7 @@ import {
 export const coinNews = () => {
     return function (dispatch) {
     dispatch({type: NEWS_FETCHING})
-    axios.get(cryptoCompareNews).then((response) => {
+   return axios.get(cryptoCompareNews).then((response) => {
         return(
             dispatch({
               type: NEWS_FETCHING_SUCESS,

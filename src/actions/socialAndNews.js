@@ -16,7 +16,7 @@ export const fetchRedditPosts = (subreddit) => {
 
     return function (dispatch)  {
         dispatch({type: REDDIT_FETCHING})
-        axios.get(RedditFetch + subreddit).then((response) => {
+        return axios.get(RedditFetch + subreddit).then((response) => {
         return (
             dispatch({
                 type: REDDIT_FETCHED,

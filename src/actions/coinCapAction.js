@@ -22,7 +22,7 @@ import {
 export const fetchCoin = () => {
   return function (dispatch) {
     dispatch({type: CRYPTO_FETCHING}) 
-    axios.get(ApiCoinCap).then((response) => {
+    return axios.get(ApiCoinCap).then((response) => {
     return(
     dispatch({
       type: CRYPTO_FETCH_SUCESS,
@@ -44,7 +44,7 @@ export const fetchCoin = () => {
 export const globalData = () => { 
   return function (dispatch) {
     dispatch({type: CRYPTO_FETCHING}) 
-      axios.get(GlobalData).then((response) => {
+     return axios.get(GlobalData).then((response) => {
     return(
       dispatch({
         type: GLOBAL_DATA,
@@ -80,7 +80,7 @@ export const updateCrypto = (updatedData) => {
 export const coinHistory = (days, coinName) => {
     return function (dispatch) {
     dispatch({type: CRYPTO_FETCHING_HISTORY}) 
-    axios.get(coinCapHistory + days + "day/" + coinName).then(respone => {
+    return axios.get(coinCapHistory + days + "day/" + coinName).then(respone => {
       let coinHistoryV = []
       for (let i = 0; i<respone.data["price"].length; i++) {
         coinHistoryV.push({
@@ -112,7 +112,7 @@ export const coinHistory = (days, coinName) => {
 export const coinComplete = (coinName) => {
   return function (dispatch) {
     dispatch({type: CRYPTO_FETCHING}) 
-    axios.get(coinCapComplete + coinName).then((respone) => {
+   return axios.get(coinCapComplete + coinName).then((respone) => {
       return (
         dispatch({
           type: COIN_COMPLETE,
