@@ -10,6 +10,7 @@ import CoinChart from './src/container/coinChartComponents/coinChart.js'
 import News from "./src/container/News/coinNews.js"
 import Exchange from "./src/container/Exchanges/coinExchange.js"
 import CryptoToShowcase from "./src/container/Exchanges/coinSelect.js"
+import CryptoProfile from "./src/container/Profile/cryptoProfile.js"
 
 export const homeStackNavigator = createStackNavigator({
   Home: {
@@ -50,6 +51,9 @@ export const MyScreen = createSwitchNavigator({
   },
   Exchange: {
     screen: exchangeStackNavigator 
+  },
+  About: {
+    screen: CryptoProfile 
   }
 
 },{

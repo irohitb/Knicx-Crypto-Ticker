@@ -11,13 +11,11 @@ import {
     Linking,
     StatusBar
 } from 'react-native'
-import Header from '../components/header.js';
 import BottomNavigation from '../components/BottomNavigation';
 import { 
     coinHistory, 
     coinComplete 
 } from "../actions/coinCapAction.js"
-import Spinner from 'react-native-loading-spinner-overlay';
 import {
     fetchRedditPosts
 } from "../actions/socialAndNews.js"
@@ -29,9 +27,7 @@ import {
     Bars, 
     Pulse 
    } from 'react-native-loader';
- 
- 
-
+   import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 
@@ -119,13 +115,18 @@ class CoinCapCharts extends PureComponent {
                   { this.props.itemHistoryFetching ?  (  <View style={historyBarLoading}>       
                            <Bars  size={15} color="#4CAF50" /> 
                         </View> )  : 
-                  ( <CoinChart 
+
+                  (
+          
+                       <CoinChart 
                     coinHistory = {this.props.coinHistoryDisplay}
                     chartColor = {this.props.coinCompleteDisplay} 
                     navigation={this.props.navigation}
 
                     //  Chart color here is actually sending everything and we are using it for more than color operations now
-                   />)}
+                   />
+           
+                   )}
                 <View style={buttonMain}>
                     <View>
                         <TouchableOpacity
@@ -171,10 +172,11 @@ class CoinCapCharts extends PureComponent {
                             </TouchableOpacity>
                         </View>
                     </View>
-
+               
                     <CoinChartStatus 
                     coinDetails = {this.props.coinCompleteDisplay}
                     />
+          
                     <View style={reddit}>
                         <View style={redditMainHeading}>
                             <View>
@@ -213,7 +215,7 @@ class CoinCapCharts extends PureComponent {
                         
                             if (item["data"]["thumbnail"] == "self" || item["data"]["thumbnail"] == "none" || item["data"]["thumbnail"] == "default") {
                               
-                                this.image = require('./../images/reddit.png');
+                                this.image = require('./../images/reddit.jpeg');
                               } else {
                                 this.image = { uri: item["data"]["thumbnail"] };
                               }
@@ -286,7 +288,7 @@ export default connect(mapStateToProps,
     redditSearch: {
         display: "flex",
         flexDirection: "row",
-        marginTop: 5,
+        marginTop: 8,
         justifyContent: "space-between",
         marginLeft: 3,
         marginRight: 3
@@ -296,7 +298,7 @@ export default connect(mapStateToProps,
         paddingTop: 5,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
-        backgroundColor: "#f44336",
+        backgroundColor: "#3b5998",
     },
     redditMain: {
         display: "flex",
@@ -322,7 +324,8 @@ export default connect(mapStateToProps,
         fontSize: 20, 
         color: "white",
         marginBottom: 5,
-        marginTop: 5
+        marginTop: 5,
+        textAlign: "center"
     },
     CoinCapChartsMain:{
         flex: 1

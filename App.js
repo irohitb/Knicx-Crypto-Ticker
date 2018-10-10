@@ -14,5 +14,3 @@ export default class App extends React.Component {
   }
 }
 
-//This is exported to index.js
-//https://codeburst.io/react-native-navigation-stack-navigator-inside-tab-navigator-inside-drawer-navigator-b2f21836708d 

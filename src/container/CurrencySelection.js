@@ -88,7 +88,7 @@ class Language extends Component {
                  contentContainerStyle={{paddingBottom:60}}>
                   <View style={listOfCurrencies}> 
                   { this.CurrencyDisplay.map(data => {
-                  let CurrencyURl = "https://www.countryflags.io/" + data["Co"] + "/flat/32.png"
+                  let CurrencyURl = "https://www.countryflags.io/" + data["Co"] + "/shiny/32.png"
                   let dataShort = data["short"]
                   return (
                   <TouchableOpacity onPress={() => this.setGlobalLanguage(data["short"], data["Co"])}>

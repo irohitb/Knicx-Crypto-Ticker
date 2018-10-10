@@ -62,17 +62,18 @@ class coinExchange extends PureComponent {
          }
     }
 
+    refreshData = async () => {
+        await this.props.indianCurrency()
+        await this.props.exchangeToDisplay(this.coinURL, true)
+        await this.setState({isFetching: false})
+    }
+
  
     onRefresh = () => {
         this.coinExchangeArray=[]
         this.setState({coinExchangeArray: [...this.coinExchangeArray]})
         this.setState({isFetching: true})
-            refreshData = async () => {
-                await this.props.indianCurrency()
-                await this.props.exchangeToDisplay(this.coinURL, true)
-                await this.setState({isFetching: false})
-            }
-            refreshData()
+        this.refreshData()
     }
 
    
@@ -80,7 +81,6 @@ class coinExchange extends PureComponent {
     componentDidMount() {
         this.props.coinUpdateState(true)
         this.props.indianCurrency()
-        displayData()
     //Set Timeout API Call
     }
 
@@ -377,13 +377,11 @@ const {
     viewSearchExchange,
     loadingComponent,
     exchangeList,
-    subExchangeHeading3,
     heading,
     Value,
     flatlistStyle,
     subExchangeHeading1,
     subExchangeHeading2,
-    value1,
     cryptoSelect,
     ImageHeading,
     imageHeader

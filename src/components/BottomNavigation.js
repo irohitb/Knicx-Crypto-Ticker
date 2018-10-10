@@ -55,8 +55,8 @@ class BottomNavigation extends PureComponent {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                    onPress={() => this.activeTab("about")}>
-                        <Text> <Icons2 name="user" size={30} color={this.props.navbarActive == "about" ? "#fbc02d" : "white"} /> </Text>
+                    onPress={() => this.activeTab("About")}>
+                        <Text> <Icons2 name="user" size={30} color={this.props.navbarActive == "About" ? "#fbc02d" : "white"} /> </Text>
                     </TouchableOpacity>
 
                 </View>
@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
       backgroundColor: "#3b5998",
       position: "absolute",
       width: "100%",
-    //   borderTopColor: '#fbc02d',
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-around",
@@ -92,9 +91,3 @@ const styles = StyleSheet.create({
     }
   })
 
-
-//   <TouchableOpacity
-//   onPress={() => this.changeHistoryChart(30)}
-//   style={button}>
-//   <Text style={[buttonT, this.state.activeButton == 30 ? {color: "#3F51B5"} : {color: "#9E9E9E"} ]}>1M </Text>
-// </TouchableOpacity>

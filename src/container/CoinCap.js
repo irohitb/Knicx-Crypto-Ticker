@@ -268,9 +268,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     marginRight: 3
-  },
-  iconImage: {
-    
   }
 
 

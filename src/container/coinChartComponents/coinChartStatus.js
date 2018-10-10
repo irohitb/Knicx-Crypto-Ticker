@@ -14,10 +14,6 @@ class coinStatus extends PureComponent {
             <View style={coinDetailsH}>
             <Text style={mainHeading}> Coin Details </Text>
             </View>
-            {/* <View style={coinDetails}>
-                <Text style={subHeadingContent}>Display Name:</Text>
-                <Text> {props.coinDetails.display_name} ({props.coinDetails.id})</Text>
-            </View> */}
             <View style={coinDetails}>
                 <Text style={subHeadingContent}>Volume 24 Hour:  </Text>
                 <Text style={subHeadingValue}> {this.props.coinDetails.volume} </Text>
@@ -75,14 +71,16 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         paddingTop: 5,
         marginBottom: 10,
-        backgroundColor: "#ffc400",
+        backgroundColor: "#3b5998",
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
-        paddingBottom: 5,
-        paddingLeft: 5
+        paddingBottom: 8,
+        paddingLeft: 8,
+        textAlign: "center",
+        justifyContent: "center"
     },
     mainHeading: {
-        textAlign: 'left',
+        textAlign: 'center',
         fontSize: 20, 
         color: "#4A708B",
         marginBottom: 5,
