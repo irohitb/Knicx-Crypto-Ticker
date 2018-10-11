@@ -150,7 +150,7 @@ componentWillUnmount() {
      
              <View style={superMainView}>
             <View>
-               <StatusBar backgroundColor="white" 
+               <StatusBar backgroundColor="#3b5998" 
                 barStyle="light-content"/>
             </View>
           

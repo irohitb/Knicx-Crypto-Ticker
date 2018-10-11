@@ -171,7 +171,7 @@ class coinExchange extends PureComponent {
         return (
             <View style={exchangeMain}> 
             <View>
-               <StatusBar backgroundColor="white" 
+               <StatusBar backgroundColor="#3b5998" 
                 barStyle="light-content"/>
             </View>
                 { this.props.exchangeLoading ? 
