@@ -69,12 +69,13 @@ class cryptoProfile extends PureComponent {
                             If you live around Capital of India (Delhi) and want to grab a cup coffee on weekend then you can already count me in. Also, We are connecting on any of the above networking site?    </Text>
 
                     </View>
-                  
-                </ScrollView>
-                <View style={loveSpaceyfiFotter}> 
+                    <View style={loveSpaceyfiFotter}> 
                          { this.spaceyfiLogo }
                         <Text style={spaceyfiText}>Spaceyfi.com</Text>
                     </View>
+                  
+                </ScrollView>
+            
                 <BottomNavigation navigation={this.props.navigation}/>
             </View>
         )
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#f3f3f3"
     },
     mainprofileView: {
-        marginTop: "27%",
+        marginTop: "5%",
         justifyContent: "center",
         flexDirection: "row"
     },
@@ -171,9 +172,10 @@ const styles = StyleSheet.create({
         lineHeight: 20.5
     },
     loveSpaceyfiFotter: {
+        marginTop: 40,
         width: "100%",
         display: "flex",
-        bottom: 80,
+        bottom: 0,
         justifyContent: "center",
         flexDirection: "row",
         alignItems: "center"
