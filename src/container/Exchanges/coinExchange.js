@@ -171,7 +171,7 @@ class coinExchange extends PureComponent {
         return (
             <View style={exchangeMain}> 
             <View>
-               <StatusBar backgroundColor="white" 
+               <StatusBar backgroundColor="#3b5998" 
                 barStyle="light-content"/>
             </View>
                 { this.props.exchangeLoading ? 
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#f3f3f3"
     }, 
     header: {
-        paddingTop: 38,
+        paddingTop: 30,
         paddingBottom: 10,
         backgroundColor: "#3b5998"
     },

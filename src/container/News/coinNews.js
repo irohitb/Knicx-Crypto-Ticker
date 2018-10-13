@@ -28,7 +28,10 @@ class News extends PureComponent {
 
     constructor() {
         super()
-        this.config
+        this.config = {
+            velocityThreshold: 0.1,
+            directionalOffsetThreshold: 80
+          }
         this.spaceyfiLogo = (<Image source={require('./../../images/spaceyfi.png')}  style={imgS} />) 
     }
     state = {
@@ -59,12 +62,7 @@ class News extends PureComponent {
         this.props.coinNews()
     }
     render() {
-        if (!this.props.newsLoading) {
-            this.config = {
-                velocityThreshold: 0.3,
-                directionalOffsetThreshold: 80
-              };
-        }
+       
         
         return (
             <View style={coinNewsMain}>

@@ -150,7 +150,7 @@ componentWillUnmount() {
      
              <View style={superMainView}>
             <View>
-               <StatusBar backgroundColor="white" 
+               <StatusBar backgroundColor="#3b5998" 
                 barStyle="light-content"/>
             </View>
           
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   },
   searchDrop: {
     justifyContent:  "space-between",
-    paddingTop: 38,
+    paddingTop: 30,
     paddingBottom: 5,
     display: "flex",
     flexDirection: "row",
