@@ -1,6 +1,6 @@
 # Spaceyfi Crypto Ticker Made Using React Native.
 
-# App WOrking GIF
+## App Working GIF
 
 
 The App in General Is divide into 4 tabs and hence there are 4 GIFS walking you across those 4 Tabs 
