@@ -11,7 +11,7 @@
     "art": "^0.10.3",
     "axios": "^0.18.0",
     "react": "16.4.1",
-    "react-native": "0.56.0",
+    "react-native": "0.56.1",
     "react-native-display": "^1.0.8",
     "react-native-git-upgrade": "^0.2.7",
     "react-native-highcharts": "^1.0.2",
