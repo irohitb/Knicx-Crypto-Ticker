@@ -18,7 +18,7 @@
     "react-native-linear-gradient": "^2.4.2",
     "react-native-loader": "^1.2.1",
     "react-native-loading-placeholder": "0.0.6",
-    "react-native-loading-spinner-overlay": "^0.5.2",
+    "react-native-loading-spinner-overlay": "^1.0.1",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-modal-dropdown": "^0.6.2",
     "react-native-motion": "^0.2.0",

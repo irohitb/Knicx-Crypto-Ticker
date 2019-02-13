@@ -4844,9 +4844,11 @@ react-native-loading-placeholder@0.0.6:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-loading-spinner-overlay@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/react-native-loading-spinner-overlay/-/react-native-loading-spinner-overlay-0.5.2.tgz#b7bcd277476d596615fd7feee601789f9bdc7acc"
+react-native-loading-spinner-overlay@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-loading-spinner-overlay/-/react-native-loading-spinner-overlay-1.0.1.tgz#07f85a072b6f7d05b8749668cd626df4cc330347"
+  dependencies:
+    prop-types "^15.6.2"
 
 react-native-material-buttons@^0.5.0:
   version "0.5.0"
